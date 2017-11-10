@@ -83,7 +83,8 @@ public class File {
                         pName = strLine.split("<")[1];
                         pName = pName.substring(0, pName.length() - 1);
                     } else if (strLine.startsWith("$$$$")) {
-                        // TODO
+                        c.printProperties();
+                        c.clearProperties();
                     } else if (strLine.isEmpty()) {
                     } else if (!strLine.isEmpty()) {
                         c.addPropertyByName(pName, strLine);

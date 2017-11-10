@@ -95,6 +95,14 @@ public class Compound {
         return properties.get(propertyName);
     }
 
+    /**
+     * Removes all stored properties
+     *
+     */
+    void clearProperties() {
+        properties.clear();
+    }
+
     @Override
     public String toString() {
         return properties.toString();

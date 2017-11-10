@@ -37,10 +37,10 @@ public class SDFParser {
     public static void main(String[] args) {
         Compound c = new Compound();
         File file = new File("examples/chebi_test.sdf");
-        //File file = new File("drugcentral_test.sdf");
+        //File file = new File("examples/drugcentral_test.sdf");
         file.parse(c);
-        System.out.println(c.toString());
-        c.printProperties();
+        //System.out.println(c.toString());
+        //c.printProperties();
     }
 
 }
