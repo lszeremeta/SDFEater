@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package chebisdfparser;
+package sdfparser;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -72,20 +72,16 @@ public class File {
 
                 if (!molfileReady) {
                     // TODO molfile
-                    System.out.println(strLine);
+                    //System.out.println(strLine);
                 }
 
-                if (strLine.startsWith("M ")) {
+                if (strLine.replaceAll("\\s+", "").startsWith("MEND")) {
                     molfileReady = true;
                 } else if (molfileReady) {
                     // SDF file parse
-                    if (strLine.startsWith("> <")) {
-                        // > <ChEBI Name> więc można obcinać 3 znaki z przodu i jeden z tyłu (prawodpodobnie wydajniej),
-                        // ale może być jakiś podwójny odstęp...
-                        pName = strLine.substring(3, strLine.length() - 1);
-                        // alternatywne rozwiązanie:
-                        //pName = strLine.split("<")[1];
-                        //pName = propertyName.substring(0, propertyName.length() - 1);
+                    if (strLine.replaceAll("\\s+", "").startsWith("><")) {
+                        pName = strLine.split("<")[1];
+                        pName = pName.substring(0, pName.length() - 1);
                     } else if (strLine.startsWith("$$$$")) {
                         // TODO
                     } else if (strLine.isEmpty()) {

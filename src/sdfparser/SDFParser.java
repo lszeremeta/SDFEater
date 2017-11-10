@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package chebisdfparser;
+package sdfparser;
 
 /**
  *
  * @author Łukasz Szeremeta 2017
  */
-public class ChEBISDFParser {
+public class SDFParser {
 
     /**
      * Main parser class
@@ -36,7 +36,8 @@ public class ChEBISDFParser {
      */
     public static void main(String[] args) {
         Compound c = new Compound();
-        File file = new File("sdftest.sdf");
+        File file = new File("chebi_test.sdf");
+        //File file = new File("drugcentral_test.sdf");
         file.parse(c);
         System.out.println(c.toString());
         c.printProperties();
