@@ -23,6 +23,8 @@
  */
 package sdfparser;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Łukasz Szeremeta 2017
@@ -36,13 +38,15 @@ public class SDFParser {
      */
     public static void main(String[] args) {
         Compound c = new Compound();
-        File file = new File("examples/chebi_test.sdf");
-        //File file = new File("BindingDB_BindingDB_2D.sdf");
-        //File file = new File("examples/drugcentral_test.sdf");
-        file.parse(c);
-        //System.out.println(c.toString());
-        //c.printProperties();
-        //System.out.println(c.bonds.get(1).atom1);
+        if (args.length == 1) {
+            File file = new File(args[0]);
+            file.parse(c);
+        } else {
+            System.out.println("USAGE: java -jar \"SDFParser.jar\" FILE");
+        }
+
+        //File file = new File("examples/chebi_test.sdf");
+        //file.parse(c);
     }
 
 }

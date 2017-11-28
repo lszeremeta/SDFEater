@@ -78,7 +78,7 @@ public class File {
                     tokens = strLine.split("\\s+");
 
                     if (tokens.length == 16) {
-                        c.atoms.add(new Atom(tokens[3].charAt(0), Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2])));
+                        c.atoms.add(new Atom(tokens[3], Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2])));
                     }
 
                     if (tokens.length == 7) {

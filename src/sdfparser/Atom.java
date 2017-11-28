@@ -30,7 +30,7 @@ package sdfparser;
  */
 public class Atom {
 
-    char name;
+    String name;
     float x;
     float y;
     float z;
@@ -44,7 +44,7 @@ public class Atom {
      * @param z atom z position
      *
      */
-    public Atom(char name, float x, float y, float z) {
+    public Atom(String name, float x, float y, float z) {
         this.name = name;
         this.x = x;
         this.y = y;
