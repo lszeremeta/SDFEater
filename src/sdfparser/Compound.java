@@ -38,7 +38,19 @@ public class Compound {
     /**
      * Stores all properties of the chemical compound
      */
-    private Map<String, List<String>> properties = new HashMap<>();
+    private final Map<String, List<String>> properties = new HashMap<>();
+
+    /**
+     * Stores atoms data
+     *
+     */
+    List<Atom> atoms = new ArrayList<>();
+
+    /**
+     * Stores bonds data
+     *
+     */
+    List<Bond> bonds = new ArrayList<>();
 
     /**
      * Set compound property name
@@ -86,6 +98,26 @@ public class Compound {
     }
 
     /**
+     * Print atoms data
+     *
+     */
+    void printAtoms() {
+        for (Atom atom : atoms) {
+            System.out.println(atom.toString());
+        }
+    }
+
+    /**
+     * Print bonds data
+     *
+     */
+    void printBonds() {
+        for (Bond bond : bonds) {
+            System.out.println("(" + atoms.get(bond.atom1 - 1).name + "[" + bond.atom1 + "])--" + bond.type + "--(" + atoms.get(bond.atom2 - 1).name + "[" + bond.atom2 + "])");
+        }
+    }
+
+    /**
      * Get property values by property name
      *
      * @param propertyName property name (key)
@@ -96,11 +128,13 @@ public class Compound {
     }
 
     /**
-     * Removes all stored properties
+     * Removes all stored properties, atoms and bonds data
      *
      */
-    void clearProperties() {
+    void clearAll() {
         properties.clear();
+        atoms.clear();
+        bonds.clear();
     }
 
     @Override

@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Łukasz Szeremeta.
@@ -24,25 +24,35 @@
 package sdfparser;
 
 /**
+ * Atoms data
  *
  * @author Łukasz Szeremeta 2017
  */
-public class SDFParser {
+public class Atom {
+
+    char name;
+    float x;
+    float y;
+    float z;
 
     /**
-     * Main parser class
+     * Atom class constructor
      *
-     * @param args the command line arguments
+     * @param name atom name
+     * @param x atom x position
+     * @param y atom y position
+     * @param z atom z position
+     *
      */
-    public static void main(String[] args) {
-        Compound c = new Compound();
-        File file = new File("examples/chebi_test.sdf");
-        //File file = new File("BindingDB_BindingDB_2D.sdf");
-        //File file = new File("examples/drugcentral_test.sdf");
-        file.parse(c);
-        //System.out.println(c.toString());
-        //c.printProperties();
-        //System.out.println(c.bonds.get(1).atom1);
+    public Atom(char name, float x, float y, float z) {
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
+    @Override
+    public String toString() {
+        return name + " (" + x + "," + y + "," + z + ")";
+    }
 }

@@ -65,18 +65,25 @@ public class File {
             String strLine;
             String pName = "";    // current property name
             boolean molfileReady = false;
+            String[] tokens;
 
-            // TODO change later for only one compound (each compound ends with $$$$ in new line)
             while ((strLine = br.readLine()) != null) {
                 strLine = strLine.trim();
 
-                if (!molfileReady) {
-                    // TODO molfile
-                    //System.out.println(strLine);
-                }
-
                 if (strLine.replaceAll("\\s+", "").startsWith("MEND")) {
                     molfileReady = true;
+                } else if (!molfileReady) {
+                    // TODO: V3000
+                    
+                    tokens = strLine.split("\\s+");
+
+                    if (tokens.length == 16) {
+                        c.atoms.add(new Atom(tokens[3].charAt(0), Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2])));
+                    }
+
+                    if (tokens.length == 7) {
+                        c.bonds.add(new Bond(Byte.parseByte(tokens[0]), Byte.parseByte(tokens[2]), Byte.parseByte(tokens[1])));
+                    }
                 } else if (molfileReady) {
                     // SDF file parse
                     if (strLine.replaceAll("\\s+", "").startsWith("><")) {
@@ -84,7 +91,9 @@ public class File {
                         pName = pName.substring(0, pName.length() - 1);
                     } else if (strLine.startsWith("$$$$")) {
                         c.printProperties();
-                        c.clearProperties();
+                        c.printAtoms();
+                        c.printBonds();
+                        c.clearAll();
                     } else if (strLine.isEmpty()) {
                     } else if (!strLine.isEmpty()) {
                         c.addPropertyByName(pName, strLine);

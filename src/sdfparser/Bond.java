@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Łukasz Szeremeta.
@@ -24,25 +24,32 @@
 package sdfparser;
 
 /**
- *
+ * Bonds data
+ * 
  * @author Łukasz Szeremeta 2017
  */
-public class SDFParser {
+public class Bond {
+
+    byte atom1;
+    byte type;
+    byte atom2;
 
     /**
-     * Main parser class
+     * Bond class constructor
      *
-     * @param args the command line arguments
+     * @param atom1 first atom id
+     * @param type bond type
+     * @param atom2 second atom id
+     *
      */
-    public static void main(String[] args) {
-        Compound c = new Compound();
-        File file = new File("examples/chebi_test.sdf");
-        //File file = new File("BindingDB_BindingDB_2D.sdf");
-        //File file = new File("examples/drugcentral_test.sdf");
-        file.parse(c);
-        //System.out.println(c.toString());
-        //c.printProperties();
-        //System.out.println(c.bonds.get(1).atom1);
+    public Bond(byte atom1, byte type, byte atom2) {
+        this.atom1 = atom1;
+        this.type = type;
+        this.atom2 = atom2;
     }
 
+    @Override
+    public String toString() {
+        return "(" + String.valueOf(atom1) + ")--" + String.valueOf(type) + "--(" + String.valueOf(atom2) + ")";
+    }
 }
