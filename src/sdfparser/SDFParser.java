@@ -23,8 +23,6 @@
  */
 package sdfparser;
 
-import java.util.Arrays;
-
 /**
  *
  * @author Łukasz Szeremeta 2017

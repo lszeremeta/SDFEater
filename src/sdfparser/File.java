@@ -26,6 +26,7 @@ package sdfparser;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -70,21 +71,22 @@ public class File {
             while ((strLine = br.readLine()) != null) {
                 strLine = strLine.trim();
 
-                if (strLine.replaceAll("\\s+", "").startsWith("MEND")) {
+                if (strLine.startsWith("END", 3)) {
                     molfileReady = true;
-                } else if (!molfileReady) {
+                } else if (!molfileReady && !strLine.matches("M\\s+\\w+.*")) {
                     // TODO: V3000
-                    
+
                     tokens = strLine.split("\\s+");
 
                     if (tokens.length == 16) {
                         c.atoms.add(new Atom(tokens[3], Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2])));
                     }
 
-                    if (tokens.length == 7) {
+                    // V2000, V3000
+                    if (tokens.length == 7 && !tokens[6].startsWith("V")) {
                         c.bonds.add(new Bond(Byte.parseByte(tokens[0]), Byte.parseByte(tokens[2]), Byte.parseByte(tokens[1])));
                     }
-                } else if (molfileReady) {
+                } else if (molfileReady && !strLine.matches("M\\s+\\w+.*")) {
                     // SDF file parse
                     if (strLine.replaceAll("\\s+", "").startsWith("><")) {
                         pName = strLine.split("<")[1];
@@ -94,6 +96,7 @@ public class File {
                         c.printAtoms();
                         c.printBonds();
                         c.clearAll();
+                        molfileReady = false;
                     } else if (strLine.isEmpty()) {
                     } else if (!strLine.isEmpty()) {
                         c.addPropertyByName(pName, strLine);
@@ -102,8 +105,8 @@ public class File {
 
             }
             in.close();
-        } catch (Exception e) {
-            System.err.println("Error while parsing file: " + e.getMessage());
+        } catch (IOException | NumberFormatException e) {
+            System.err.println("Error while parsing file: " + e.toString());
         }
     }
 
