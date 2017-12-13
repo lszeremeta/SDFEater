@@ -25,7 +25,7 @@ package sdfparser;
 
 /**
  * Bonds data
- * 
+ *
  * @author Łukasz Szeremeta 2017
  */
 public class Bond {
@@ -33,6 +33,7 @@ public class Bond {
     byte atom1;
     byte type;
     byte atom2;
+    byte stereo;
 
     /**
      * Bond class constructor
@@ -40,12 +41,14 @@ public class Bond {
      * @param atom1 first atom id
      * @param type bond type
      * @param atom2 second atom id
+     * @param stereo bond stereo
      *
      */
-    public Bond(byte atom1, byte type, byte atom2) {
+    public Bond(byte atom1, byte type, byte atom2, byte stereo) {
         this.atom1 = atom1;
         this.type = type;
         this.atom2 = atom2;
+        this.stereo = stereo;
     }
 
     @Override
