@@ -30,9 +30,9 @@ package sdfparser;
  */
 public class Bond {
 
-    byte atom1;
+    int atom1;
     byte type;
-    byte atom2;
+    int atom2;
     byte stereo;
 
     /**
@@ -44,7 +44,7 @@ public class Bond {
      * @param stereo bond stereo
      *
      */
-    public Bond(byte atom1, byte type, byte atom2, byte stereo) {
+    public Bond(int atom1, byte type, int atom2, byte stereo) {
         this.atom1 = atom1;
         this.type = type;
         this.atom2 = atom2;

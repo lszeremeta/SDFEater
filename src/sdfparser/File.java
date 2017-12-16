@@ -84,7 +84,7 @@ public class File {
 
                     // V2000, V3000
                     if (tokens.length == 7 && !tokens[6].startsWith("V")) {
-                        c.bonds.add(new Bond(Byte.parseByte(tokens[0]), Byte.parseByte(tokens[2]), Byte.parseByte(tokens[1]), Byte.parseByte(tokens[3])));
+                        c.bonds.add(new Bond(Integer.parseInt(tokens[0]), Byte.parseByte(tokens[2]), Integer.parseInt(tokens[1]), Byte.parseByte(tokens[3])));
                     }
                 } else if (molfileReady && !strLine.matches("M\\s+\\w+.*")) {
                     // SDF file parse
