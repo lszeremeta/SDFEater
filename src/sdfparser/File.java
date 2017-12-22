@@ -92,9 +92,12 @@ public class File {
                         pName = strLine.split("<")[1];
                         pName = pName.substring(0, pName.length() - 1);
                     } else if (strLine.startsWith("$$$$")) {
-                        c.printProperties();
-                        c.printAtoms();
-                        c.printBonds();
+                        //c.printProperties();
+                        //c.printAtoms();
+                        //c.printBonds();
+                        c.printCypherCompound();
+                        c.printCypherAtoms();
+                        c.printCypherBonds();
                         c.clearAll();
                         molfileReady = false;
                     } else if (strLine.isEmpty()) {

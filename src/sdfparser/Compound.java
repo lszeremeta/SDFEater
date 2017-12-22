@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Class that stores information about chemical compound
@@ -51,6 +52,12 @@ public class Compound {
      *
      */
     List<Bond> bonds = new ArrayList<>();
+
+    UUID uuid;
+
+    public Compound() {
+        uuid = UUID.randomUUID();
+    }
 
     /**
      * Set compound property name
@@ -133,13 +140,124 @@ public class Compound {
     }
 
     /**
-     * Removes all stored properties, atoms and bonds data
+     * Print main compound data in Cypher
+     *
+     */
+    void printCypherCompound() {
+        String val_tmp = "";
+        String query_str = "CREATE (c" + addUUID() + ":Compound {";
+
+        for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
+            String key = entry.getKey();
+            List<String> values = entry.getValue();
+            query_str += key.replaceAll("\\s+", "") + ": ";
+
+            if (values.size() > 1) {
+                query_str += "[";
+                for (String value : values) {
+                    val_tmp += printValueAsNumberOrStringInCypher(value);
+                }
+                val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
+                query_str += val_tmp + "], ";
+                val_tmp = "";
+            } else {
+                String value = values.get(0);
+                query_str += printValueAsNumberOrStringInCypher(value);
+            }
+        }
+
+        query_str = query_str.substring(0, query_str.length() - 2) + "})";
+
+        System.out.println(query_str);
+    }
+
+    /**
+     * Detect if value is number and use this in Cypher output
+     *
+     * @param value Value to check
+     * @return value, if number and 'value', if not
+     */
+    private String printValueAsNumberOrStringInCypher(String value) {
+        if (isNumber(value)) {
+            return value + ", ";
+        } else {
+            return "'" + value + "', ";
+        }
+    }
+
+    /**
+     * Print atoms data and Compound-Atom relations in Cypher
+     *
+     */
+    void printCypherAtoms() {
+        int it = 1;
+        for (Atom atom : atoms) {
+            System.out.println("CREATE (a" + it + addUUID() + ":Atom {symbol: '" + atom.symbol + "', x: " + atom.x + ", y: " + atom.y + ", z: " + atom.z + "})");
+            it++;
+        }
+
+        printCypherCompoundAtomRelation();
+    }
+
+    /**
+     * Print Compound-Atom relations in Cypher
+     *
+     */
+    void printCypherCompoundAtomRelation() {
+        String query_str = "CREATE";
+
+        for (int i = 1; i <= atoms.size(); i++) {
+            query_str += "\n(c" + addUUID() + ")-[:RELATED]->(a" + i + addUUID() + "),";
+        }
+        query_str = query_str.substring(0, query_str.length() - 1);
+        System.out.println(query_str);
+    }
+
+    /**
+     * Print bonds data in Cypher
+     *
+     */
+    void printCypherBonds() {
+        String query_str = "CREATE";
+        for (Bond bond : bonds) {
+            query_str += "\n(a" + bond.atom1 + addUUID() + ")-[:BOND_WITH {type: " + bond.type + ", stereo: " + bond.stereo + "}]->(a" + bond.atom2 + addUUID() + "),";
+        }
+        query_str = query_str.substring(0, query_str.length() - 1);
+        System.out.println(query_str);
+    }
+
+    /**
+     * Prepare UUID to use in Cypher output
+     *
+     */
+    String addUUID() {
+        return "_" + uuid.toString().replace('-', '_');
+    }
+
+    /**
+     * Prepare program structures for new compound
      *
      */
     void clearAll() {
         properties.clear();
         atoms.clear();
         bonds.clear();
+        uuid = UUID.randomUUID();
+    }
+
+    /**
+     * Detect if String is number
+     *
+     * @param s String to check
+     * @return true if number, false if not
+     */
+    private boolean isNumber(String s) {
+        try {
+            Double.parseDouble(s);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 
     @Override
