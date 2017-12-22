@@ -30,7 +30,7 @@ package sdfparser;
  */
 public class Atom {
 
-    String name;
+    String symbol;
     float x;
     float y;
     float z;
@@ -38,14 +38,14 @@ public class Atom {
     /**
      * Atom class constructor
      *
-     * @param name atom name
+     * @param symbol atom symbol
      * @param x atom x position
      * @param y atom y position
      * @param z atom z position
      *
      */
-    public Atom(String name, float x, float y, float z) {
-        this.name = name;
+    public Atom(String symbol, float x, float y, float z) {
+        this.symbol = symbol;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -53,6 +53,6 @@ public class Atom {
 
     @Override
     public String toString() {
-        return name + " (" + x + "," + y + "," + z + ")";
+        return symbol + " (" + x + "," + y + "," + z + ")";
     }
 }

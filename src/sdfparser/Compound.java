@@ -114,7 +114,7 @@ public class Compound {
     void printBonds() {
         for (Bond bond : bonds) {
             try {
-                System.out.println("(" + atoms.get(bond.atom1 - 1).name + "[" + bond.atom1 + "])--" + bond.type + "--(" + atoms.get(bond.atom2 - 1).name + "[" + bond.atom2 + "])");
+                System.out.println("(" + atoms.get(bond.atom1 - 1).symbol + "[" + bond.atom1 + "])--" + bond.type + "--(" + atoms.get(bond.atom2 - 1).symbol + "[" + bond.atom2 + "])");
             } catch (Exception e) {
                 System.err.println("Error in printBonds(): " + e.toString());
             }
