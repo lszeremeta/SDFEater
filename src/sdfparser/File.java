@@ -83,7 +83,7 @@ public class File {
                     }
 
                     // V2000, V3000
-                    if ((tokens.length == 7 || tokens.length == 6) && !tokens[6].startsWith("V")) {
+                    if ((tokens.length == 7 && !tokens[6].startsWith("V") || tokens.length == 6 && isInt(tokens[0]))) {
                         c.bonds.add(new Bond(Integer.parseInt(tokens[0]), Byte.parseByte(tokens[2]), Integer.parseInt(tokens[1]), Byte.parseByte(tokens[3])));
                     }
                 } else if (molfileReady && !strLine.matches("M\\s+\\w+.*")) {
@@ -108,6 +108,15 @@ public class File {
         } catch (IOException | NumberFormatException e) {
             System.err.println("Error while parsing file: " + e.toString());
         }
+    }
+
+    private boolean isInt(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 
 }
