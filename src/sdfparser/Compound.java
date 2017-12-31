@@ -220,10 +220,95 @@ public class Compound {
     void printCypherBonds() {
         String query_str = "CREATE";
         for (Bond bond : bonds) {
-            query_str += "\n(a" + bond.atom1 + addUUID() + ")-[:BOND_WITH {type: " + bond.type + ", stereo: " + bond.stereo + "}]->(a" + bond.atom2 + addUUID() + "),";
+            query_str += "\n(a" + bond.atom1 + addUUID() + ")-[:BOND_WITH {";
+
+            if (!"0".equals(bondTypeNumberToString(bond.type))) {
+                query_str += "type: \"" + bondTypeNumberToString(bond.type) + "\"";
+            }
+
+            if (!"0".equals(bondTypeNumberToString(bond.type)) && !"0".equals(bondStereoNumberToString(bond.stereo, bond.type))) {
+                query_str += ", ";
+            }
+
+            if (!"0".equals(bondStereoNumberToString(bond.stereo, bond.type))) {
+                query_str += "stereo: " + bondStereoNumberToString(bond.stereo, bond.type);
+            }
+
+            query_str += "}]->(a" + bond.atom2 + addUUID() + "),";
         }
         query_str = query_str.substring(0, query_str.length() - 1);
         System.out.println(query_str);
+    }
+
+    /**
+     * Change bond types numbers to string value
+     *
+     * @param type Bond type number
+     * @return String value of bond type, 0 if not supported
+     */
+    String bondTypeNumberToString(byte type) {
+        switch (type) {
+            case 1:
+                return "single";
+            case 2:
+                return "double";
+            case 3:
+                return "triple";
+            // [Query] Values 4 through 8 are for SSS queries only.
+            case 4:
+                return "aromatic";
+            case 5:
+                return "single or double";
+            case 6:
+                return "single or aromatic";
+            case 7:
+                return "double or aromatic";
+            case 8:
+                return "any";
+            default:
+                return "0";
+        }
+    }
+
+    /**
+     * Change bond stereo numbers to string value
+     *
+     * @param stereo Bond stereo number
+     * @param type Bond type number
+     * @return String value of bond stereo with double quotes, false or 0 if not
+     * supported
+     */
+    String bondStereoNumberToString(byte stereo, byte type) {
+        switch (type) {
+            case 1:
+                // single bond
+                switch (stereo) {
+                    case 0:
+                        // not stereo
+                        return "false";
+                    case 1:
+                        return "\"up\"";
+                    case 4:
+                        return "\"either\"";
+                    case 6:
+                        return "\"down\"";
+                    default:
+                        return "0";
+                }
+            case 2:
+                // double bond
+                switch (stereo) {
+                    case 0:
+                        // Use x-, y-, z-coords from atom block to determine cis or trans,
+                        return "\"not determined\"";
+                    case 3:
+                        return "\"cis or trans (either) double bond\"";
+                    default:
+                        return "0";
+                }
+            default:
+                return "0";
+        }
     }
 
     /**
