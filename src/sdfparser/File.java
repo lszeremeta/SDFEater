@@ -32,7 +32,7 @@ import java.io.InputStreamReader;
 /**
  * Class responsible for all file operations
  *
- * @author Łukasz Szeremeta 2017
+ * @author Łukasz Szeremeta 2017-2018
  */
 public class File {
 
@@ -82,8 +82,8 @@ public class File {
                         c.atoms.add(new Atom(tokens[3], Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2])));
                     }
 
-                    // V2000, V3000
-                    if ((tokens.length == 7 && !tokens[6].startsWith("V") || tokens.length == 6 && isInt(tokens[0]))) {
+                    // V2000, V3000; comment text exclusion
+                    if ((tokens.length == 7 && !tokens[6].startsWith("V") && isInt(tokens[0]) || tokens.length == 6 && isInt(tokens[0]))) {
                         c.bonds.add(new Bond(Integer.parseInt(tokens[0]), Byte.parseByte(tokens[2]), Integer.parseInt(tokens[1]), Byte.parseByte(tokens[3])));
                     }
                 } else if (molfileReady && !strLine.matches("M\\s+\\w+.*")) {
@@ -92,9 +92,6 @@ public class File {
                         pName = strLine.split("<")[1];
                         pName = pName.substring(0, pName.length() - 1);
                     } else if (strLine.startsWith("$$$$")) {
-                        //c.printProperties();
-                        //c.printAtoms();
-                        //c.printBonds();
                         c.printCypherCompound();
                         c.printCypherAtoms();
                         c.printCypherBonds();
@@ -102,7 +99,48 @@ public class File {
                         molfileReady = false;
                     } else if (strLine.isEmpty()) {
                     } else if (!strLine.isEmpty()) {
-                        c.addPropertyByName(pName, strLine);
+                        // Database links, XML tags remove
+                        switch (pName) {
+                            case "Description":
+                                // XML tags remove
+                                c.addPropertyByName(pName, strLine.replaceAll("<[^>]+>", ""));
+                            case "ChEBI ID":
+                                c.addPropertyByName("ChEBI Database Link", "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=" + strLine.substring(6));
+                            case "DrugBank Database Links":
+                                c.addPropertyByName("DrugBank Database Link", "https://www.drugbank.ca/drugs/" + strLine);
+                            case "IntEnz Database Links":
+                                strLine = strLine.replaceAll(" ", "+");
+                                c.addPropertyByName("IntEnz Database Link", "http://www.ebi.ac.uk/intenz/query?q=" + strLine);
+                            case "HMDB Database Links":
+                                // metabolites
+                                c.addPropertyByName("HMDB Database Link", "http://www.hmdb.ca/metabolites/" + strLine);
+                            case "KEGG COMPOUND Database Links":
+                                c.addPropertyByName("KEGG COMPOUND Database Link", "http://www.genome.jp/dbget-bin/www_bget?cpd:" + strLine);
+                            case "KEGG DRUG Database Links":
+                                c.addPropertyByName("KEGG DRUG Database Link", "http://www.genome.jp/dbget-bin/www_bget?dr:" + strLine);
+                            case "Wikipedia Database Links":
+                                c.addPropertyByName("Wikipedia Database Link", "https://en.wikipedia.org/wiki/" + strLine);
+                            case "Patent Database Links":
+                                c.addPropertyByName("Patent Database Link", "https://worldwide.espacenet.com/searchResults?query=" + strLine);
+                            case "Rhea Database Links":
+                                c.addPropertyByName("Rhea Database Link", "https://www.rhea-db.org/reaction?id=" + strLine.substring(5));
+                            case "SABIO-RK Database Links":
+                                c.addPropertyByName("SABIO-RK Database Link", "http://sabio.h-its.org/reacdetails.jsp?reactid=" + strLine.substring(5));
+                            case "PubChem Database Links":
+                                switch (strLine.substring(0, 3)) {
+                                    case "CID":
+                                        c.addPropertyByName("PubChem Database Compound Link", "https://pubchem.ncbi.nlm.nih.gov/compound/" + strLine.substring(5));
+                                    case "SID":
+                                        c.addPropertyByName("PubChem Database Substance Link", "https://pubchem.ncbi.nlm.nih.gov/substance/" + strLine.substring(5));
+                                }
+                            case "PubMed Citation Links":
+                                c.addPropertyByName("PubMed Citation Link", "https://www.ncbi.nlm.nih.gov/pubmed/?term=" + strLine);
+                            case "UniProt Database Links":
+                                c.addPropertyByName("UniProt Database Link", "https://www.uniprot.org/uniprot/" + strLine);
+                            default:
+                                c.addPropertyByName(pName, strLine);
+                        }
+
                     }
                 }
 
@@ -121,5 +159,4 @@ public class File {
         }
         return true;
     }
-
 }
