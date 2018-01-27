@@ -32,7 +32,8 @@ import java.util.UUID;
 /**
  * Class that stores information about chemical compound
  *
- * @author Łukasz Szeremeta 2017
+ * @author Łukasz Szeremeta 2017-2018
+ * @author Dominik Tomaszuk 2017-2018
  */
 public class Compound {
     /**
