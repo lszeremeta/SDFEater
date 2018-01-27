@@ -35,6 +35,11 @@ import java.util.UUID;
  * @author Łukasz Szeremeta 2017
  */
 public class Compound {
+    /**
+     * Consts for UUID
+     */
+    public static final byte STRIKE = 0;
+    public static final byte UNDERLINE = 1;
 
     /**
      * Stores all properties of the chemical compound
@@ -145,7 +150,7 @@ public class Compound {
      */
     void printCypherCompound() {
         String val_tmp = "";
-        String query_str = "CREATE (c" + addUUID() + ":Compound {";
+        String query_str = "CREATE (c" + addUUID(UNDERLINE) + ":Compound {";
 
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
@@ -170,6 +175,34 @@ public class Compound {
 
         System.out.println(query_str);
     }
+    
+    void printChemSKOSCompound() {
+        String val_tmp = "";
+        String query_str = "";
+
+        for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
+            String key = entry.getKey();
+            List<String> values = entry.getValue();
+            //query_str += key.replaceAll("\\s+", "");
+            if ("SMILES".equals(key)) {
+                String value = values.get(0);
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:notation " + printValueAsNumberOrString(value) + "^^chemskos:SMILES .\n";
+            }
+            if ("Formulae".equals(key)) {
+                String value = values.get(0);
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:hiddenLabel " + printValueAsNumberOrString(value) + "@en .\n";
+            }
+        }
+        System.out.println(query_str);
+    }
+    
+    private String printValueAsNumberOrString(String value) {
+        if (isNumber(value)) {
+            return value;
+        } else {
+            return "'" + value + "'";
+        }
+    }
 
     /**
      * Detect if value is number and use this in Cypher output
@@ -185,6 +218,119 @@ public class Compound {
         }
     }
 
+    void printChemSKOSAtomsAndBonds() {
+        System.out.println("<urn:uuid:" + addUUID(STRIKE) + "> skos:example \"\"\"\n");
+        System.out.println("  CT\n");
+        int atomsSize = atoms.size();
+        int bondsSize = bonds.size();
+        if (atomsSize >= 0 && atomsSize <= 9) {
+            System.out.print("  "+atomsSize);
+        } else if (atomsSize >= 10 && atomsSize <= 99) {
+            System.out.print(" "+atomsSize);
+        } else {
+            System.out.print(atomsSize);
+        }
+        if (bondsSize >= 0 && bondsSize <= 9) {
+            System.out.println("  "+bondsSize+"  0  0  0  0            999 V2000");
+        } else if (bondsSize >= 10 && bondsSize <= 99) {
+            System.out.println(" "+bondsSize+"  0  0  0  0            999 V2000");
+        } else {
+            System.out.println(bondsSize+"  0  0  0  0            999 V2000");
+        }
+        for (Atom atom : atoms) {
+            float x = atom.x;
+            float y = atom.y;
+            float z = atom.z;
+            String symbol = atom.symbol;
+            String line = "";
+            if (x < 0) {
+                String temp = String.format("%.4g%n", x);
+                if (temp.length() == 7 ) {
+                    temp += "0";
+                } else if (temp.length() == 6 ) {
+                    temp += "00";
+                }
+                line += "   " + temp;
+            } else {
+                String temp = String.format("%.4g%n", x);
+                if (temp.length() == 6 ) {
+                    temp += "0";
+                } else if (temp.length() == 5 ) {
+                    temp += "00";
+                }
+                line += "    " + temp;
+            }
+            if (y < 0) {
+                String temp = String.format("%.4g%n", y);
+                if (temp.length() == 7 ) {
+                    temp += "0";
+                } else if (temp.length() == 6 ) {
+                    temp += "00";
+                }
+                line += "   " + temp;
+            } else {
+                String temp = String.format("%.4g%n", y);
+                if (temp.length() == 6 ) {
+                    temp += "0";
+                } else if (temp.length() == 5 ) {
+                    temp += "00";
+                }
+                line += "    " + temp;
+            }
+            if (z < 0) {
+                String temp = String.format("%.4g%n", z);
+                if (temp.length() == 7 ) {
+                    temp += "0";
+                } else if (temp.length() == 6 ) {
+                    temp += "00";
+                }
+                line += "   " + temp;
+            } else {
+                String temp = String.format("%.4g%n", z);
+                if (temp.length() == 6 ) {
+                    temp += "0";
+                } else if (temp.length() == 5 ) {
+                    temp += "00";
+                }
+                line += "    " + temp;
+            }
+            if (symbol.length() == 1) {
+                line += " " + symbol + "   ";
+            } else {
+                line += " " + symbol + "  ";
+            }
+            line += "0  0  0  0  0  0  0  0  0  0  0  0";
+            line = line.replace("\n", "").replace(",", ".");
+            System.out.println(line);
+        }
+        for (Bond bond : bonds) {
+            int atom1 = bond.atom1;
+            int atom2 = bond.atom2;
+            byte type = bond.type;
+            byte stereo = bond.stereo;
+            String line = "";
+            if (atom1 <= 9) {
+                line += "  " + atom1;
+            } else if (atom1 >= 10 && atom1 <= 99) {
+                line += " " + atom1;
+            } else {
+                line += "" + atom1;
+            }
+            if (atom2 <= 9) {
+                line += "  " + atom2;
+            } else if (atom2 >= 10 && atom2 <= 99) {
+                line += " " + atom2;
+            } else {
+                line += "" + atom2;
+            }
+            line += "  " + type;
+            line += "  " + stereo + "  0  0  0";
+            System.out.println(line);
+        }
+        System.out.print("M  END");
+        System.out.println("\"\"\" .");
+    }
+    
     /**
      * Print atoms data and Compound-Atom relations in Cypher
      *
@@ -192,7 +338,7 @@ public class Compound {
     void printCypherAtoms() {
         int it = 1;
         for (Atom atom : atoms) {
-            System.out.println("CREATE (a" + it + addUUID() + ":Atom {symbol: '" + atom.symbol + "', x: " + atom.x + ", y: " + atom.y + ", z: " + atom.z + "})");
+            System.out.println("CREATE (a" + it + addUUID(UNDERLINE) + ":Atom {symbol: '" + atom.symbol + "', x: " + atom.x + ", y: " + atom.y + ", z: " + atom.z + "})");
             it++;
         }
 
@@ -207,7 +353,7 @@ public class Compound {
         String query_str = "CREATE";
 
         for (int i = 1; i <= atoms.size(); i++) {
-            query_str += "\n(c" + addUUID() + ")-[:RELATED]->(a" + i + addUUID() + "),";
+            query_str += "\n(c" + addUUID(UNDERLINE) + ")-[:RELATED]->(a" + i + addUUID(UNDERLINE) + "),";
         }
         query_str = query_str.substring(0, query_str.length() - 1);
         System.out.println(query_str);
@@ -220,7 +366,7 @@ public class Compound {
     void printCypherBonds() {
         String query_str = "CREATE";
         for (Bond bond : bonds) {
-            query_str += "\n(a" + bond.atom1 + addUUID() + ")-[:BOND_WITH {";
+            query_str += "\n(a" + bond.atom1 + addUUID(UNDERLINE) + ")-[:BOND_WITH {";
 
             if (!"0".equals(bondTypeNumberToString(bond.type))) {
                 query_str += "type: \"" + bondTypeNumberToString(bond.type) + "\"";
@@ -234,7 +380,7 @@ public class Compound {
                 query_str += "stereo: " + bondStereoNumberToString(bond.stereo, bond.type);
             }
 
-            query_str += "}]->(a" + bond.atom2 + addUUID() + "),";
+            query_str += "}]->(a" + bond.atom2 + addUUID(UNDERLINE) + "),";
         }
         query_str = query_str.substring(0, query_str.length() - 1);
         System.out.println(query_str);
@@ -315,8 +461,12 @@ public class Compound {
      * Prepare UUID to use in Cypher output
      *
      */
-    String addUUID() {
-        return "_" + uuid.toString().replace('-', '_');
+    String addUUID(byte dash) {
+        if (dash == 0) {
+            return uuid.toString();
+        } else {
+            return "_" + uuid.toString().replace('-', '_');
+        }
     }
 
     /**
