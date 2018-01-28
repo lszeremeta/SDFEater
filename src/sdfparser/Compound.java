@@ -210,7 +210,7 @@ public class Compound {
             } else if ("CAS Registry Numbers".equals(key)) {
                 String value = values.get(0);
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:casNumber " + printValueAsNumberOrString(value) + "@en .\n";
-            } else if ("KEGG COMPOUND Database Link".equals(key)) {
+            } else if ("KEGG COMPOUND Database Links".equals(key)) {
                 String value = values.get(0);
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrString(value) + " .\n";
             }
