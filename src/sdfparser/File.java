@@ -59,7 +59,7 @@ public class File {
      * @param c Compound object to which values from the file will be entered
      *
      */
-    void parse(Compound c) {
+    void parse(Compound c, char flag) {
         try {
             FileInputStream fstream = new FileInputStream(filename);
             DataInputStream in = new DataInputStream(fstream);
@@ -93,11 +93,14 @@ public class File {
                         pName = strLine.split("<")[1];
                         pName = pName.substring(0, pName.length() - 1);
                     } else if (strLine.startsWith("$$$$")) {
-                        c.printChemSKOSCompound();
-                        c.printChemSKOSAtomsAndBonds();
-                        //c.printCypherCompound();
-                        //c.printCypherAtoms();
-                        //c.printCypherBonds();
+                        if (flag == 'c') {
+                            c.printCypherCompound();
+                            c.printCypherAtoms();
+                            c.printCypherBonds();
+                        } else if (flag == 'r') {
+                            c.printChemSKOSCompound();
+                            c.printChemSKOSAtomsAndBonds();
+                        }
                         c.clearAll();
                         molfileReady = false;
                     } else if (strLine.isEmpty()) {

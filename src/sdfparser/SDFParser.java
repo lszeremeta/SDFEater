@@ -23,6 +23,8 @@
  */
 package sdfparser;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Łukasz Szeremeta 2017
@@ -36,11 +38,19 @@ public class SDFParser {
      */
     public static void main(String[] args) {
         Compound c = new Compound();
-        if (args.length == 1) {
+        if (args.length > 0) {
             File file = new File(args[0]);
-            file.parse(c);
+            if (Arrays.asList(args).contains("-c")) {
+                file.parse(c,'c');
+            } else if (Arrays.asList(args).contains("-r")) {
+                file.parse(c,'r');
+            } else {
+                file.parse(c,'c');
+            }
+            
         } else {
-            System.out.println("USAGE: java -jar \"SDFParser.jar\" FILE");
+            System.out.println("USAGE: java -jar \"SDFParser.jar\" FILE OPTIONS");
+            System.out.println("Options:\n -c Cypher format (default)\n -r CVME Turtle format (SKOS and RDF based)");
         }
 
         //File file = new File("examples/chebi_test.sdf");
