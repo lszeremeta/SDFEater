@@ -23,6 +23,7 @@
  */
 package sdfparser;
 
+import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -188,10 +189,30 @@ public class Compound {
             if ("SMILES".equals(key)) {
                 String value = values.get(0);
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:notation " + printValueAsNumberOrString(value) + "^^chemskos:SMILES .\n";
-            }
-            if ("Formulae".equals(key)) {
+            } else if ("Formulae".equals(key)) {
                 String value = values.get(0);
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:hiddenLabel " + printValueAsNumberOrString(value) + "@en .\n";
+            } else if ("Definition".equals(key)) {
+                String value = values.get(0);
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:definition " + printValueAsNumberOrString(value) + "@en .\n";
+            } else if ("InChIKey".equals(key)) {
+                String value = values.get(0);
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbp:inchikey " + printValueAsNumberOrString(value) + "@en .\n";
+            } else if ("InChI".equals(key)) {
+                String value = values.get(0);
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:inchi " + printValueAsNumberOrString(value) + "@en .\n";
+            } else if ("Mass".equals(key)) {
+                String value = values.get(0);
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:molecularWeight " + printValueAsNumberOrString(value) + "@en .\n";
+            } else if ("IUPAC Names".equals(key)) {
+                String value = values.get(0);
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:prefLabel " + printValueAsNumberOrString(value) + "@en .\n";
+            } else if ("CAS Registry Numbers".equals(key)) {
+                String value = values.get(0);
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:casNumber " + printValueAsNumberOrString(value) + "@en .\n";
+            } else if ("KEGG COMPOUND Database Link".equals(key)) {
+                String value = values.get(0);
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrString(value) + " .\n";
             }
         }
         System.out.println(query_str);
@@ -200,6 +221,8 @@ public class Compound {
     private String printValueAsNumberOrString(String value) {
         if (isNumber(value)) {
             return value;
+        } else if(isURL(value)) {
+            return "<" + value + ">";
         } else {
             return "'" + value + "'";
         }
@@ -244,8 +267,9 @@ public class Compound {
             float z = atom.z;
             String symbol = atom.symbol;
             String line = "";
+            String temp = "";
             if (x < 0) {
-                String temp = String.format("%.4g%n", x);
+                temp = String.format("%.4g%n", x);
                 if (temp.length() == 7 ) {
                     temp += "0";
                 } else if (temp.length() == 6 ) {
@@ -253,7 +277,7 @@ public class Compound {
                 }
                 line += "   " + temp;
             } else {
-                String temp = String.format("%.4g%n", x);
+                temp = String.format("%.4g%n", x);
                 if (temp.length() == 6 ) {
                     temp += "0";
                 } else if (temp.length() == 5 ) {
@@ -262,7 +286,7 @@ public class Compound {
                 line += "    " + temp;
             }
             if (y < 0) {
-                String temp = String.format("%.4g%n", y);
+                temp = String.format("%.4g%n", y);
                 if (temp.length() == 7 ) {
                     temp += "0";
                 } else if (temp.length() == 6 ) {
@@ -270,7 +294,7 @@ public class Compound {
                 }
                 line += "   " + temp;
             } else {
-                String temp = String.format("%.4g%n", y);
+                temp = String.format("%.4g%n", y);
                 if (temp.length() == 6 ) {
                     temp += "0";
                 } else if (temp.length() == 5 ) {
@@ -279,7 +303,7 @@ public class Compound {
                 line += "    " + temp;
             }
             if (z < 0) {
-                String temp = String.format("%.4g%n", z);
+                temp = String.format("%.4g%n", z);
                 if (temp.length() == 7 ) {
                     temp += "0";
                 } else if (temp.length() == 6 ) {
@@ -287,7 +311,7 @@ public class Compound {
                 }
                 line += "   " + temp;
             } else {
-                String temp = String.format("%.4g%n", z);
+                temp = String.format("%.4g%n", z);
                 if (temp.length() == 6 ) {
                     temp += "0";
                 } else if (temp.length() == 5 ) {
@@ -495,6 +519,16 @@ public class Compound {
         }
         return true;
     }
+  
+    private boolean isURL(String s) {
+        try {
+            URL url = new URL(s);
+            url.toURI();
+        } catch (Exception exception) {
+            return false;
+        }
+        return true;
+}
 
     @Override
     public String toString() {
