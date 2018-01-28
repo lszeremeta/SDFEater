@@ -54,7 +54,7 @@ public class SDFParser {
         }
 
         //File file = new File("examples/chebi_test.sdf");
-        //file.parse(c);
+        //file.parse(c, 'c');
     }
 
 }

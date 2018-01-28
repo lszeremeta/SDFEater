@@ -112,52 +112,52 @@ public class File {
                                 c.addPropertyByName(pName, strLine.replaceAll("<[^>]+>", ""));
                                 break;
                             case "ChEBI ID":
-                                c.addPropertyByName("ChEBI Database Link", "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=" + strLine.substring(6));
+                                c.addPropertyByName(pName, "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=" + strLine.substring(6));
                                 break;
                             case "DrugBank Database Links":
-                                c.addPropertyByName("DrugBank Database Link", "https://www.drugbank.ca/drugs/" + strLine);
+                                c.addPropertyByName(pName, "https://www.drugbank.ca/drugs/" + strLine);
                                 break;
                             case "IntEnz Database Links":
                                 strLine = strLine.replaceAll(" ", "+");
-                                c.addPropertyByName("IntEnz Database Link", "http://www.ebi.ac.uk/intenz/query?q=" + strLine);
+                                c.addPropertyByName(pName, "http://www.ebi.ac.uk/intenz/query?q=" + strLine);
                                 break;
                             case "HMDB Database Links":
                                 // metabolites
-                                c.addPropertyByName("HMDB Database Link", "http://www.hmdb.ca/metabolites/" + strLine);
+                                c.addPropertyByName(pName, "http://www.hmdb.ca/metabolites/" + strLine);
                                 break;
                             case "KEGG COMPOUND Database Links":
-                                c.addPropertyByName("KEGG COMPOUND Database Link", "http://www.genome.jp/dbget-bin/www_bget?cpd:" + strLine);
+                                c.addPropertyByName(pName, "http://www.genome.jp/dbget-bin/www_bget?cpd:" + strLine);
                                 break;
                             case "KEGG DRUG Database Links":
-                                c.addPropertyByName("KEGG DRUG Database Link", "http://www.genome.jp/dbget-bin/www_bget?dr:" + strLine);
+                                c.addPropertyByName(pName, "http://www.genome.jp/dbget-bin/www_bget?dr:" + strLine);
                                 break;
                             case "Wikipedia Database Links":
-                                c.addPropertyByName("Wikipedia Database Link", "https://en.wikipedia.org/wiki/" + strLine);
+                                c.addPropertyByName(pName, "https://en.wikipedia.org/wiki/" + strLine);
                                 break;
                             case "Patent Database Links":
-                                c.addPropertyByName("Patent Database Link", "https://worldwide.espacenet.com/searchResults?query=" + strLine);
+                                c.addPropertyByName(pName, "https://worldwide.espacenet.com/searchResults?query=" + strLine);
                                 break;
                             case "Rhea Database Links":
-                                c.addPropertyByName("Rhea Database Link", "https://www.rhea-db.org/reaction?id=" + strLine);
+                                c.addPropertyByName(pName, "https://www.rhea-db.org/reaction?id=" + strLine);
                                 break;
                             case "SABIO-RK Database Links":
-                                c.addPropertyByName("SABIO-RK Database Link", "http://sabio.h-its.org/reacdetails.jsp?reactid=" + strLine);
+                                c.addPropertyByName(pName, "http://sabio.h-its.org/reacdetails.jsp?reactid=" + strLine);
                                 break;
                             case "PubChem Database Links":
                                 switch (strLine.substring(0, 3)) {
                                     case "CID":
-                                        c.addPropertyByName("PubChem Database Compound Link", "https://pubchem.ncbi.nlm.nih.gov/compound/" + strLine.substring(5));
+                                        c.addPropertyByName("PubChem Database Compound Links", "https://pubchem.ncbi.nlm.nih.gov/compound/" + strLine.substring(5));
                                         break;
                                     case "SID":
-                                        c.addPropertyByName("PubChem Database Substance Link", "https://pubchem.ncbi.nlm.nih.gov/substance/" + strLine.substring(5));
+                                        c.addPropertyByName("PubChem Database Substance Links", "https://pubchem.ncbi.nlm.nih.gov/substance/" + strLine.substring(5));
                                         break;
                                 }
                                 break;
                             case "PubMed Citation Links":
-                                c.addPropertyByName("PubMed Citation Link", "https://www.ncbi.nlm.nih.gov/pubmed/?term=" + strLine);
+                                c.addPropertyByName(pName, "https://www.ncbi.nlm.nih.gov/pubmed/?term=" + strLine);
                                 break;
                             case "UniProt Database Links":
-                                c.addPropertyByName("UniProt Database Link", "https://www.uniprot.org/uniprot/" + strLine);
+                                c.addPropertyByName(pName, "https://www.uniprot.org/uniprot/" + strLine);
                                 break;
                             default:
                                 c.addPropertyByName(pName, strLine);
