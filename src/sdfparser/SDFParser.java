@@ -26,14 +26,14 @@ package sdfparser;
 import java.util.Arrays;
 
 /**
+ * Main parser class
  *
- * @author Łukasz Szeremeta 2017
+ * @author Łukasz Szeremeta 2017-2018
+ * @author Dominik Tomaszuk 2017-2018
  */
 public class SDFParser {
 
     /**
-     * Main parser class
-     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {

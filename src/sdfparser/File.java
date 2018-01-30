@@ -107,7 +107,7 @@ public class File {
                     } else if (!strLine.isEmpty()) {
                         // Database links, XML tags remove
                         switch (pName) {
-                            case "Description":
+                            case "Definition":
                                 // XML tags remove
                                 c.addPropertyByName(pName, strLine.replaceAll("<[^>]+>", ""));
                                 break;

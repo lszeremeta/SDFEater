@@ -177,7 +177,11 @@ public class Compound {
 
         System.out.println(query_str);
     }
-    
+
+    /**
+     * Print main compound data in CVME
+     *
+     */
     void printChemSKOSCompound() {
         String val_tmp = "";
         String query_str = "";
@@ -210,14 +214,43 @@ public class Compound {
             } else if ("CAS Registry Numbers".equals(key)) {
                 String value = values.get(0);
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:casNumber " + printValueAsNumberOrString(value) + "@en .\n";
+            } else if ("Synonyms".equals(key)) {
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:altLabel ";
+                if (values.size() > 1) {
+                    for (String value : values) {
+                        val_tmp += printValueAsNumberOrString(value) + "@en, ";
+                    }
+                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
+                    query_str += val_tmp + " .\n";
+                    val_tmp = "";
+                } else {
+                    String value = values.get(0);
+                    query_str += printValueAsNumberOrString(value)+ "@en .\n";
+                }
             } else if ("KEGG COMPOUND Database Links".equals(key)) {
                 String value = values.get(0);
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrString(value) + " .\n";
+            } else if ("Patent Database Links".equals(key)) {
+                String value = values.get(0);
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> cvme:patent " + printValueAsNumberOrString(value) + " .\n";
+            } else if ("PubChem Database Compound Links".equals(key)) {
+                String value = values.get(0);
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrString(value) + " .\n";
+            } else if ("PubChem Database Substance Links".equals(key)) {
+                String value = values.get(0);
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrString(value) + " .\n";
             }
+            
         }
         System.out.println(query_str);
     }
-    
+
+    /**
+     * Detect if value is number, URL or String
+     *
+     * @param value Value to check
+     * @return value, if number, 'value', if string, <value> if URL
+     */
     private String printValueAsNumberOrString(String value) {
         if (isNumber(value)) {
             return value;
@@ -242,6 +275,10 @@ public class Compound {
         }
     }
 
+    /**
+     * Print atoms and bonds as skos:example property in CVME
+     *
+     */
     void printChemSKOSAtomsAndBonds() {
         System.out.println("<urn:uuid:" + addUUID(STRIKE) + "> skos:example \"\"\"\n");
         System.out.println("  CT\n");
