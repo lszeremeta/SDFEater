@@ -227,6 +227,84 @@ public class Compound {
                     String value = values.get(0);
                     query_str += printValueAsNumberOrString(value)+ "@en .\n";
                 }
+            } else if ("PubMed Citation Links".equals(key)) {
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
+                if (values.size() > 1) {
+                    for (String value : values) {
+                        val_tmp += printValueAsNumberOrString(value) + ", ";
+                    }
+                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
+                    query_str += val_tmp + " .\n";
+                    val_tmp = "";
+                } else {
+                    String value = values.get(0);
+                    query_str += printValueAsNumberOrString(value)+ " .\n";
+                }
+            } else if ("PubMed Citation Links".equals(key)) {
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
+                if (values.size() > 1) {
+                    for (String value : values) {
+                        val_tmp += printValueAsNumberOrString(value) + ", ";
+                    }
+                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
+                    query_str += val_tmp + " .\n";
+                    val_tmp = "";
+                } else {
+                    String value = values.get(0);
+                    query_str += printValueAsNumberOrString(value)+ " .\n";
+                }
+            } else if ("KNApSAcK Database Links".equals(key)) {
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
+                if (values.size() > 1) {
+                    for (String value : values) {
+                        val_tmp += printValueAsNumberOrString(value) + ", ";
+                    }
+                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
+                    query_str += val_tmp + " .\n";
+                    val_tmp = "";
+                } else {
+                    String value = values.get(0);
+                    query_str += printValueAsNumberOrString(value)+ " .\n";
+                }
+            } else if ("LIPID MAPS instance Database Links".equals(key)) {
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
+                if (values.size() > 1) {
+                    for (String value : values) {
+                        val_tmp += printValueAsNumberOrString(value) + ", ";
+                    }
+                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
+                    query_str += val_tmp + " .\n";
+                    val_tmp = "";
+                } else {
+                    String value = values.get(0);
+                    query_str += printValueAsNumberOrString(value)+ " .\n";
+                }
+            } else if ("UniProt Database Links".equals(key)) {
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
+                if (values.size() > 1) {
+                    for (String value : values) {
+                        val_tmp += printValueAsNumberOrString(value) + ", ";
+                    }
+                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
+                    query_str += val_tmp + " .\n";
+                    val_tmp = "";
+                } else {
+                    String value = values.get(0);
+                    query_str += printValueAsNumberOrString(value)+ " .\n";
+                }
+            } else if ("Rhea Database Links".equals(key)) {
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
+                if (values.size() > 1) {
+                    for (String value : values) {
+                        val_tmp += printValueAsNumberOrString(value) + ", ";
+                    }
+                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
+                    query_str += val_tmp + " .\n";
+                    val_tmp = "";
+                } else {
+                    String value = values.get(0);
+                    query_str += printValueAsNumberOrString(value)+ " .\n";
+                }
             } else if ("KEGG COMPOUND Database Links".equals(key)) {
                 String value = values.get(0);
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrString(value) + " .\n";
