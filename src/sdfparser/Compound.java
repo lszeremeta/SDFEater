@@ -157,7 +157,7 @@ public class Compound {
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
             List<String> values = entry.getValue();
-            query_str += key.replaceAll("\\s+", "") + ": ";
+            query_str += key.replaceAll("\\s+|-", "") + ": ";
 
             if (values.size() > 1) {
                 query_str += "[";
