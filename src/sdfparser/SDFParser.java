@@ -40,17 +40,27 @@ public class SDFParser {
         Compound c = new Compound();
         if (args.length > 0) {
             File file = new File(args[0]);
-            if (Arrays.asList(args).contains("-c")) {
-                file.parse(c,'c');
-            } else if (Arrays.asList(args).contains("-r")) {
-                file.parse(c,'r');
+            if (Arrays.asList(args).contains("-e")) {
+              if (Arrays.asList(args).contains("-c")) {
+                  file.parse(c,'c',true);
+              } else if (Arrays.asList(args).contains("-r")) {
+                  file.parse(c,'r',true);
+              } else {
+                  file.parse(c,'c',true);
+              }
             } else {
-                file.parse(c,'c');
+              if (Arrays.asList(args).contains("-c")) {
+                  file.parse(c,'c',false);
+              } else if (Arrays.asList(args).contains("-r")) {
+                  file.parse(c,'r',false);
+              } else {
+                  file.parse(c,'c',false);
+              }
             }
             
         } else {
             System.out.println("USAGE: java -jar \"SDFParser.jar\" FILE OPTIONS");
-            System.out.println("Options:\n -c Cypher format (default)\n -r CVME Turtle format (SKOS and RDF based)");
+            System.out.println("Options:\n -c Cypher format (default)\n -r CVME Turtle format (SKOS and RDF based)\n -e try to enrich links");
         }
 
         //File file = new File("examples/chebi_test.sdf");
