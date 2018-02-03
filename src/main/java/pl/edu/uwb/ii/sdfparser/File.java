@@ -57,9 +57,11 @@ public class File {
      * appropriate program structures
      *
      * @param c Compound object to which values from the file will be entered
+     * @param format Output format: c - Cypher, r - cvme
+     * @param urls Try to generate full database URLs instead of IDs
      *
      */
-    void parse(Compound c, char flag, boolean urls) {
+    void parse(Compound c, char format, boolean urls) {
         try {
             FileInputStream fstream = new FileInputStream(filename);
             DataInputStream in = new DataInputStream(fstream);
@@ -93,11 +95,11 @@ public class File {
                         pName = strLine.split("<")[1];
                         pName = pName.substring(0, pName.length() - 1);
                     } else if (strLine.startsWith("$$$$")) {
-                        if (flag == 'c') {
+                        if (format == 'c') {
                             c.printCypherCompound();
                             c.printCypherAtoms();
                             c.printCypherBonds();
-                        } else if (flag == 'r') {
+                        } else if (format == 'r') {
                             c.printChemSKOSCompound();
                             c.printChemSKOSAtomsAndBonds();
                         }
@@ -214,7 +216,8 @@ public class File {
                             }
                         } else {
                             /**
-                             * @TODO add exclusion of above keys because now they are (non-ULR) literals 
+                             * @TODO add exclusion of above keys because now
+                             * they are (non-ULR) literals
                              */
                             c.addPropertyByName(pName, strLine);
                         }

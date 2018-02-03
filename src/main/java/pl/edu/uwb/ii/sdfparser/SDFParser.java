@@ -51,20 +51,20 @@ public class SDFParser {
         Option formatarg = new Option("f", "format", true, "output format (cypher, cvme)");
         formatarg.setRequired(true);
         options.addOption(formatarg);
-        Option enrich = new Option("e", "enrich", false, "try to enrich URLs (enabled in cvme)");
-        enrich.setRequired(false);
-        options.addOption(enrich);
+        Option urls = new Option("u", "urls", false, "try to generate full database URLs instead of IDs (enabled in cvme)");
+        urls.setRequired(false);
+        options.addOption(urls);
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
         try {
             cmd = parser.parse(options, args);
-            String fileparam = cmd.getOptionValue("i");
+            String fileparam = cmd.getOptionValue("input");
             File file = new File(fileparam);
-            if (cmd.hasOption("f")) {
-                String format = cmd.getOptionValue("f");
+            if (cmd.hasOption("format")) {
+                String format = cmd.getOptionValue("format");
                 if (format.equalsIgnoreCase("cypher")) {
-                    if (cmd.hasOption("e")) {
+                    if (cmd.hasOption("urls")) {
                         file.parse(c, 'c', true);
                     } else {
                         file.parse(c, 'c', false);
