@@ -23,7 +23,9 @@
  */
 package sdfparser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import org.apache.commons.cli.*;
 
 /**
  * Main parser class
@@ -36,35 +38,43 @@ public class SDFParser {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Compound c = new Compound();
-        if (args.length > 0) {
-            File file = new File(args[0]);
-            if (Arrays.asList(args).contains("-e")) {
-              if (Arrays.asList(args).contains("-c")) {
-                  file.parse(c,'c',true);
-              } else if (Arrays.asList(args).contains("-r")) {
-                  file.parse(c,'r',true);
-              } else {
-                  file.parse(c,'c',true);
-              }
-            } else {
-              if (Arrays.asList(args).contains("-c")) {
-                  file.parse(c,'c',false);
-              } else if (Arrays.asList(args).contains("-r")) {
-                  file.parse(c,'r',false);
-              } else {
-                  file.parse(c,'c',false);
-              }
+        Options options = new Options();
+        Option input = new Option("i", "input", true, "input file path");
+        input.setRequired(true);
+        options.addOption(input);
+        Option formatarg = new Option("f", "format", true, "output format (cypher, cvme)");
+        formatarg.setRequired(true);
+        options.addOption(formatarg);
+        Option enrich = new Option("e", "enrich", false, "try to enrich URLs (enabled in cvme)");
+        enrich.setRequired(false);
+        options.addOption(enrich);
+        CommandLineParser parser = new DefaultParser();
+        HelpFormatter formatter = new HelpFormatter();
+        CommandLine cmd;
+        try {
+            cmd = parser.parse(options, args);
+            String fileparam = cmd.getOptionValue("i");
+            File file = new File(fileparam);
+            if(cmd.hasOption("f")) {
+                String format = cmd.getOptionValue("f");
+                if (format.equalsIgnoreCase("cypher")) {
+                    if (cmd.hasOption("e")) {
+                        file.parse(c,'c',true);
+                    } else {
+                        file.parse(c,'c',false);
+                    }
+                } else if (format.equalsIgnoreCase("cvme")) {
+                    file.parse(c,'r',true);
+                }
             }
-            
-        } else {
-            System.out.println("USAGE: java -jar \"SDFParser.jar\" FILE OPTIONS");
-            System.out.println("Options:\n -c Cypher format (default)\n -r CVME Turtle format (SKOS and RDF based)\n -e try to enrich links");
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+            formatter.printHelp("SDFParser.jar", options);
+            return;
         }
-
-        //File file = new File("examples/chebi_test.sdf");
-        //file.parse(c, 'c');
     }
-
 }
+
+
