@@ -21,11 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package sdfparser;
+package pl.edu.uwb.ii.sdfparser;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 /**
  * Main parser class
@@ -38,7 +42,7 @@ public class SDFParser {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Compound c = new Compound();
         Options options = new Options();
         Option input = new Option("i", "input", true, "input file path");
@@ -57,24 +61,21 @@ public class SDFParser {
             cmd = parser.parse(options, args);
             String fileparam = cmd.getOptionValue("i");
             File file = new File(fileparam);
-            if(cmd.hasOption("f")) {
+            if (cmd.hasOption("f")) {
                 String format = cmd.getOptionValue("f");
                 if (format.equalsIgnoreCase("cypher")) {
                     if (cmd.hasOption("e")) {
-                        file.parse(c,'c',true);
+                        file.parse(c, 'c', true);
                     } else {
-                        file.parse(c,'c',false);
+                        file.parse(c, 'c', false);
                     }
                 } else if (format.equalsIgnoreCase("cvme")) {
-                    file.parse(c,'r',true);
+                    file.parse(c, 'r', true);
                 }
             }
         } catch (ParseException e) {
             System.out.println(e.getMessage());
             formatter.printHelp("SDFParser.jar", options);
-            return;
         }
     }
 }
-
-

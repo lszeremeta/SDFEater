@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package sdfparser;
+package pl.edu.uwb.ii.sdfparser;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
