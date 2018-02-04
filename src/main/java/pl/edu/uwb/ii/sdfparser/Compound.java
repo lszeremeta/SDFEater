@@ -472,6 +472,42 @@ public class Compound {
     }
     
     /**
+     * Print SMILES form SDF
+     *
+     */
+    void printSMILES() {
+        String query_str = "";
+
+        for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
+            String key = entry.getKey();
+            List<String> values = entry.getValue();
+            if ("SMILES".equals(key)) {
+                query_str = values.get(0);
+            } 
+            
+        }
+        System.out.println(query_str);
+    }
+    
+        /**
+     * Print InChI form SDF
+     *
+     */
+    void printInChI() {
+        String query_str = "";
+
+        for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
+            String key = entry.getKey();
+            List<String> values = entry.getValue();
+            if ("InChI".equals(key)) {
+                query_str = values.get(0);
+            } 
+            
+        }
+        System.out.println(query_str);
+    }
+    
+    /**
      * Print atoms data and Compound-Atom relations in Cypher
      *
      */

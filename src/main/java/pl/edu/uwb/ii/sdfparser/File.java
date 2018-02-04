@@ -57,7 +57,7 @@ public class File {
      * appropriate program structures
      *
      * @param c Compound object to which values from the file will be entered
-     * @param format Output format: c - Cypher, r - cvme
+     * @param format Output format: c - Cypher, r - cvme, s - smiles, n - inchi
      * @param urls Try to generate full database URLs instead of IDs
      *
      */
@@ -102,6 +102,10 @@ public class File {
                         } else if (format == 'r') {
                             c.printChemSKOSCompound();
                             c.printChemSKOSAtomsAndBonds();
+                        } else if (format == 's') {
+                            c.printSMILES();
+                        } else if (format == 'n') {
+                            c.printInChI();
                         }
                         c.clearAll();
                         molfileReady = false;

@@ -48,7 +48,7 @@ public class SDFParser {
         Option input = new Option("i", "input", true, "input file path");
         input.setRequired(true);
         options.addOption(input);
-        Option formatarg = new Option("f", "format", true, "output format (cypher, cvme)");
+        Option formatarg = new Option("f", "format", true, "output format (cypher, cvme, smiles, inchi)");
         formatarg.setRequired(true);
         options.addOption(formatarg);
         Option urls = new Option("u", "urls", false, "try to generate full database URLs instead of IDs (enabled in cvme)");
@@ -71,6 +71,10 @@ public class SDFParser {
                     }
                 } else if (format.equalsIgnoreCase("cvme")) {
                     file.parse(c, 'r', true);
+                } else if (format.equalsIgnoreCase("smiles")) {
+                    file.parse(c, 's', false);
+                } else if (format.equalsIgnoreCase("inchi")) {
+                    file.parse(c, 'n', false);
                 }
             }
         } catch (ParseException e) {
