@@ -58,10 +58,12 @@ public class File {
      *
      * @param c Compound object to which values from the file will be entered
      * @param format Output format: c - Cypher, r - cvme, s - smiles, n - inchi
-     * @param urls Try to generate full database URLs instead of IDs
+     * @param urls Try to generate full database URLs instead of IDs (true/false)
+     * @param periodic Map with additional atoms data from periodic table for cypher
+     * format (true/false)
      *
      */
-    void parse(Compound c, char format, boolean urls) {
+    void parse(Compound c, char format, boolean urls, boolean periodic) {
         try {
             FileInputStream fstream = new FileInputStream(filename);
             DataInputStream in = new DataInputStream(fstream);
@@ -97,7 +99,13 @@ public class File {
                     } else if (strLine.startsWith("$$$$")) {
                         if (format == 'c') {
                             c.printCypherCompound();
-                            c.printCypherAtoms();
+
+                            if (periodic) {
+                                c.printCypherAtomsWithPeriodicTableData();
+                            } else {
+                                c.printCypherAtoms();
+                            }
+
                             c.printCypherBonds();
                         } else if (format == 'r') {
                             c.printChemSKOSCompound();

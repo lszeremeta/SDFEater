@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import static pl.edu.uwb.ii.sdfparser.SDFParser.periodic_table_data;
 
 /**
  * Class that stores information about chemical compound
@@ -37,6 +38,7 @@ import java.util.UUID;
  * @author Dominik Tomaszuk 2017-2018
  */
 public class Compound {
+
     /**
      * Consts for UUID
      */
@@ -225,7 +227,7 @@ public class Compound {
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value)+ "@en .\n";
+                    query_str += printValueAsNumberOrString(value) + "@en .\n";
                 }
             } else if ("PubMed Citation Links".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
@@ -238,7 +240,7 @@ public class Compound {
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value)+ " .\n";
+                    query_str += printValueAsNumberOrString(value) + " .\n";
                 }
             } else if ("PubMed Citation Links".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
@@ -251,7 +253,7 @@ public class Compound {
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value)+ " .\n";
+                    query_str += printValueAsNumberOrString(value) + " .\n";
                 }
             } else if ("KNApSAcK Database Links".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
@@ -264,7 +266,7 @@ public class Compound {
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value)+ " .\n";
+                    query_str += printValueAsNumberOrString(value) + " .\n";
                 }
             } else if ("LIPID MAPS instance Database Links".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
@@ -277,7 +279,7 @@ public class Compound {
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value)+ " .\n";
+                    query_str += printValueAsNumberOrString(value) + " .\n";
                 }
             } else if ("UniProt Database Links".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
@@ -290,7 +292,7 @@ public class Compound {
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value)+ " .\n";
+                    query_str += printValueAsNumberOrString(value) + " .\n";
                 }
             } else if ("Rhea Database Links".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
@@ -303,7 +305,7 @@ public class Compound {
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value)+ " .\n";
+                    query_str += printValueAsNumberOrString(value) + " .\n";
                 }
             } else if ("KEGG COMPOUND Database Links".equals(key)) {
                 String value = values.get(0);
@@ -318,7 +320,7 @@ public class Compound {
                 String value = values.get(0);
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrString(value) + " .\n";
             }
-            
+
         }
         System.out.println(query_str);
     }
@@ -332,7 +334,7 @@ public class Compound {
     private String printValueAsNumberOrString(String value) {
         if (isNumber(value)) {
             return value;
-        } else if(isURL(value)) {
+        } else if (isURL(value)) {
             return "<" + value + ">";
         } else {
             return "'" + value + "'";
@@ -363,18 +365,18 @@ public class Compound {
         int atomsSize = atoms.size();
         int bondsSize = bonds.size();
         if (atomsSize >= 0 && atomsSize <= 9) {
-            System.out.print("  "+atomsSize);
+            System.out.print("  " + atomsSize);
         } else if (atomsSize >= 10 && atomsSize <= 99) {
-            System.out.print(" "+atomsSize);
+            System.out.print(" " + atomsSize);
         } else {
             System.out.print(atomsSize);
         }
         if (bondsSize >= 0 && bondsSize <= 9) {
-            System.out.println("  "+bondsSize+"  0  0  0  0            999 V2000");
+            System.out.println("  " + bondsSize + "  0  0  0  0            999 V2000");
         } else if (bondsSize >= 10 && bondsSize <= 99) {
-            System.out.println(" "+bondsSize+"  0  0  0  0            999 V2000");
+            System.out.println(" " + bondsSize + "  0  0  0  0            999 V2000");
         } else {
-            System.out.println(bondsSize+"  0  0  0  0            999 V2000");
+            System.out.println(bondsSize + "  0  0  0  0            999 V2000");
         }
         for (Atom atom : atoms) {
             float x = atom.x;
@@ -385,51 +387,51 @@ public class Compound {
             String temp = "";
             if (x < 0) {
                 temp = String.format("%.4g%n", x);
-                if (temp.length() == 7 ) {
+                if (temp.length() == 7) {
                     temp += "0";
-                } else if (temp.length() == 6 ) {
+                } else if (temp.length() == 6) {
                     temp += "00";
                 }
                 line += "   " + temp;
             } else {
                 temp = String.format("%.4g%n", x);
-                if (temp.length() == 6 ) {
+                if (temp.length() == 6) {
                     temp += "0";
-                } else if (temp.length() == 5 ) {
+                } else if (temp.length() == 5) {
                     temp += "00";
                 }
                 line += "    " + temp;
             }
             if (y < 0) {
                 temp = String.format("%.4g%n", y);
-                if (temp.length() == 7 ) {
+                if (temp.length() == 7) {
                     temp += "0";
-                } else if (temp.length() == 6 ) {
+                } else if (temp.length() == 6) {
                     temp += "00";
                 }
                 line += "   " + temp;
             } else {
                 temp = String.format("%.4g%n", y);
-                if (temp.length() == 6 ) {
+                if (temp.length() == 6) {
                     temp += "0";
-                } else if (temp.length() == 5 ) {
+                } else if (temp.length() == 5) {
                     temp += "00";
                 }
                 line += "    " + temp;
             }
             if (z < 0) {
                 temp = String.format("%.4g%n", z);
-                if (temp.length() == 7 ) {
+                if (temp.length() == 7) {
                     temp += "0";
-                } else if (temp.length() == 6 ) {
+                } else if (temp.length() == 6) {
                     temp += "00";
                 }
                 line += "   " + temp;
             } else {
                 temp = String.format("%.4g%n", z);
-                if (temp.length() == 6 ) {
+                if (temp.length() == 6) {
                     temp += "0";
-                } else if (temp.length() == 5 ) {
+                } else if (temp.length() == 5) {
                     temp += "00";
                 }
                 line += "    " + temp;
@@ -470,7 +472,7 @@ public class Compound {
         System.out.print("M  END");
         System.out.println("\"\"\" .");
     }
-    
+
     /**
      * Print SMILES form SDF
      *
@@ -483,13 +485,13 @@ public class Compound {
             List<String> values = entry.getValue();
             if ("SMILES".equals(key)) {
                 query_str = values.get(0);
-            } 
-            
+            }
+
         }
         System.out.println(query_str);
     }
-    
-        /**
+
+    /**
      * Print InChI form SDF
      *
      */
@@ -501,12 +503,12 @@ public class Compound {
             List<String> values = entry.getValue();
             if ("InChI".equals(key)) {
                 query_str = values.get(0);
-            } 
-            
+            }
+
         }
         System.out.println(query_str);
     }
-    
+
     /**
      * Print atoms data and Compound-Atom relations in Cypher
      *
@@ -519,6 +521,49 @@ public class Compound {
         }
 
         printCypherCompoundAtomRelation();
+    }
+
+    /**
+     * Print atoms data with additional periodic table data and Compound-Atom
+     * relations in Cypher
+     *
+     */
+    void printCypherAtomsWithPeriodicTableData() {
+        String str = "";
+        int it = 1;
+        for (Atom atom : atoms) {
+            str += "CREATE (a" + it + addUUID(UNDERLINE) + ":Atom {symbol: '" + atom.symbol + "', x: " + atom.x + ", y: " + atom.y + ", z: " + atom.z;
+
+            for (Map.Entry<String, Object> entry : getAtomPeriodicDataByAtomSymbol(atom.symbol).entrySet()) {
+                String key = entry.getKey();
+                Object value = entry.getValue();
+                
+                str += ", " + key + ": ";
+                if (isNumber(value.toString())){
+                    str += value;
+                }
+                else{
+                    str += "'" + value + "'";
+                }
+            }
+
+            str += "})\n";
+            it++;
+        }
+        System.out.println(str);
+
+        printCypherCompoundAtomRelation();
+    }
+
+    /**
+     * Gets additional periodic table data by atom symbol
+     *
+     * @param symbol Atom symbol
+     * @return All periodic table data
+     *
+     */
+    private Map<String, Object> getAtomPeriodicDataByAtomSymbol(String symbol) {
+        return periodic_table_data.get(symbol);
     }
 
     /**
@@ -670,7 +715,7 @@ public class Compound {
         }
         return true;
     }
-  
+
     private boolean isURL(String s) {
         try {
             URL url = new URL(s);
@@ -679,7 +724,7 @@ public class Compound {
             return false;
         }
         return true;
-}
+    }
 
     @Override
     public String toString() {

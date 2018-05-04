@@ -34,7 +34,7 @@ public class Atom {
     float x;
     float y;
     float z;
-
+    
     /**
      * Atom class constructor
      *
