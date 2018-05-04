@@ -49,8 +49,14 @@ import org.apache.commons.cli.ParseException;
  */
 public class SDFParser {
 
+    /**
+     * Stores all Atoms data from periodic table
+     */
     static Map<String, Map<String, Object>> periodic_table_data;
 
+    /**
+     * Loads periodic data from JSON file to the Map
+     */
     static void loadPeriodicTableData() {
         Gson gson = new GsonBuilder().create();
         Type type = new TypeToken<Map<String, Map<String, String>>>() {
@@ -67,29 +73,6 @@ public class SDFParser {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //Gson gson = new GsonBuilder().create();
-        //Type type = new TypeToken<Map<String, Object>>() {
-        //}.getType();
-
-        /*
-        Gson gson = new GsonBuilder().create();
-        
-        Type type = new TypeToken<Map<String, Map<String, String>>>() {
-        }.getType();
-        Map<String, Map<String, String>> atoms_periodic_data = gson.fromJson("{\"H\":{\"atomicNumber\":1,\"symbol\":\"H\",\"name\":\"Hydrogen\",\"atomicMass\":\"1.00794(4)\",\"cpkHexColor\":\"FFFFFF\",\"electronicConfiguration\":\"1s1\",\"electronegativity\":2.2,\"atomicRadius\":37,\"vanDelWaalsRadius\":120,\"ionizationEnergy\":1312,\"electronAffinity\":-73,\"oxidationStates\":\"-1, 1\",\"standardState\":\"gas\",\"bondingType\":\"diatomic\",\"meltingPoint\":14,\"boilingPoint\":20,\"density\":0.0000899,\"groupBlock\":\"nonmetal\",\"yearDiscovered\":1766},\n"
-                + "\"He\":{\"atomicNumber\":2,\"symbol\":\"He\",\"name\":\"Helium\",\"atomicMass\":\"4.002602(2)\",\"cpkHexColor\":\"D9FFFF\",\"electronicConfiguration\":\"1s2\",\"atomicRadius\":32,\"vanDelWaalsRadius\":140,\"ionizationEnergy\":2372,\"electronAffinity\":0,\"standardState\":\"gas\",\"bondingType\":\"atomic\",\"boilingPoint\":4,\"density\":0.0001785,\"groupBlock\":\"noble gas\",\"yearDiscovered\":1868}}", type);
-
-        
-        System.out.println(atoms_periodic_data.get("H"));
-
-        for (Map.Entry<String, String> entry : atoms_periodic_data.get("H").entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            System.out.println("Key = " + key);
-            System.out.println("Value = " + value);
-        }
-
-         */
         Compound c = new Compound();
         Options options = new Options();
         Option input = new Option("i", "input", true, "input file path");
