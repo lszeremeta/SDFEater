@@ -534,17 +534,20 @@ public class Compound {
         for (Atom atom : atoms) {
             str += "CREATE (a" + it + addUUID(UNDERLINE) + ":Atom {symbol: '" + atom.symbol + "', x: " + atom.x + ", y: " + atom.y + ", z: " + atom.z;
 
-            for (Map.Entry<String, Object> entry : getAtomPeriodicDataByAtomSymbol(atom.symbol).entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
-                
-                str += ", " + key + ": ";
-                if (isNumber(value.toString())){
-                    str += value;
+            try {
+                for (Map.Entry<String, Object> entry : getAtomPeriodicDataByAtomSymbol(atom.symbol).entrySet()) {
+                    String key = entry.getKey();
+                    Object value = entry.getValue();
+
+                    str += ", " + key + ": ";
+                    if (isNumber(value.toString())) {
+                        str += value;
+                    } else {
+                        str += "'" + value + "'";
+                    }
                 }
-                else{
-                    str += "'" + value + "'";
-                }
+            } catch (Exception e) {
+                System.err.println("WARNING: No additional data could be found in the periodic table for " + atom.symbol);
             }
 
             str += "})\n";
