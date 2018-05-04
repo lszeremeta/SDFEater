@@ -27,9 +27,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,12 +66,9 @@ public class SDFParser {
         Gson gson = new GsonBuilder().create();
         Type type = new TypeToken<Map<String, Map<String, String>>>() {
         }.getType();
-        try {
-            BufferedReader json_file = new BufferedReader(new FileReader("periodic_table.json"));
-            periodic_table_data = gson.fromJson(json_file, type);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(SDFParser.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        InputStream periodic_resource = SDFParser.class.getResourceAsStream("periodic_table.json");
+        Reader periodic_reader = new InputStreamReader(periodic_resource);
+        periodic_table_data = gson.fromJson(periodic_reader, type);
     }
 
     /**
