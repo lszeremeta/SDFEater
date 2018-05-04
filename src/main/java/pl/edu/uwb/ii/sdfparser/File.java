@@ -58,9 +58,10 @@ public class File {
      *
      * @param c Compound object to which values from the file will be entered
      * @param format Output format: c - Cypher, r - cvme, s - smiles, n - inchi
-     * @param urls Try to generate full database URLs instead of IDs (true/false)
-     * @param periodic Map with additional atoms data from periodic table for cypher
-     * format (true/false)
+     * @param urls Try to generate full database URLs instead of IDs
+     * (true/false)
+     * @param periodic Map with additional atoms data from periodic table for
+     * cypher format (true/false)
      *
      */
     void parse(Compound c, char format, boolean urls, boolean periodic) {
@@ -97,23 +98,28 @@ public class File {
                         pName = strLine.split("<")[1];
                         pName = pName.substring(0, pName.length() - 1);
                     } else if (strLine.startsWith("$$$$")) {
-                        if (format == 'c') {
-                            c.printCypherCompound();
-
-                            if (periodic) {
-                                c.printCypherAtomsWithPeriodicTableData();
-                            } else {
-                                c.printCypherAtoms();
-                            }
-
-                            c.printCypherBonds();
-                        } else if (format == 'r') {
-                            c.printChemSKOSCompound();
-                            c.printChemSKOSAtomsAndBonds();
-                        } else if (format == 's') {
-                            c.printSMILES();
-                        } else if (format == 'n') {
-                            c.printInChI();
+                        switch (format) {
+                            case 'c':
+                                c.printCypherCompound();
+                                if (periodic) {
+                                    c.printCypherAtomsWithPeriodicTableData();
+                                } else {
+                                    c.printCypherAtoms();
+                                }   c.printCypherBonds();
+                                System.out.println(';');
+                                break;
+                            case 'r':
+                                c.printChemSKOSCompound();
+                                c.printChemSKOSAtomsAndBonds();
+                                break;
+                            case 's':
+                                c.printSMILES();
+                                break;
+                            case 'n':
+                                c.printInChI();
+                                break;
+                            default:
+                                break;
                         }
                         c.clearAll();
                         molfileReady = false;
