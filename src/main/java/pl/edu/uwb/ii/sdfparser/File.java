@@ -67,8 +67,8 @@ public class File {
     void parse(Compound c, char format, boolean urls, boolean periodic) {
         try {
             FileInputStream fstream = new FileInputStream(filename);
-            DataInputStream in = new DataInputStream(fstream);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            //DataInputStream in = new DataInputStream(fstream);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String strLine;
             String pName = "";    // current property name
             boolean molfileReady = false;
@@ -105,8 +105,8 @@ public class File {
                                     c.printCypherAtomsWithPeriodicTableData();
                                 } else {
                                     c.printCypherAtoms();
-                                }   c.printCypherBonds();
-                                System.out.println(';');
+                                }
+                                c.printCypherBonds();
                                 break;
                             case 'r':
                                 c.printChemSKOSCompound();
@@ -242,7 +242,12 @@ public class File {
                     }
                 }
             }
-            in.close();
+
+            if (format == 'c') {
+                System.out.println(';');
+            }
+            
+            fstream.close();
         } catch (IOException | NumberFormatException e) {
             System.err.println("Error while parsing file: " + e.toString());
         }
