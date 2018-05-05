@@ -24,7 +24,6 @@
 package pl.edu.uwb.ii.sdfparser;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -67,7 +66,6 @@ public class File {
     void parse(Compound c, char format, boolean urls, boolean periodic) {
         try {
             FileInputStream fstream = new FileInputStream(filename);
-            //DataInputStream in = new DataInputStream(fstream);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
             String strLine;
             String pName = "";    // current property name
@@ -127,9 +125,6 @@ public class File {
                     } else if (!strLine.isEmpty()) {
                         if (urls) {
                             // Database links, XML tags remove
-                            /**
-                             * @TODO add above keys into LinkedList to reuse it
-                             */
                             switch (pName) {
                                 case "Definition":
                                     // XML tags remove
@@ -233,10 +228,6 @@ public class File {
                                     c.addPropertyByName(pName, strLine);
                             }
                         } else {
-                            /**
-                             * @TODO add exclusion of above keys because now
-                             * they are (non-ULR) literals
-                             */
                             c.addPropertyByName(pName, strLine);
                         }
                     }
@@ -246,7 +237,8 @@ public class File {
             if (format == 'c') {
                 System.out.println(';');
             }
-            
+
+            br.close();
             fstream.close();
         } catch (IOException | NumberFormatException e) {
             System.err.println("Error while parsing file: " + e.toString());
