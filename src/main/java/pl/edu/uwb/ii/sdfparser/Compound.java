@@ -553,7 +553,7 @@ public class Compound {
             str += "})\n";
             it++;
         }
-        System.out.println(str);
+        System.out.print(str);
 
         printCypherCompoundAtomRelation();
     }

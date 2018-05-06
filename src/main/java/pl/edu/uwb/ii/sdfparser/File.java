@@ -105,6 +105,7 @@ public class File {
                                     c.printCypherAtoms();
                                 }
                                 c.printCypherBonds();
+                                System.out.println(';');
                                 break;
                             case 'r':
                                 c.printChemSKOSCompound();
@@ -124,12 +125,12 @@ public class File {
                     } else if (strLine.isEmpty()) {
                     } else if (!strLine.isEmpty()) {
                         if (urls) {
-                            // Database links, XML tags remove
+                            // Database links
                             switch (pName) {
-                                case "Definition":
-                                    // XML tags remove
-                                    c.addPropertyByName(pName, strLine.replaceAll("<[^>]+>", ""));
-                                    break;
+                                //case "Definition":
+                                //    // XML tags remove
+                                //    c.addPropertyByName(pName, strLine.replaceAll("<[^>]+>", ""));
+                                //    break;
                                 case "Agricola Citation Links":
                                     c.addPropertyByName(pName, "https://agricola.nal.usda.gov/cgi-bin/Pwebrecon.cgi?Search_Arg=" + strLine + "&DB=local&CNT=25&Search_Code=GKEY%5E&STARTDB=AGRIDB");
                                     break;
@@ -233,11 +234,6 @@ public class File {
                     }
                 }
             }
-
-            if (format == 'c') {
-                System.out.println(';');
-            }
-
             br.close();
             fstream.close();
         } catch (IOException | NumberFormatException e) {
