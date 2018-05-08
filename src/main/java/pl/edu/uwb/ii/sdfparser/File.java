@@ -73,7 +73,7 @@ public class File {
             String[] tokens;
 
             while ((strLine = br.readLine()) != null) {
-                strLine = strLine.trim();
+                strLine = strLine.trim().replace("\\", "\\\\");
 
                 if (strLine.startsWith("END", 3)) {
                     molfileReady = true;
@@ -127,10 +127,6 @@ public class File {
                         if (urls) {
                             // Database links
                             switch (pName) {
-                                //case "Definition":
-                                //    // XML tags remove
-                                //    c.addPropertyByName(pName, strLine.replaceAll("<[^>]+>", ""));
-                                //    break;
                                 case "Agricola Citation Links":
                                     c.addPropertyByName(pName, "https://agricola.nal.usda.gov/cgi-bin/Pwebrecon.cgi?Search_Arg=" + strLine + "&DB=local&CNT=25&Search_Code=GKEY%5E&STARTDB=AGRIDB");
                                     break;

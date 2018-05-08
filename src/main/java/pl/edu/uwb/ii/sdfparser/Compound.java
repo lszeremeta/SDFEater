@@ -159,7 +159,7 @@ public class Compound {
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
             List<String> values = entry.getValue();
-            query_str += key.replaceAll("\\s+|-", "") + ": ";
+            query_str += key.replaceAll("\\s+|-", "").replaceAll("CAS Registry Numbers|CAS_NUMBER", "CASNumber") + ": ";
 
             if (values.size() > 1) {
                 query_str += "[";
@@ -514,13 +514,15 @@ public class Compound {
      *
      */
     void printCypherAtoms() {
-        int it = 1;
-        for (Atom atom : atoms) {
-            System.out.println("CREATE (a" + it + addUUID(UNDERLINE) + ":Atom {symbol: '" + atom.symbol + "', x: " + atom.x + ", y: " + atom.y + ", z: " + atom.z + "})");
-            it++;
-        }
+        if (!atoms.isEmpty()) {
+            int it = 1;
+            for (Atom atom : atoms) {
+                System.out.println("CREATE (a" + it + addUUID(UNDERLINE) + ":Atom {symbol: '" + atom.symbol + "', x: " + atom.x + ", y: " + atom.y + ", z: " + atom.z + "})");
+                it++;
+            }
 
-        printCypherCompoundAtomRelation();
+            printCypherCompoundAtomRelation();
+        }
     }
 
     /**
@@ -529,33 +531,35 @@ public class Compound {
      *
      */
     void printCypherAtomsWithPeriodicTableData() {
-        String str = "";
-        int it = 1;
-        for (Atom atom : atoms) {
-            str += "CREATE (a" + it + addUUID(UNDERLINE) + ":Atom {symbol: '" + atom.symbol + "', x: " + atom.x + ", y: " + atom.y + ", z: " + atom.z;
+        if (!atoms.isEmpty()) {
+            String str = "";
+            int it = 1;
+            for (Atom atom : atoms) {
+                str += "CREATE (a" + it + addUUID(UNDERLINE) + ":Atom {symbol: '" + atom.symbol + "', x: " + atom.x + ", y: " + atom.y + ", z: " + atom.z;
 
-            try {
-                for (Map.Entry<String, Object> entry : getAtomPeriodicDataByAtomSymbol(atom.symbol).entrySet()) {
-                    String key = entry.getKey();
-                    Object value = entry.getValue();
+                try {
+                    for (Map.Entry<String, Object> entry : getAtomPeriodicDataByAtomSymbol(atom.symbol).entrySet()) {
+                        String key = entry.getKey();
+                        Object value = entry.getValue();
 
-                    str += ", " + key + ": ";
-                    if (isNumber(value.toString())) {
-                        str += value;
-                    } else {
-                        str += "'" + value + "'";
+                        str += ", " + key + ": ";
+                        if (isNumber(value.toString())) {
+                            str += value;
+                        } else {
+                            str += "'" + value + "'";
+                        }
                     }
+                } catch (Exception e) {
+                    //System.err.println("WARNING: No additional data could be found in the periodic table for " + atom.symbol);
                 }
-            } catch (Exception e) {
-                System.err.println("WARNING: No additional data could be found in the periodic table for " + atom.symbol);
+
+                str += "})\n";
+                it++;
             }
+            System.out.print(str);
 
-            str += "})\n";
-            it++;
+            printCypherCompoundAtomRelation();
         }
-        System.out.print(str);
-
-        printCypherCompoundAtomRelation();
     }
 
     /**
@@ -574,13 +578,15 @@ public class Compound {
      *
      */
     void printCypherCompoundAtomRelation() {
-        String query_str = "CREATE";
+        if (!atoms.isEmpty()) {
+            String query_str = "CREATE";
 
-        for (int i = 1; i <= atoms.size(); i++) {
-            query_str += "\n(c" + addUUID(UNDERLINE) + ")-[:RELATED]->(a" + i + addUUID(UNDERLINE) + "),";
+            for (int i = 1; i <= atoms.size(); i++) {
+                query_str += "\n(c" + addUUID(UNDERLINE) + ")-[:RELATED]->(a" + i + addUUID(UNDERLINE) + "),";
+            }
+            query_str = query_str.substring(0, query_str.length() - 1);
+            System.out.println(query_str);
         }
-        query_str = query_str.substring(0, query_str.length() - 1);
-        System.out.println(query_str);
     }
 
     /**
@@ -588,26 +594,29 @@ public class Compound {
      *
      */
     void printCypherBonds() {
-        String query_str = "CREATE";
-        for (Bond bond : bonds) {
-            query_str += "\n(a" + bond.atom1 + addUUID(UNDERLINE) + ")-[:BOND_WITH {";
+        if (!bonds.isEmpty()) {
+            String query_str = "CREATE";
+            for (Bond bond : bonds) {
+                query_str += "\n(a" + bond.atom1 + addUUID(UNDERLINE) + ")-[:BOND_WITH {";
 
-            if (!"0".equals(bondTypeNumberToString(bond.type))) {
-                query_str += "type: \"" + bondTypeNumberToString(bond.type) + "\"";
+                if (!"0".equals(bondTypeNumberToString(bond.type))) {
+                    query_str += "type: \"" + bondTypeNumberToString(bond.type) + "\"";
+                }
+
+                if (!"0".equals(bondTypeNumberToString(bond.type)) && !"0".equals(bondStereoNumberToString(bond.stereo, bond.type))) {
+                    query_str += ", ";
+                }
+
+                if (!"0".equals(bondStereoNumberToString(bond.stereo, bond.type))) {
+                    query_str += "stereo: " + bondStereoNumberToString(bond.stereo, bond.type);
+                }
+
+                query_str += "}]->(a" + bond.atom2 + addUUID(UNDERLINE) + "),";
             }
-
-            if (!"0".equals(bondTypeNumberToString(bond.type)) && !"0".equals(bondStereoNumberToString(bond.stereo, bond.type))) {
-                query_str += ", ";
-            }
-
-            if (!"0".equals(bondStereoNumberToString(bond.stereo, bond.type))) {
-                query_str += "stereo: " + bondStereoNumberToString(bond.stereo, bond.type);
-            }
-
-            query_str += "}]->(a" + bond.atom2 + addUUID(UNDERLINE) + "),";
+            query_str = query_str.substring(0, query_str.length() - 1);
+            System.out.println(query_str);
         }
-        query_str = query_str.substring(0, query_str.length() - 1);
-        System.out.println(query_str);
+
     }
 
     /**
