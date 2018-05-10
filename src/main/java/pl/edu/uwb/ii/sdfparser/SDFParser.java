@@ -1,7 +1,7 @@
 /* 
  * The MIT License
  *
- * Copyright 2017 Łukasz Szeremeta.
+ * Copyright 2017-2018 Łukasz Szeremeta.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

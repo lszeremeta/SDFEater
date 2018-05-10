@@ -1,7 +1,7 @@
 /* 
  * The MIT License
  *
- * Copyright 2017 Łukasz Szeremeta.
+ * Copyright 2017-2018 Łukasz Szeremeta.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,8 @@
  */
 package pl.edu.uwb.ii.sdfparser;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
@@ -194,131 +196,131 @@ public class Compound {
             //query_str += key.replaceAll("\\s+", "");
             if ("SMILES".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:notation " + printValueAsNumberOrString(value) + "^^chemskos:SMILES .\n";
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:notation " + printValueAsNumberOrStringCVME(value) + "^^chemskos:SMILES .\n";
             } else if ("Formulae".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:hiddenLabel " + printValueAsNumberOrString(value) + "@en .\n";
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:hiddenLabel " + printValueAsNumberOrStringCVME(value) + "@en .\n";
             } else if ("Definition".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:definition " + printValueAsNumberOrString(value) + "@en .\n";
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:definition " + printValueAsNumberOrStringCVME(value) + "@en .\n";
             } else if ("InChIKey".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbp:inchikey " + printValueAsNumberOrString(value) + "@en .\n";
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbp:inchikey " + printValueAsNumberOrStringCVME(value) + "@en .\n";
             } else if ("InChI".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:inchi " + printValueAsNumberOrString(value) + "@en .\n";
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:inchi " + printValueAsNumberOrStringCVME(value) + "@en .\n";
             } else if ("Mass".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:molecularWeight " + printValueAsNumberOrString(value) + "@en .\n";
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:molecularWeight " + printValueAsNumberOrStringCVME(value) + "@en .\n";
             } else if ("IUPAC Names".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:prefLabel " + printValueAsNumberOrString(value) + "@en .\n";
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:prefLabel " + printValueAsNumberOrStringCVME(value) + "@en .\n";
             } else if ("CAS Registry Numbers".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:casNumber " + printValueAsNumberOrString(value) + "@en .\n";
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:casNumber " + printValueAsNumberOrStringCVME(value) + "@en .\n";
             } else if ("Synonyms".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:altLabel ";
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrString(value) + "@en, ";
+                        val_tmp += printValueAsNumberOrStringCVME(value) + "@en, ";
                     }
                     val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
                     query_str += val_tmp + " .\n";
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value) + "@en .\n";
+                    query_str += printValueAsNumberOrStringCVME(value) + "@en .\n";
                 }
             } else if ("PubMed Citation Links".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrString(value) + ", ";
+                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
                     }
                     val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
                     query_str += val_tmp + " .\n";
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value) + " .\n";
+                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
                 }
             } else if ("PubMed Citation Links".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrString(value) + ", ";
+                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
                     }
                     val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
                     query_str += val_tmp + " .\n";
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value) + " .\n";
+                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
                 }
             } else if ("KNApSAcK Database Links".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrString(value) + ", ";
+                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
                     }
                     val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
                     query_str += val_tmp + " .\n";
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value) + " .\n";
+                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
                 }
             } else if ("LIPID MAPS instance Database Links".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrString(value) + ", ";
+                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
                     }
                     val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
                     query_str += val_tmp + " .\n";
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value) + " .\n";
+                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
                 }
             } else if ("UniProt Database Links".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrString(value) + ", ";
+                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
                     }
                     val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
                     query_str += val_tmp + " .\n";
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value) + " .\n";
+                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
                 }
             } else if ("Rhea Database Links".equals(key)) {
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrString(value) + ", ";
+                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
                     }
                     val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
                     query_str += val_tmp + " .\n";
                     val_tmp = "";
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrString(value) + " .\n";
+                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
                 }
             } else if ("KEGG COMPOUND Database Links".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrString(value) + " .\n";
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrStringCVME(value) + " .\n";
             } else if ("Patent Database Links".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> cvme:patent " + printValueAsNumberOrString(value) + " .\n";
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> cvme:patent " + printValueAsNumberOrStringCVME(value) + " .\n";
             } else if ("PubChem Database Compound Links".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrString(value) + " .\n";
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrStringCVME(value) + " .\n";
             } else if ("PubChem Database Substance Links".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrString(value) + " .\n";
+                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrStringCVME(value) + " .\n";
             }
 
         }
@@ -331,7 +333,7 @@ public class Compound {
      * @param value Value to check
      * @return value, if number, 'value', if string, <value> if URL
      */
-    private String printValueAsNumberOrString(String value) {
+    private String printValueAsNumberOrStringCVME(String value) {
         if (isNumber(value)) {
             return value;
         } else if (isURL(value)) {
@@ -720,19 +722,19 @@ public class Compound {
      * @return true if number, false if not
      */
     private boolean isNumber(String s) {
-        try {
-            Double.parseDouble(s);
-        } catch (NumberFormatException e) {
+        String regex = "-?\\d+(\\.\\d+)?";
+        if (s.matches(regex)) {
+            return true;
+        } else {
             return false;
         }
-        return true;
     }
 
     private boolean isURL(String s) {
         try {
             URL url = new URL(s);
             url.toURI();
-        } catch (Exception exception) {
+        } catch (MalformedURLException | URISyntaxException exception) {
             return false;
         }
         return true;
