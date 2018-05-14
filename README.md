@@ -3,7 +3,7 @@
 [SDF](https://pubs.acs.org/doi/abs/10.1021/ci00007a012) parser written in Java running from command-line interface (CLI). SDFEater not only ~~eats~~ parse your SDF files, but also can add additional data to the output.
 
 ## How to start?
-You can [clone this repository](https://help.github.com/articles/cloning-a-repository/) and build a project yourself or simply download one of [ready to use JAR file](https://github.com/lszeremeta/SDFEater/releases) from project releases.
+Simply download one of [ready to use JAR file](https://github.com/lszeremeta/SDFEater/releases) from project releases. You can also [clone this repository](https://help.github.com/articles/cloning-a-repository/) and build a project yourself.
 
 ### Build project yourself
 
@@ -26,7 +26,7 @@ java -jar SDFEater-version-jar-with-dependencies.jar -i ./examples/chebi_special
 ```
 Example above reads input SDF file, adds periodic table data for atoms, try to replace chemical database IDs with URL and give [Cypher](https://neo4j.com/developer/cypher-query-language/) file in the output.
 
-In _examples_ directory you can find example SDF files based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) and [DrugBank](https://www.drugbank.ca/releases/latest#open-data) open structures ([CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)) databases.
+In _examples_ directory you can find example SDF files based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) and [DrugBank  open structures](https://www.drugbank.ca/releases/latest#open-data) ([CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)) databases.
 
 ## CLI options
 Running SDFEater without parameters displays help.
