@@ -32,7 +32,7 @@ import java.io.InputStreamReader;
  * Class responsible for all file operations
  *
  * @author Łukasz Szeremeta 2017-2018
- * @author Dominik Tomaszuk 2017-2018
+ * @author Dominik Tomaszuk 2018
  */
 public class File {
 

@@ -2,6 +2,7 @@
  * The MIT License
  *
  * Copyright 2017-2018 Łukasz Szeremeta.
+ * Copyright 2018 Dominik Tomaszuk.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -79,7 +80,7 @@ public class SDFEater {
         Option urls = new Option("u", "urls", false, "try to generate full database URLs instead of IDs (enabled in cvme)");
         urls.setRequired(false);
         options.addOption(urls);
-        Option periodic_data = new Option("p", "periodic", false, "add additional atoms data from periodic table (for cypher format)");
+        Option periodic_data = new Option("p", "periodic", false, "add additional atoms data from periodic table (for cypher output format)");
         periodic_data.setRequired(false);
         options.addOption(periodic_data);
         CommandLineParser parser = new DefaultParser();
