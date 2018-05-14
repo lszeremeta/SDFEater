@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package pl.edu.uwb.ii.sdfparser;
+package pl.edu.uwb.ii.sdfeater;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -45,7 +45,7 @@ import org.apache.commons.cli.ParseException;
  * @author Łukasz Szeremeta 2017-2018
  * @author Dominik Tomaszuk 2017-2018
  */
-public class SDFParser {
+public class SDFEater {
 
     /**
      * Stores all Atoms data from periodic table
@@ -59,7 +59,7 @@ public class SDFParser {
         Gson gson = new GsonBuilder().create();
         Type type = new TypeToken<Map<String, Map<String, String>>>() {
         }.getType();
-        InputStream periodic_resource = SDFParser.class.getResourceAsStream("periodic_table.json");
+        InputStream periodic_resource = SDFEater.class.getResourceAsStream("periodic_table.json");
         Reader periodic_reader = new InputStreamReader(periodic_resource);
         periodic_table_data = gson.fromJson(periodic_reader, type);
     }
@@ -113,7 +113,7 @@ public class SDFParser {
             }
         } catch (ParseException e) {
             System.out.println(e.getMessage());
-            formatter.printHelp("SDFParser.jar", options);
+            formatter.printHelp("SDFEater.jar", options);
         }
     }
 }

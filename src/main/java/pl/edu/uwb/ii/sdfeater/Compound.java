@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package pl.edu.uwb.ii.sdfparser;
+package pl.edu.uwb.ii.sdfeater;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import static pl.edu.uwb.ii.sdfparser.SDFParser.periodic_table_data;
+import static pl.edu.uwb.ii.sdfeater.SDFEater.periodic_table_data;
 
 /**
  * Class that stores information about chemical compound

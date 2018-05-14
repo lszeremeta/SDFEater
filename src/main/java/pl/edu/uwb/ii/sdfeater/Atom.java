@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package pl.edu.uwb.ii.sdfparser;
+package pl.edu.uwb.ii.sdfeater;
 
 /**
  * Atoms data

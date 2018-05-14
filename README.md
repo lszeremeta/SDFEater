@@ -1,4 +1,4 @@
-# sdf-parser
+# SDFEater
 
 SDF parser written in Java.
 

@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.edu.uwb.ii</groupId>
-    <artifactId>SDFParser</artifactId>
+    <artifactId>SDFEater</artifactId>
     <version>1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <description>SDFParser is a tool for parsing SDF cheminformatics format</description>
+    <description>SDFEater is a tool for parsing SDF cheminformatics format</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -33,7 +33,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>pl.edu.uwb.ii.sdfparser.SDFParser</mainClass>
+                            <mainClass>pl.edu.uwb.ii.sdfeater.SDFEater</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -52,4 +52,5 @@
             </plugin>
         </plugins>
     </build>
+    <name>SDFEater</name>
 </project>
