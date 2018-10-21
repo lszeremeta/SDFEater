@@ -12,6 +12,7 @@ If you need more detailed information, take a look at these publications and res
 2. D. Tomaszuk and Ł. Szeremeta, "Named Property Graphs" in Proceedings of the 2018 Federated Conference on Computer Science and Information Systems, ser. Annals of Computer Science and
 Information Systems, M. Ganzha, L. Maciaszek, and M. Paprzycki, Eds., vol. 15. IEEE, 2018, pp. 173–177. (2018) [Online]. Available: http://dx.doi.org/10.15439/2018F103.
 3. Ł. Szeremeta and D. Tomaszuk, “SDFParser example Cypher outputs”. figshare, 10-May-2018 [Online]. Available: https://doi.org/10.6084/m9.figshare.6249962.
+4. D. Tomaszuk, “chemskos”. figshare, 29-Aug-2018 [Online]. Available: https://doi.org/10.6084/m9.figshare.7022144.
 
 ## How to start?
 Simply download one of the [ready to use JAR file](https://github.com/lszeremeta/SDFEater/releases) from project releases. You can also [clone this repository](https://help.github.com/articles/cloning-a-repository/) and build the project yourself.
