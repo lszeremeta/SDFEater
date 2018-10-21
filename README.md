@@ -4,6 +4,15 @@
 
 [SDF](https://pubs.acs.org/doi/abs/10.1021/ci00007a012) parser written in Java running from command-line interface (CLI). SDFEater not only ~~eats~~ parse your SDF files, but also can add additional data to the output.
 
+## Publications and resources
+If you need more detailed information, take a look at these publications and resources. There you will find detailed description of the parser, performance tests and example Cypher outputs.
+
+1. Ł. Szeremeta, "SDFEater: A Parser for Chemoinformatics Formats"
+9 2018 [Online]. Available: https://doi.org/10.26434/chemrxiv.7123193.
+2. D. Tomaszuk and Ł. Szeremeta, "Named Property Graphs" in Proceedings of the 2018 Federated Conference on Computer Science and Information Systems, ser. Annals of Computer Science and
+Information Systems, M. Ganzha, L. Maciaszek, and M. Paprzycki, Eds., vol. 15. IEEE, 2018, pp. 173–177. (2018) [Online]. Available: http://dx.doi.org/10.15439/2018F103.
+3. Ł. Szeremeta and D. Tomaszuk, “SDFParser example Cypher outputs”. figshare, 10-May-2018 [Online]. Available: https://doi.org/10.6084/m9.figshare.6249962.
+
 ## How to start?
 Simply download one of the [ready to use JAR file](https://github.com/lszeremeta/SDFEater/releases) from project releases. You can also [clone this repository](https://help.github.com/articles/cloning-a-repository/) and build the project yourself.
 
@@ -40,7 +49,7 @@ Running SDFEater without parameters displays help.
 
 ## Output formats
 You can specify the output format using `-f,--format`. Available output formats:
-* `cypher` - [Cypher](https://neo4j.com/developer/cypher-query-language/) compound, atoms, bonds and relation to [import to the Neo4j graph database](https://neo4j.com/developer/kb/export-sub-graph-to-cypher-and-import/),
+* `cypher` - [Cypher](https://neo4j.com/developer/cypher-query-language/) compound, atoms, bonds and relation ready to [import to the Neo4j graph database](https://neo4j.com/developer/kb/export-sub-graph-to-cypher-and-import/),
 * `cvme` - [CVME](http://cs.aalto.fi/en/current/events/2017-09-22-002/) file format based on SKOS,
 * `smiles` - plain text SMILES (if available in the compound property)
 * `inchi` - plain text InChI (if available in the compound property)
