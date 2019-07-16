@@ -1,8 +1,8 @@
 /* 
  * The MIT License
  *
- * Copyright 2017-2018 Łukasz Szeremeta.
- * Copyright 2018 Dominik Tomaszuk.
+ * Copyright 2017-2019 Łukasz Szeremeta.
+ * Copyright 2018-2019 Dominik Tomaszuk.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -182,8 +182,8 @@ public class Compound {
 
         System.out.println(query_str);
     }
-
-    /**
+    
+        /**
      * Print main compound data in CVME
      *
      */
@@ -322,6 +322,62 @@ public class Compound {
             } else if ("PubChem Database Substance Links".equals(key)) {
                 String value = values.get(0);
                 query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrStringCVME(value) + " .\n";
+            }
+
+        }
+        System.out.println(query_str);
+    }
+
+
+    /**
+     * Print main compound data in Schema.org
+     *
+     */
+    void printSchema() {
+        String val_tmp = "";
+        String query_str = "@prefix schema: <http://schema.org/> .\n\n";
+
+        for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
+            String key = entry.getKey();
+            List<String> values = entry.getValue();
+            //query_str += key.replaceAll("\\s+", "");
+            if ("SMILES".equals(key)) {
+                String value = values.get(0);
+                query_str += "_:" + addUUID(STRIKE) + " schema:smiles " + printValueAsNumberOrStringCVME(value) + " .\n";
+            } else if ("Formulae".equals(key)) {
+                String value = values.get(0);
+                query_str += "_:" + addUUID(STRIKE) + " schema:molecularFormula " + printValueAsNumberOrStringCVME(value) + " .\n";
+            } else if ("Definition".equals(key)) {
+                String value = values.get(0);
+                query_str += "_:" + addUUID(STRIKE) + " schema:description " + printValueAsNumberOrStringCVME(value) + "@en .\n";
+            } else if ("InChIKey".equals(key)) {
+                String value = values.get(0);
+                query_str += "_:" + addUUID(STRIKE) + " schema:inChIKey " + printValueAsNumberOrStringCVME(value) + " .\n";
+            } else if ("InChI".equals(key)) {
+                String value = values.get(0);
+                query_str += "_:" + addUUID(STRIKE) + " schema:inChI " + printValueAsNumberOrStringCVME(value) + " .\n";
+            } else if ("Mass".equals(key)) {
+                String value = values.get(0);
+                query_str += "_:" + addUUID(STRIKE) + " schema:molecularWeight " + printValueAsNumberOrStringCVME(value) + " .\n";
+            } else if ("IUPAC Names".equals(key)) {
+                String value = values.get(0);
+                query_str += "_:" + addUUID(STRIKE) + " schema:iupacName " + printValueAsNumberOrStringCVME(value) + " .\n";
+            } else if ("CAS Registry Numbers".equals(key)) {
+                String value = values.get(0);
+                query_str += "_:" + addUUID(STRIKE) + " schema:identifier " + printValueAsNumberOrStringCVME(value) + " .\n";
+            } else if ("Synonyms".equals(key)) {
+                query_str += "_:" + addUUID(STRIKE) + " schema:alternateName ";
+                if (values.size() > 1) {
+                    for (String value : values) {
+                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
+                    }
+                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
+                    query_str += val_tmp + " .\n";
+                    val_tmp = "";
+                } else {
+                    String value = values.get(0);
+                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
+                }
             }
 
         }

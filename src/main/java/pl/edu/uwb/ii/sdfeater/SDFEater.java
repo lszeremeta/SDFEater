@@ -1,8 +1,8 @@
 /* 
  * The MIT License
  *
- * Copyright 2017-2018 Łukasz Szeremeta.
- * Copyright 2018 Dominik Tomaszuk.
+ * Copyright 2017-2019 Łukasz Szeremeta.
+ * Copyright 2018-2019 Dominik Tomaszuk.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -110,6 +110,8 @@ public class SDFEater {
                     file.parse(c, 's', false, false);
                 } else if (format.equalsIgnoreCase("inchi")) {
                     file.parse(c, 'n', false, false);
+                } else if (format.equalsIgnoreCase("schema")) {
+                    file.parse(c, 'b', false, false);
                 }
             }
         } catch (ParseException e) {

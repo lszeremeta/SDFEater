@@ -1,7 +1,8 @@
 /* 
  * The MIT License
  *
- * Copyright 2017-2018 Łukasz Szeremeta.
+ * Copyright 2017-2019 Łukasz Szeremeta.
+ * Copyright 2018-2019 Dominik Tomaszuk.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -116,6 +117,9 @@ public class File {
                                 break;
                             case 'n':
                                 c.printInChI();
+                                break;
+                            case 'b':
+                                c.printSchema();
                                 break;
                             default:
                                 break;
