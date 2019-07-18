@@ -27,18 +27,15 @@ package pl.edu.uwb.ii.sdfeater;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.apache.commons.cli.*;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.Map;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
 
 /**
  * Main parser class
@@ -66,6 +63,19 @@ public class SDFEater {
     }
 
     /**
+     * Apache Jena Model for some formats
+     */
+    static Model jenaModel;
+
+    /**
+     * Initialize Apache Jena Model for some formats
+     */
+    private static void initializeJenaModel() {
+        jenaModel = ModelFactory.createDefaultModel();
+        jenaModel.setNsPrefix("schema", "https://schema.org/");
+    }
+
+    /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -74,7 +84,7 @@ public class SDFEater {
         Option input = new Option("i", "input", true, "input file path");
         input.setRequired(true);
         options.addOption(input);
-        Option formatarg = new Option("f", "format", true, "output format (cypher, cvme, smiles, inchi)");
+        Option formatarg = new Option("f", "format", true, "output format (cypher, cvme, smiles, inchi, bioschemas, turtle, ntriples, jsonld, rdfxml, rdfthrift)");
         formatarg.setRequired(true);
         options.addOption(formatarg);
         Option urls = new Option("u", "urls", false, "try to generate full database URLs instead of IDs (enabled in cvme)");
@@ -109,10 +119,26 @@ public class SDFEater {
                 } else if (format.equalsIgnoreCase("smiles")) {
                     file.parse(c, 's', false, false);
                 } else if (format.equalsIgnoreCase("inchi")) {
-                    file.parse(c, 'n', false, false);
-                } else if (format.equalsIgnoreCase("schema")) {
+                    file.parse(c, 'i', false, false);
+                } else if (format.equalsIgnoreCase("bioschemas")) {
                     file.parse(c, 'b', false, false);
+                } else if (format.equalsIgnoreCase("turtle")) {
+                    initializeJenaModel();
+                    file.parse(c, 't', false, false);
+                } else if (format.equalsIgnoreCase("ntriples")) {
+                    initializeJenaModel();
+                    file.parse(c, 'n', false, false);
+                } else if (format.equalsIgnoreCase("jsonld")) {
+                    initializeJenaModel();
+                    file.parse(c, 'j', false, false);
+                } else if (format.equalsIgnoreCase("rdfxml")) {
+                    initializeJenaModel();
+                    file.parse(c, 'x', false, false);
+                } else if (format.equalsIgnoreCase("rdfthrift")) {
+                    initializeJenaModel();
+                    file.parse(c, 'h', false, false);
                 }
+
             }
         } catch (ParseException e) {
             System.out.println(e.getMessage());

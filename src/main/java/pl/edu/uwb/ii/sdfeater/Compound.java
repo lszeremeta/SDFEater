@@ -24,14 +24,16 @@
  */
 package pl.edu.uwb.ii.sdfeater;
 
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+
+import static pl.edu.uwb.ii.sdfeater.SDFEater.jenaModel;
 import static pl.edu.uwb.ii.sdfeater.SDFEater.periodic_table_data;
 
 /**
@@ -328,6 +330,52 @@ public class Compound {
         System.out.println(query_str);
     }
 
+    /**
+     * Add main compound data to Jena model
+     */
+    void addToJenaModel() {
+        Resource me = ResourceFactory.createResource();
+        for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
+
+            String key = entry.getKey();
+            List<String> values = entry.getValue();
+            //query_str += key.replaceAll("\\s+", "");
+            if ("SMILES".equals(key)) {
+                String value = values.get(0);
+                Property p = jenaModel.createProperty("https://schema.org/smiles");
+                jenaModel.add(me, p, value);
+            } else if ("Formulae".equals(key)) {
+                String value = values.get(0);
+                Property p = jenaModel.createProperty("https://schema.org/molecularFormula");
+                jenaModel.add(me, p, value);
+            } else if ("Definition".equals(key)) {
+                String value = values.get(0);
+                Property p = jenaModel.createProperty("https://schema.org/description");
+                jenaModel.add(me, p, value);
+            } else if ("InChIKey".equals(key)) {
+                String value = values.get(0);
+                Property p = jenaModel.createProperty("https://schema.org/inChIKey");
+                jenaModel.add(me, p, value);
+            } else if ("InChI".equals(key)) {
+                String value = values.get(0);
+                Property p = jenaModel.createProperty("https://schema.org/inChI");
+                jenaModel.add(me, p, value);
+            } else if ("Mass".equals(key)) {
+                String value = values.get(0);
+                Property p = jenaModel.createProperty("https://schema.org/molecularWeight");
+                jenaModel.add(me, p, value);
+            } else if ("IUPAC Names".equals(key)) {
+                String value = values.get(0);
+                Property p = jenaModel.createProperty("https://schema.org/iupacName");
+                jenaModel.add(me, p, value);
+            } else if ("CAS Registry Numbers".equals(key)) {
+                String value = values.get(0);
+                Property p = jenaModel.createProperty("https://schema.org/identifier");
+                jenaModel.add(me, p, value);
+            }
+        }
+
+    }
 
     /**
      * Print main compound data in Schema.org
@@ -780,11 +828,7 @@ public class Compound {
      */
     private boolean isNumber(String s) {
         String regex = "-?\\d+(\\.\\d+)?";
-        if (s.matches(regex)) {
-            return true;
-        } else {
-            return false;
-        }
+        return s.matches(regex);
     }
 
     private boolean isURL(String s) {

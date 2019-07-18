@@ -29,6 +29,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static pl.edu.uwb.ii.sdfeater.SDFEater.jenaModel;
+
 /**
  * Class responsible for all file operations
  *
@@ -40,7 +42,7 @@ public class File {
     /**
      * Filename
      */
-    String filename;
+    private String filename;
 
     /**
      * File class constructor
@@ -115,18 +117,25 @@ public class File {
                             case 's':
                                 c.printSMILES();
                                 break;
-                            case 'n':
+                            case 'i':
                                 c.printInChI();
                                 break;
                             case 'b':
                                 c.printSchema();
+                                break;
+                            case 't':
+                            case 'n':
+                            case 'j':
+                            case 'x':
+                            case 'h':
+                                c.addToJenaModel();
                                 break;
                             default:
                                 break;
                         }
                         c.clearAll();
                         molfileReady = false;
-                    } else if (strLine.isEmpty()) {
+                        //} else if (strLine.isEmpty()) {
                     } else if (!strLine.isEmpty()) {
                         if (urls) {
                             // Database links
@@ -238,6 +247,27 @@ public class File {
             fstream.close();
         } catch (IOException | NumberFormatException e) {
             System.err.println("Error while parsing file: " + e.toString());
+        }
+
+        /* Do something AFTER file reading */
+        switch (format) {
+            case 't':
+                jenaModel.write(System.out, "TURTLE");
+                break;
+            case 'n':
+                jenaModel.write(System.out, "NTRIPLES");
+                break;
+            case 'j':
+                jenaModel.write(System.out, "JSONLD");
+                break;
+            case 'x':
+                jenaModel.write(System.out, "RDF/XML");
+                break;
+            case 'h':
+                jenaModel.write(System.out, "RDFTHRIFT");
+                break;
+            default:
+                break;
         }
     }
 
