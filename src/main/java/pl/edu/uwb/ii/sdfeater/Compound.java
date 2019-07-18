@@ -378,10 +378,10 @@ public class Compound {
     }
 
     /**
-     * Print main compound data in Schema.org
+     * Print main compound data in Schema.org (BioSchemas)
      *
      */
-    void printSchema() {
+    void printBioSchemas() {
         String val_tmp = "";
         String query_str = "@prefix schema: <http://schema.org/> .\n\n";
 

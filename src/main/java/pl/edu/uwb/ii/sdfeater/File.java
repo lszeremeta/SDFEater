@@ -121,7 +121,7 @@ public class File {
                                 c.printInChI();
                                 break;
                             case 'b':
-                                c.printSchema();
+                                c.printBioSchemas();
                                 break;
                             case 't':
                             case 'n':

@@ -54,11 +54,18 @@ You can specify the output format using `-f,--format`. Available output formats:
 * `cvme` - [CVME](http://cs.aalto.fi/en/current/events/2017-09-22-002/) file format based on SKOS,
 * `smiles` - plain text SMILES (if available in the compound property)
 * `inchi` - plain text InChI (if available in the compound property)
+* `bioschemas` - [Bioschemas](https://bioschemas.org/)
+* `turtle` - [Terse RDF Triple Language](https://www.w3.org/TR/turtle/)
+* `ntriples` - [N-Triples](https://www.w3.org/TR/n-triples/)
+* `jsonld` - [JSON-LD](https://json-ld.org/)
+* `rdfxml` - [RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/)
+* `rdfthrift` - [RDF Binary encoding using Thrift](https://afs.github.io/rdf-thrift/rdf-binary-thrift.html)
 
 ## Used open source projects
 - [Apache Commons CLI](https://github.com/apache/commons-cli) as CLI controller ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)),
 - [Gson](https://github.com/google/gson) as periodic table JSON parser ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)),
-- [periodic-table](https://github.com/andrejewski/periodic-table) - base JSON periodic table file ([ISC License](https://choosealicense.com/licenses/isc/)).
+- [periodic-table](https://github.com/andrejewski/periodic-table) - base JSON periodic table file ([ISC License](https://choosealicense.com/licenses/isc/)),
+- [Apache Jena](https://jena.apache.org/) - for some output formats.
 
 The sample SDF files in the examples directory are based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) and [DrugBank](https://www.drugbank.ca/releases/latest#open-data) open structures ([CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)) databases.
 
