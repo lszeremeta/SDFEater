@@ -42,13 +42,13 @@ import static pl.edu.uwb.ii.sdfeater.SDFEater.periodic_table_data;
  * @author Łukasz Szeremeta 2017-2018
  * @author Dominik Tomaszuk 2017-2018
  */
-public class Compound {
+class Compound {
 
     /**
      * Consts for UUID
      */
-    public static final byte STRIKE = 0;
-    public static final byte UNDERLINE = 1;
+    private static final byte STRIKE = 0;
+    private static final byte UNDERLINE = 1;
 
     /**
      * Stores all properties of the chemical compound
@@ -59,17 +59,17 @@ public class Compound {
      * Stores atoms data
      *
      */
-    List<Atom> atoms = new ArrayList<>();
+    final List<Atom> atoms = new ArrayList<>();
 
     /**
      * Stores bonds data
      *
      */
-    List<Bond> bonds = new ArrayList<>();
+    final List<Bond> bonds = new ArrayList<>();
 
-    UUID uuid;
+    private UUID uuid;
 
-    public Compound() {
+    Compound() {
         uuid = UUID.randomUUID();
     }
 
@@ -78,7 +78,7 @@ public class Compound {
      *
      * @param propertyName property name (key)
      */
-    void setPropertyName(String propertyName) {
+    private void setPropertyName(String propertyName) {
         properties.put(propertyName, new ArrayList<>());
     }
 
@@ -158,29 +158,29 @@ public class Compound {
      *
      */
     void printCypherCompound() {
-        String val_tmp = "";
-        String query_str = "CREATE (c" + addUUID(UNDERLINE) + ":Compound {";
+        StringBuilder val_tmp = new StringBuilder();
+        StringBuilder query_str = new StringBuilder("CREATE (c" + addUUID(UNDERLINE) + ":Compound {");
 
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
             List<String> values = entry.getValue();
-            query_str += key.replaceAll("\\s+|-", "").replaceAll("CAS Registry Numbers|CAS_NUMBER", "CASNumber") + ": ";
+            query_str.append(key.replaceAll("\\s+|-", "").replaceAll("CAS Registry Numbers|CAS_NUMBER", "CASNumber")).append(": ");
 
             if (values.size() > 1) {
-                query_str += "[";
+                query_str.append("[");
                 for (String value : values) {
-                    val_tmp += printValueAsNumberOrStringInCypher(value);
+                    val_tmp.append(printValueAsNumberOrStringInCypher(value));
                 }
-                val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
-                query_str += val_tmp + "], ";
-                val_tmp = "";
+                val_tmp = new StringBuilder(val_tmp.substring(0, val_tmp.length() - 2));
+                query_str.append(val_tmp).append("], ");
+                val_tmp = new StringBuilder();
             } else {
                 String value = values.get(0);
-                query_str += printValueAsNumberOrStringInCypher(value);
+                query_str.append(printValueAsNumberOrStringInCypher(value));
             }
         }
 
-        query_str = query_str.substring(0, query_str.length() - 2) + "})";
+        query_str = new StringBuilder(query_str.substring(0, query_str.length() - 2) + "})");
 
         System.out.println(query_str);
     }
@@ -190,8 +190,8 @@ public class Compound {
      *
      */
     void printChemSKOSCompound() {
-        String val_tmp = "";
-        String query_str = "";
+        StringBuilder val_tmp = new StringBuilder();
+        StringBuilder query_str = new StringBuilder();
 
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
@@ -199,131 +199,118 @@ public class Compound {
             //query_str += key.replaceAll("\\s+", "");
             if ("SMILES".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:notation " + printValueAsNumberOrStringCVME(value) + "^^chemskos:SMILES .\n";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> skos:notation ").append(printValueAsNumberOrStringCVME(value)).append("^^chemskos:SMILES .\n");
             } else if ("Formulae".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:hiddenLabel " + printValueAsNumberOrStringCVME(value) + "@en .\n";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> skos:hiddenLabel ").append(printValueAsNumberOrStringCVME(value)).append("@en .\n");
             } else if ("Definition".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:definition " + printValueAsNumberOrStringCVME(value) + "@en .\n";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> skos:definition ").append(printValueAsNumberOrStringCVME(value)).append("@en .\n");
             } else if ("InChIKey".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbp:inchikey " + printValueAsNumberOrStringCVME(value) + "@en .\n";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> dbp:inchikey ").append(printValueAsNumberOrStringCVME(value)).append("@en .\n");
             } else if ("InChI".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:inchi " + printValueAsNumberOrStringCVME(value) + "@en .\n";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> dbo:inchi ").append(printValueAsNumberOrStringCVME(value)).append("@en .\n");
             } else if ("Mass".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:molecularWeight " + printValueAsNumberOrStringCVME(value) + "@en .\n";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> dbo:molecularWeight ").append(printValueAsNumberOrStringCVME(value)).append("@en .\n");
             } else if ("IUPAC Names".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:prefLabel " + printValueAsNumberOrStringCVME(value) + "@en .\n";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> skos:prefLabel ").append(printValueAsNumberOrStringCVME(value)).append("@en .\n");
             } else if ("CAS Registry Numbers".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> dbo:casNumber " + printValueAsNumberOrStringCVME(value) + "@en .\n";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> dbo:casNumber ").append(printValueAsNumberOrStringCVME(value)).append("@en .\n");
             } else if ("Synonyms".equals(key)) {
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> skos:altLabel ";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> skos:altLabel ");
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrStringCVME(value) + "@en, ";
+                        val_tmp.append(printValueAsNumberOrStringCVME(value)).append("@en, ");
                     }
-                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
-                    query_str += val_tmp + " .\n";
-                    val_tmp = "";
+                    val_tmp = new StringBuilder(val_tmp.substring(0, val_tmp.length() - 2));
+                    query_str.append(val_tmp).append(" .\n");
+                    val_tmp = new StringBuilder();
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrStringCVME(value) + "@en .\n";
+                    query_str.append(printValueAsNumberOrStringCVME(value)).append("@en .\n");
                 }
             } else if ("PubMed Citation Links".equals(key)) {
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> rdfs:seeAlso ");
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
+                        val_tmp.append(printValueAsNumberOrStringCVME(value)).append(", ");
                     }
-                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
-                    query_str += val_tmp + " .\n";
-                    val_tmp = "";
+                    val_tmp = new StringBuilder(val_tmp.substring(0, val_tmp.length() - 2));
+                    query_str.append(val_tmp).append(" .\n");
+                    val_tmp = new StringBuilder();
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
-                }
-            } else if ("PubMed Citation Links".equals(key)) {
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
-                if (values.size() > 1) {
-                    for (String value : values) {
-                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
-                    }
-                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
-                    query_str += val_tmp + " .\n";
-                    val_tmp = "";
-                } else {
-                    String value = values.get(0);
-                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
+                    query_str.append(printValueAsNumberOrStringCVME(value)).append(" .\n");
                 }
             } else if ("KNApSAcK Database Links".equals(key)) {
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> rdfs:seeAlso ");
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
+                        val_tmp.append(printValueAsNumberOrStringCVME(value)).append(", ");
                     }
-                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
-                    query_str += val_tmp + " .\n";
-                    val_tmp = "";
+                    val_tmp = new StringBuilder(val_tmp.substring(0, val_tmp.length() - 2));
+                    query_str.append(val_tmp).append(" .\n");
+                    val_tmp = new StringBuilder();
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
+                    query_str.append(printValueAsNumberOrStringCVME(value)).append(" .\n");
                 }
             } else if ("LIPID MAPS instance Database Links".equals(key)) {
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> rdfs:seeAlso ");
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
+                        val_tmp.append(printValueAsNumberOrStringCVME(value)).append(", ");
                     }
-                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
-                    query_str += val_tmp + " .\n";
-                    val_tmp = "";
+                    val_tmp = new StringBuilder(val_tmp.substring(0, val_tmp.length() - 2));
+                    query_str.append(val_tmp).append(" .\n");
+                    val_tmp = new StringBuilder();
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
+                    query_str.append(printValueAsNumberOrStringCVME(value)).append(" .\n");
                 }
             } else if ("UniProt Database Links".equals(key)) {
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> rdfs:seeAlso ");
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
+                        val_tmp.append(printValueAsNumberOrStringCVME(value)).append(", ");
                     }
-                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
-                    query_str += val_tmp + " .\n";
-                    val_tmp = "";
+                    val_tmp = new StringBuilder(val_tmp.substring(0, val_tmp.length() - 2));
+                    query_str.append(val_tmp).append(" .\n");
+                    val_tmp = new StringBuilder();
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
+                    query_str.append(printValueAsNumberOrStringCVME(value)).append(" .\n");
                 }
             } else if ("Rhea Database Links".equals(key)) {
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso ";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> rdfs:seeAlso ");
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
+                        val_tmp.append(printValueAsNumberOrStringCVME(value)).append(", ");
                     }
-                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
-                    query_str += val_tmp + " .\n";
-                    val_tmp = "";
+                    val_tmp = new StringBuilder(val_tmp.substring(0, val_tmp.length() - 2));
+                    query_str.append(val_tmp).append(" .\n");
+                    val_tmp = new StringBuilder();
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
+                    query_str.append(printValueAsNumberOrStringCVME(value)).append(" .\n");
                 }
             } else if ("KEGG COMPOUND Database Links".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrStringCVME(value) + " .\n";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> rdfs:seeAlso ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             } else if ("Patent Database Links".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> cvme:patent " + printValueAsNumberOrStringCVME(value) + " .\n";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> cvme:patent ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             } else if ("PubChem Database Compound Links".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrStringCVME(value) + " .\n";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> rdfs:seeAlso ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             } else if ("PubChem Database Substance Links".equals(key)) {
                 String value = values.get(0);
-                query_str += "<urn:uuid:" + addUUID(STRIKE) + "> rdfs:seeAlso " + printValueAsNumberOrStringCVME(value) + " .\n";
+                query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> rdfs:seeAlso ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             }
 
         }
@@ -382,8 +369,8 @@ public class Compound {
      *
      */
     void printBioSchemas() {
-        String val_tmp = "";
-        String query_str = "@prefix schema: <http://schema.org/> .\n\n";
+        StringBuilder val_tmp = new StringBuilder();
+        StringBuilder query_str = new StringBuilder("@prefix schema: <http://schema.org/> .\n\n");
 
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
@@ -391,40 +378,40 @@ public class Compound {
             //query_str += key.replaceAll("\\s+", "");
             if ("SMILES".equals(key)) {
                 String value = values.get(0);
-                query_str += "_:" + addUUID(STRIKE) + " schema:smiles " + printValueAsNumberOrStringCVME(value) + " .\n";
+                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:smiles ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             } else if ("Formulae".equals(key)) {
                 String value = values.get(0);
-                query_str += "_:" + addUUID(STRIKE) + " schema:molecularFormula " + printValueAsNumberOrStringCVME(value) + " .\n";
+                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:molecularFormula ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             } else if ("Definition".equals(key)) {
                 String value = values.get(0);
-                query_str += "_:" + addUUID(STRIKE) + " schema:description " + printValueAsNumberOrStringCVME(value) + "@en .\n";
+                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:description ").append(printValueAsNumberOrStringCVME(value)).append("@en .\n");
             } else if ("InChIKey".equals(key)) {
                 String value = values.get(0);
-                query_str += "_:" + addUUID(STRIKE) + " schema:inChIKey " + printValueAsNumberOrStringCVME(value) + " .\n";
+                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:inChIKey ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             } else if ("InChI".equals(key)) {
                 String value = values.get(0);
-                query_str += "_:" + addUUID(STRIKE) + " schema:inChI " + printValueAsNumberOrStringCVME(value) + " .\n";
+                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:inChI ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             } else if ("Mass".equals(key)) {
                 String value = values.get(0);
-                query_str += "_:" + addUUID(STRIKE) + " schema:molecularWeight " + printValueAsNumberOrStringCVME(value) + " .\n";
+                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:molecularWeight ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             } else if ("IUPAC Names".equals(key)) {
                 String value = values.get(0);
-                query_str += "_:" + addUUID(STRIKE) + " schema:iupacName " + printValueAsNumberOrStringCVME(value) + " .\n";
+                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:iupacName ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             } else if ("CAS Registry Numbers".equals(key)) {
                 String value = values.get(0);
-                query_str += "_:" + addUUID(STRIKE) + " schema:identifier " + printValueAsNumberOrStringCVME(value) + " .\n";
+                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:identifier ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             } else if ("Synonyms".equals(key)) {
-                query_str += "_:" + addUUID(STRIKE) + " schema:alternateName ";
+                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:alternateName ");
                 if (values.size() > 1) {
                     for (String value : values) {
-                        val_tmp += printValueAsNumberOrStringCVME(value) + ", ";
+                        val_tmp.append(printValueAsNumberOrStringCVME(value)).append(", ");
                     }
-                    val_tmp = val_tmp.substring(0, val_tmp.length() - 2);
-                    query_str += val_tmp + " .\n";
-                    val_tmp = "";
+                    val_tmp = new StringBuilder(val_tmp.substring(0, val_tmp.length() - 2));
+                    query_str.append(val_tmp).append(" .\n");
+                    val_tmp = new StringBuilder();
                 } else {
                     String value = values.get(0);
-                    query_str += printValueAsNumberOrStringCVME(value) + " .\n";
+                    query_str.append(printValueAsNumberOrStringCVME(value)).append(" .\n");
                 }
             }
 
@@ -491,7 +478,7 @@ public class Compound {
             float z = atom.z;
             String symbol = atom.symbol;
             String line = "";
-            String temp = "";
+            String temp;
             if (x < 0) {
                 temp = String.format("%.4g%n", x);
                 if (temp.length() == 7) {
@@ -639,28 +626,28 @@ public class Compound {
      */
     void printCypherAtomsWithPeriodicTableData() {
         if (!atoms.isEmpty()) {
-            String str = "";
+            StringBuilder str = new StringBuilder();
             int it = 1;
             for (Atom atom : atoms) {
-                str += "CREATE (a" + it + addUUID(UNDERLINE) + ":Atom {symbol: '" + atom.symbol + "', x: " + atom.x + ", y: " + atom.y + ", z: " + atom.z;
+                str.append("CREATE (a").append(it).append(addUUID(UNDERLINE)).append(":Atom {symbol: '").append(atom.symbol).append("', x: ").append(atom.x).append(", y: ").append(atom.y).append(", z: ").append(atom.z);
 
                 try {
                     for (Map.Entry<String, Object> entry : getAtomPeriodicDataByAtomSymbol(atom.symbol).entrySet()) {
                         String key = entry.getKey();
                         Object value = entry.getValue();
 
-                        str += ", " + key + ": ";
+                        str.append(", ").append(key).append(": ");
                         if (isNumber(value.toString())) {
-                            str += value;
+                            str.append(value);
                         } else {
-                            str += "'" + value + "'";
+                            str.append("'").append(value).append("'");
                         }
                     }
                 } catch (Exception e) {
                     //System.err.println("WARNING: No additional data could be found in the periodic table for " + atom.symbol);
                 }
 
-                str += "})\n";
+                str.append("})\n");
                 it++;
             }
             System.out.print(str);
@@ -684,14 +671,14 @@ public class Compound {
      * Print Compound-Atom relations in Cypher
      *
      */
-    void printCypherCompoundAtomRelation() {
+    private void printCypherCompoundAtomRelation() {
         if (!atoms.isEmpty()) {
-            String query_str = "CREATE";
+            StringBuilder query_str = new StringBuilder("CREATE");
 
             for (int i = 1; i <= atoms.size(); i++) {
-                query_str += "\n(c" + addUUID(UNDERLINE) + ")-[:RELATED]->(a" + i + addUUID(UNDERLINE) + "),";
+                query_str.append("\n(c").append(addUUID(UNDERLINE)).append(")-[:RELATED]->(a").append(i).append(addUUID(UNDERLINE)).append("),");
             }
-            query_str = query_str.substring(0, query_str.length() - 1);
+            query_str = new StringBuilder(query_str.substring(0, query_str.length() - 1));
             System.out.println(query_str);
         }
     }
@@ -702,25 +689,25 @@ public class Compound {
      */
     void printCypherBonds() {
         if (!bonds.isEmpty()) {
-            String query_str = "CREATE";
+            StringBuilder query_str = new StringBuilder("CREATE");
             for (Bond bond : bonds) {
-                query_str += "\n(a" + bond.atom1 + addUUID(UNDERLINE) + ")-[:BOND_WITH {";
+                query_str.append("\n(a").append(bond.atom1).append(addUUID(UNDERLINE)).append(")-[:BOND_WITH {");
 
                 if (!"0".equals(bondTypeNumberToString(bond.type))) {
-                    query_str += "type: \"" + bondTypeNumberToString(bond.type) + "\"";
+                    query_str.append("type: \"").append(bondTypeNumberToString(bond.type)).append("\"");
                 }
 
                 if (!"0".equals(bondTypeNumberToString(bond.type)) && !"0".equals(bondStereoNumberToString(bond.stereo, bond.type))) {
-                    query_str += ", ";
+                    query_str.append(", ");
                 }
 
                 if (!"0".equals(bondStereoNumberToString(bond.stereo, bond.type))) {
-                    query_str += "stereo: " + bondStereoNumberToString(bond.stereo, bond.type);
+                    query_str.append("stereo: ").append(bondStereoNumberToString(bond.stereo, bond.type));
                 }
 
-                query_str += "}]->(a" + bond.atom2 + addUUID(UNDERLINE) + "),";
+                query_str.append("}]->(a").append(bond.atom2).append(addUUID(UNDERLINE)).append("),");
             }
-            query_str = query_str.substring(0, query_str.length() - 1);
+            query_str = new StringBuilder(query_str.substring(0, query_str.length() - 1));
             System.out.println(query_str);
         }
 
@@ -732,7 +719,7 @@ public class Compound {
      * @param type Bond type number
      * @return String value of bond type, 0 if not supported
      */
-    String bondTypeNumberToString(byte type) {
+    private String bondTypeNumberToString(byte type) {
         switch (type) {
             case 1:
                 return "single";
@@ -764,7 +751,7 @@ public class Compound {
      * @return String value of bond stereo with double quotes, false or 0 if not
      * supported
      */
-    String bondStereoNumberToString(byte stereo, byte type) {
+    private String bondStereoNumberToString(byte stereo, byte type) {
         switch (type) {
             case 1:
                 // single bond
@@ -801,7 +788,7 @@ public class Compound {
      * Prepare UUID to use in Cypher output
      *
      */
-    String addUUID(byte dash) {
+    private String addUUID(byte dash) {
         if (dash == 0) {
             return uuid.toString();
         } else {

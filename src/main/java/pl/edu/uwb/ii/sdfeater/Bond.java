@@ -28,12 +28,12 @@ package pl.edu.uwb.ii.sdfeater;
  *
  * @author Łukasz Szeremeta 2017
  */
-public class Bond {
+class Bond {
 
-    int atom1;
-    byte type;
-    int atom2;
-    byte stereo;
+    final int atom1;
+    final byte type;
+    final int atom2;
+    final byte stereo;
 
     /**
      * Bond class constructor
@@ -44,7 +44,7 @@ public class Bond {
      * @param stereo bond stereo
      *
      */
-    public Bond(int atom1, byte type, int atom2, byte stereo) {
+    Bond(int atom1, byte type, int atom2, byte stereo) {
         this.atom1 = atom1;
         this.type = type;
         this.atom2 = atom2;
@@ -53,6 +53,6 @@ public class Bond {
 
     @Override
     public String toString() {
-        return "(" + String.valueOf(atom1) + ")--" + String.valueOf(type) + "--(" + String.valueOf(atom2) + ")";
+        return "(" + atom1 + ")--" + type + "--(" + atom2 + ")";
     }
 }

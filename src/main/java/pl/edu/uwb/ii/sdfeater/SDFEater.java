@@ -43,7 +43,7 @@ import java.util.Map;
  * @author Łukasz Szeremeta 2017-2018
  * @author Dominik Tomaszuk 2017-2018
  */
-public class SDFEater {
+class SDFEater {
 
     /**
      * Stores all Atoms data from periodic table
@@ -53,7 +53,7 @@ public class SDFEater {
     /**
      * Loads periodic data from JSON file to the Map
      */
-    static void loadPeriodicTableData() {
+    private static void loadPeriodicTableData() {
         Gson gson = new GsonBuilder().create();
         Type type = new TypeToken<Map<String, Map<String, String>>>() {
         }.getType();

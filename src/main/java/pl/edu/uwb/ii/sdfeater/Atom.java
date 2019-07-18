@@ -28,12 +28,12 @@ package pl.edu.uwb.ii.sdfeater;
  *
  * @author Łukasz Szeremeta 2017
  */
-public class Atom {
+class Atom {
 
-    String symbol;
-    float x;
-    float y;
-    float z;
+    final String symbol;
+    final float x;
+    final float y;
+    final float z;
     
     /**
      * Atom class constructor
@@ -44,7 +44,7 @@ public class Atom {
      * @param z atom z position
      *
      */
-    public Atom(String symbol, float x, float y, float z) {
+    Atom(String symbol, float x, float y, float z) {
         this.symbol = symbol;
         this.x = x;
         this.y = y;

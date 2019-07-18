@@ -37,12 +37,12 @@ import static pl.edu.uwb.ii.sdfeater.SDFEater.jenaModel;
  * @author Łukasz Szeremeta 2017-2018
  * @author Dominik Tomaszuk 2018
  */
-public class File {
+class File {
 
     /**
      * Filename
      */
-    private String filename;
+    private final String filename;
 
     /**
      * File class constructor
@@ -50,7 +50,7 @@ public class File {
      * @param filename filename of input file
      *
      */
-    public File(String filename) {
+    File(String filename) {
         this.filename = filename;
     }
 
