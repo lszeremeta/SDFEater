@@ -54,12 +54,11 @@ You can specify the output format using `-f,--format`. Available output formats:
 * `cvme` - [CVME](http://cs.aalto.fi/en/current/events/2017-09-22-002/) file format based on SKOS,
 * `smiles` - plain text SMILES (if available in the compound property)
 * `inchi` - plain text InChI (if available in the compound property)
-* `bioschemas` - [Bioschemas](https://bioschemas.org/)
-* `turtle` - [Terse RDF Triple Language](https://www.w3.org/TR/turtle/)
-* `ntriples` - [N-Triples](https://www.w3.org/TR/n-triples/)
-* `jsonld` - [JSON-LD](https://json-ld.org/)
-* `rdfxml` - [RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/)
-* `rdfthrift` - [RDF Binary encoding using Thrift](https://afs.github.io/rdf-thrift/rdf-binary-thrift.html)
+* `turtle` - [Terse RDF Triple Language](https://www.w3.org/TR/turtle/) (base on [Bioschemas](https://bioschemas.org/))
+* `ntriples` - [N-Triples](https://www.w3.org/TR/n-triples/) (base on [Bioschemas](https://bioschemas.org/))
+* `jsonld` - [JSON-LD](https://json-ld.org/) (base on [Bioschemas](https://bioschemas.org/))
+* `rdfxml` - [RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/) (base on [Bioschemas](https://bioschemas.org/))
+* `rdfthrift` - [RDF Binary encoding using Thrift](https://afs.github.io/rdf-thrift/rdf-binary-thrift.html) (base on [Bioschemas](https://bioschemas.org/))
 
 ## Used open source projects
 - [Apache Commons CLI](https://github.com/apache/commons-cli) as CLI controller ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)),

@@ -359,64 +359,13 @@ class Compound {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/identifier");
                 jenaModel.add(me, p, value);
-            }
-        }
-
-    }
-
-    /**
-     * Print main compound data in Schema.org (BioSchemas)
-     *
-     */
-    void printBioSchemas() {
-        StringBuilder val_tmp = new StringBuilder();
-        StringBuilder query_str = new StringBuilder("@prefix schema: <http://schema.org/> .\n\n");
-
-        for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
-            String key = entry.getKey();
-            List<String> values = entry.getValue();
-            //query_str += key.replaceAll("\\s+", "");
-            if ("SMILES".equals(key)) {
-                String value = values.get(0);
-                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:smiles ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
-            } else if ("Formulae".equals(key)) {
-                String value = values.get(0);
-                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:molecularFormula ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
-            } else if ("Definition".equals(key)) {
-                String value = values.get(0);
-                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:description ").append(printValueAsNumberOrStringCVME(value)).append("@en .\n");
-            } else if ("InChIKey".equals(key)) {
-                String value = values.get(0);
-                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:inChIKey ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
-            } else if ("InChI".equals(key)) {
-                String value = values.get(0);
-                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:inChI ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
-            } else if ("Mass".equals(key)) {
-                String value = values.get(0);
-                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:molecularWeight ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
-            } else if ("IUPAC Names".equals(key)) {
-                String value = values.get(0);
-                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:iupacName ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
-            } else if ("CAS Registry Numbers".equals(key)) {
-                String value = values.get(0);
-                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:identifier ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             } else if ("Synonyms".equals(key)) {
-                query_str.append("_:").append(addUUID(STRIKE)).append(" schema:alternateName ");
-                if (values.size() > 1) {
-                    for (String value : values) {
-                        val_tmp.append(printValueAsNumberOrStringCVME(value)).append(", ");
-                    }
-                    val_tmp = new StringBuilder(val_tmp.substring(0, val_tmp.length() - 2));
-                    query_str.append(val_tmp).append(" .\n");
-                    val_tmp = new StringBuilder();
-                } else {
-                    String value = values.get(0);
-                    query_str.append(printValueAsNumberOrStringCVME(value)).append(" .\n");
-                }
+                String value = values.get(0);
+                Property p = jenaModel.createProperty("https://schema.org/alternateName");
+                jenaModel.add(me, p, value);
             }
-
         }
-        System.out.println(query_str);
+
     }
 
     /**

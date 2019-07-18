@@ -120,9 +120,6 @@ class File {
                             case 'i':
                                 c.printInChI();
                                 break;
-                            case 'b':
-                                c.printBioSchemas();
-                                break;
                             case 't':
                             case 'n':
                             case 'j':

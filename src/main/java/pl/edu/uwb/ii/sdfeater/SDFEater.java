@@ -84,7 +84,7 @@ class SDFEater {
         Option input = new Option("i", "input", true, "input file path");
         input.setRequired(true);
         options.addOption(input);
-        Option formatarg = new Option("f", "format", true, "output format (cypher, cvme, smiles, inchi, bioschemas, turtle, ntriples, jsonld, rdfxml, rdfthrift)");
+        Option formatarg = new Option("f", "format", true, "output format (cypher, cvme, smiles, inchi, turtle, ntriples, jsonld, rdfxml, rdfthrift)");
         formatarg.setRequired(true);
         options.addOption(formatarg);
         Option urls = new Option("u", "urls", false, "try to generate full database URLs instead of IDs (enabled in cvme)");
@@ -120,8 +120,6 @@ class SDFEater {
                     file.parse(c, 's', false, false);
                 } else if (format.equalsIgnoreCase("inchi")) {
                     file.parse(c, 'i', false, false);
-                } else if (format.equalsIgnoreCase("bioschemas")) {
-                    file.parse(c, 'b', false, false);
                 } else if (format.equalsIgnoreCase("turtle")) {
                     initializeJenaModel();
                     file.parse(c, 't', false, false);
