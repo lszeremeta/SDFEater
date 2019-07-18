@@ -355,13 +355,17 @@ class Compound {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/iupacName");
                 jenaModel.add(me, p, value);
-            } else if ("CAS Registry Numbers".equals(key)) {
+            } else if ("CAS Registry Numbers".equals(key) || "CAS_NUMBER".equals((key))) {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/identifier");
                 jenaModel.add(me, p, value);
-            } else if ("Synonyms".equals(key)) {
+            } else if ("Synonyms".equals(key) || "SYNONYMS".equals(key)) {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/alternateName");
+                jenaModel.add(me, p, value);
+            } else if ("COMMON_NAME".equals(key)) {
+                String value = values.get(0);
+                Property p = jenaModel.createProperty("https://schema.org/name");
                 jenaModel.add(me, p, value);
             }
         }
