@@ -331,7 +331,7 @@ class Compound {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/smiles");
                 jenaModel.add(me, p, value);
-            } else if ("Formulae".equals(key)) {
+            } else if ("Formulae".equals(key) || "FORMULA".equals(key)) {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/molecularFormula");
                 jenaModel.add(me, p, value);
@@ -339,19 +339,19 @@ class Compound {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/description");
                 jenaModel.add(me, p, value);
-            } else if ("InChIKey".equals(key)) {
+            } else if ("InChIKey".equals(key) || "INCHI_KEY".equals(key)) {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/inChIKey");
                 jenaModel.add(me, p, value);
-            } else if ("InChI".equals(key)) {
+            } else if ("InChI".equals(key) || "INCHI_IDENTIFIER".equals(key)) {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/inChI");
                 jenaModel.add(me, p, value);
-            } else if ("Mass".equals(key)) {
+            } else if ("Mass".equals(key) || "MOLECULAR_WEIGHT".equals(key)) {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/molecularWeight");
                 jenaModel.add(me, p, value);
-            } else if ("IUPAC Names".equals(key)) {
+            } else if ("IUPAC Names".equals(key) || "JCHEM_IUPAC".equals(key)) {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/iupacName");
                 jenaModel.add(me, p, value);
@@ -363,7 +363,7 @@ class Compound {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/alternateName");
                 jenaModel.add(me, p, value);
-            } else if ("COMMON_NAME".equals(key)) {
+            } else if ("COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/name");
                 jenaModel.add(me, p, value);
