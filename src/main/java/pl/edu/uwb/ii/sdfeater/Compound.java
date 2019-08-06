@@ -27,6 +27,7 @@ package pl.edu.uwb.ii.sdfeater;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.vocabulary.RDF;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -326,7 +327,8 @@ class Compound {
 
             String key = entry.getKey();
             List<String> values = entry.getValue();
-            //query_str += key.replaceAll("\\s+", "");
+            jenaModel.add(me,RDF.type,"https://schema.org/MolecularEntity");
+
             if ("SMILES".equals(key)) {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("https://schema.org/smiles");

@@ -30,6 +30,7 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.commons.cli.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.vocabulary.RDF;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -73,6 +74,7 @@ class SDFEater {
     private static void initializeJenaModel() {
         jenaModel = ModelFactory.createDefaultModel();
         jenaModel.setNsPrefix("schema", "https://schema.org/");
+        jenaModel.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
     }
 
     /**
