@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017-2019 Łukasz Szeremeta.
@@ -24,6 +24,7 @@
  */
 package pl.edu.uwb.ii.sdfeater;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -33,6 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static pl.edu.uwb.ii.sdfeater.SDFEater.jenaModel;
 import static pl.edu.uwb.ii.sdfeater.SDFEater.periodic_table_data;
@@ -50,28 +52,28 @@ class Compound {
      */
     private static final byte STRIKE = 0;
     private static final byte UNDERLINE = 1;
-
-    /**
-     * Stores all properties of the chemical compound
-     */
-    private final Map<String, List<String>> properties = new HashMap<>();
-
+    private static final AtomicLong idCounter = new AtomicLong();
     /**
      * Stores atoms data
-     *
      */
     final List<Atom> atoms = new ArrayList<>();
 
     /**
      * Stores bonds data
-     *
      */
     final List<Bond> bonds = new ArrayList<>();
-
+    /**
+     * Stores all properties of the chemical compound
+     */
+    private final Map<String, List<String>> properties = new HashMap<>();
     private UUID uuid;
 
     Compound() {
         uuid = UUID.randomUUID();
+    }
+
+    private static String createID() {
+        return String.valueOf(idCounter.getAndIncrement());
     }
 
     /**
@@ -87,7 +89,7 @@ class Compound {
      * Add properties values by property name
      *
      * @param propertyName property name (key)
-     * @param pList properties list (values)
+     * @param pList        properties list (values)
      */
     void addPropertiesByName(String propertyName, List<String> pList) {
         properties.put(propertyName, pList);
@@ -96,7 +98,7 @@ class Compound {
     /**
      * Add single property value by property name
      *
-     * @param propertyName property name (key)
+     * @param propertyName  property name (key)
      * @param propertyValue properties list (values)
      */
     void addPropertyByName(String propertyName, String propertyValue) {
@@ -108,7 +110,6 @@ class Compound {
 
     /**
      * Print properties keys and its values
-     *
      */
     void printProperties() {
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
@@ -121,7 +122,6 @@ class Compound {
 
     /**
      * Print atoms data
-     *
      */
     void printAtoms() {
         for (Atom atom : atoms) {
@@ -131,7 +131,6 @@ class Compound {
 
     /**
      * Print bonds data
-     *
      */
     void printBonds() {
         for (Bond bond : bonds) {
@@ -156,7 +155,6 @@ class Compound {
 
     /**
      * Print main compound data in Cypher
-     *
      */
     void printCypherCompound() {
         StringBuilder val_tmp = new StringBuilder();
@@ -185,10 +183,9 @@ class Compound {
 
         System.out.println(query_str);
     }
-    
-        /**
+
+    /**
      * Print main compound data in CVME
-     *
      */
     void printChemSKOSCompound() {
         StringBuilder val_tmp = new StringBuilder();
@@ -327,7 +324,7 @@ class Compound {
 
             String key = entry.getKey();
             List<String> values = entry.getValue();
-            jenaModel.add(me,RDF.type,"https://schema.org/MolecularEntity");
+            jenaModel.add(me, RDF.type, "https://schema.org/MolecularEntity");
 
             if ("SMILES".equals(key)) {
                 String value = values.get(0);
@@ -375,6 +372,56 @@ class Compound {
     }
 
     /**
+     * Print main compound data in RDFa
+     */
+    void printRDFaCompound() {
+        String output_str = "";
+        for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
+            String key = entry.getKey();
+            List<String> values = entry.getValue();
+
+            if ("SMILES".equals(key)) {
+                String value = values.get(0);
+                output_str += "      <div property='schema:smiles'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+            } else if ("Formulae".equals(key) || "FORMULA".equals(key)) {
+                String value = values.get(0);
+                output_str += "      <div property='schema:molecularFormula'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+            } else if ("Definition".equals(key)) {
+                String value = values.get(0);
+                output_str += "      <div property='schema:description'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+            } else if ("InChIKey".equals(key) || "INCHI_KEY".equals(key)) {
+                String value = values.get(0);
+                output_str += "      <div property='schema:inChIKey'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+            } else if ("InChI".equals(key) || "INCHI_IDENTIFIER".equals(key)) {
+                String value = values.get(0);
+                output_str += "      <div property='schema:inChI'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+            } else if ("Mass".equals(key) || "MOLECULAR_WEIGHT".equals(key)) {
+                String value = values.get(0);
+                output_str += "      <div property='schema:molecularWeight'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+            } else if ("IUPAC Names".equals(key) || "JCHEM_IUPAC".equals(key)) {
+                String value = values.get(0);
+                output_str += "      <div property='schema:iupacName'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+            } else if ("CAS Registry Numbers".equals(key) || "CAS_NUMBER".equals((key))) {
+                String value = values.get(0);
+                output_str += "      <div property='schema:identifier'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+            } else if ("Synonyms".equals(key) || "SYNONYMS".equals(key)) {
+                String value = values.get(0);
+                output_str += "      <div property='schema:alternateName'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+            } else if ("COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
+                String value = values.get(0);
+                output_str += "      <div property='schema:name'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+            }
+        }
+
+        if (!output_str.isEmpty()) {
+            System.out.println("    <div typeof='schema:MolecularEntity' about='http://example.org/me" + createID() + "'>");
+            System.out.print(output_str);
+            System.out.println("    </div>");
+        }
+
+    }
+
+    /**
      * Detect if value is number, URL or String
      *
      * @param value Value to check
@@ -406,7 +453,6 @@ class Compound {
 
     /**
      * Print atoms and bonds as skos:example property in CVME
-     *
      */
     void printChemSKOSAtomsAndBonds() {
         System.out.println("<urn:uuid:" + addUUID(STRIKE) + "> skos:example \"\"\"\n");
@@ -524,7 +570,6 @@ class Compound {
 
     /**
      * Print SMILES form SDF
-     *
      */
     void printSMILES() {
         String query_str = "";
@@ -542,7 +587,6 @@ class Compound {
 
     /**
      * Print InChI form SDF
-     *
      */
     void printInChI() {
         String query_str = "";
@@ -560,7 +604,6 @@ class Compound {
 
     /**
      * Print atoms data and Compound-Atom relations in Cypher
-     *
      */
     void printCypherAtoms() {
         if (!atoms.isEmpty()) {
@@ -577,7 +620,6 @@ class Compound {
     /**
      * Print atoms data with additional periodic table data and Compound-Atom
      * relations in Cypher
-     *
      */
     void printCypherAtomsWithPeriodicTableData() {
         if (!atoms.isEmpty()) {
@@ -616,7 +658,6 @@ class Compound {
      *
      * @param symbol Atom symbol
      * @return All periodic table data
-     *
      */
     private Map<String, Object> getAtomPeriodicDataByAtomSymbol(String symbol) {
         return periodic_table_data.get(symbol);
@@ -624,7 +665,6 @@ class Compound {
 
     /**
      * Print Compound-Atom relations in Cypher
-     *
      */
     private void printCypherCompoundAtomRelation() {
         if (!atoms.isEmpty()) {
@@ -640,7 +680,6 @@ class Compound {
 
     /**
      * Print bonds data in Cypher
-     *
      */
     void printCypherBonds() {
         if (!bonds.isEmpty()) {
@@ -702,7 +741,7 @@ class Compound {
      * Change bond stereo numbers to string value
      *
      * @param stereo Bond stereo number
-     * @param type Bond type number
+     * @param type   Bond type number
      * @return String value of bond stereo with double quotes, false or 0 if not
      * supported
      */
@@ -741,7 +780,6 @@ class Compound {
 
     /**
      * Prepare UUID to use in Cypher output
-     *
      */
     private String addUUID(byte dash) {
         if (dash == 0) {
@@ -753,7 +791,6 @@ class Compound {
 
     /**
      * Prepare program structures for new compound
-     *
      */
     void clearAll() {
         properties.clear();

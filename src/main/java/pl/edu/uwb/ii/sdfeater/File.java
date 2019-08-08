@@ -75,6 +75,21 @@ class File {
             boolean molfileReady = false;
             String[] tokens;
 
+            /* Do something BEFORE file reading */
+            switch (format) {
+                // RDFa
+                case 'a':
+                    System.out.println("<!DOCTYPE html>");
+                    System.out.println("<html lang='en'>");
+                    System.out.println("  <head>");
+                    System.out.println("    <title>Example Document</title>");
+                    System.out.println("  </head>");
+                    System.out.println("  <body vocab='http://schema.org/'>");
+                    break;
+                default:
+                    break;
+            }
+
             while ((strLine = br.readLine()) != null) {
                 strLine = strLine.trim().replace("\\", "\\\\").replace("'", "\\'");
 
@@ -126,6 +141,9 @@ class File {
                             case 'x':
                             case 'h':
                                 c.addToJenaModel();
+                                break;
+                            case 'a':
+                                c.printRDFaCompound();
                                 break;
                             default:
                                 break;
@@ -262,6 +280,11 @@ class File {
                 break;
             case 'h':
                 jenaModel.write(System.out, "RDFTHRIFT");
+                break;
+            // RDFa
+            case 'a':
+                System.out.println("  </body>");
+                System.out.println("</html>");
                 break;
             default:
                 break;

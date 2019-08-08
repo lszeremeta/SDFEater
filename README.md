@@ -54,11 +54,12 @@ You can specify the output format using `-f,--format`. Available output formats:
 * `cvme` - [CVME](http://cs.aalto.fi/en/current/events/2017-09-22-002/) file format based on SKOS,
 * `smiles` - plain text SMILES (if available in the compound property)
 * `inchi` - plain text InChI (if available in the compound property)
-* `turtle` - [Terse RDF Triple Language](https://www.w3.org/TR/turtle/) (use [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
-* `ntriples` - [N-Triples](https://www.w3.org/TR/n-triples/) (use [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
-* `jsonld` - [JSON-LD](https://json-ld.org/) (use [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
-* `rdfxml` - [RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/) (use [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
-* `rdfthrift` - [RDF Binary encoding using Thrift](https://afs.github.io/rdf-thrift/rdf-binary-thrift.html) (use [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
+* `turtle` - [Terse RDF Triple Language](https://www.w3.org/TR/turtle/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
+* `ntriples` - [N-Triples](https://www.w3.org/TR/n-triples/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
+* `rdfxml` - [RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
+* `rdfthrift` - [RDF Binary encoding using Thrift](https://afs.github.io/rdf-thrift/rdf-binary-thrift.html) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
+* `jsonld` - [JSON-LD](https://json-ld.org/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
+* `rdfa` - Simple HTML with [RDFa](http://rdfa.info/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 
 ## Used open source projects
 - [Apache Commons CLI](https://github.com/apache/commons-cli) as CLI controller ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)),

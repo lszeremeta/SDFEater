@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017-2019 Łukasz Szeremeta.
@@ -30,7 +30,6 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.commons.cli.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.vocabulary.RDF;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -137,6 +136,10 @@ class SDFEater {
                 } else if (format.equalsIgnoreCase("rdfthrift")) {
                     initializeJenaModel();
                     file.parse(c, 'h', false, false);
+                } else if (format.equalsIgnoreCase("rdfa")) {
+                    file.parse(c, 'a', false, false);
+                } else if (format.equalsIgnoreCase("microdata")) {
+                    file.parse(c, 'm', false, false);
                 }
 
             }
