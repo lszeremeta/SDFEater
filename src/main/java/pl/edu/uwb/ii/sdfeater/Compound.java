@@ -375,46 +375,96 @@ class Compound {
      * Print main compound data in RDFa
      */
     void printRDFaCompound() {
-        String output_str = "";
+        StringBuilder output_str = new StringBuilder();
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
             List<String> values = entry.getValue();
 
             if ("SMILES".equals(key)) {
                 String value = values.get(0);
-                output_str += "      <div property='schema:smiles'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+                output_str.append("      <div property='schema:smiles'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
             } else if ("Formulae".equals(key) || "FORMULA".equals(key)) {
                 String value = values.get(0);
-                output_str += "      <div property='schema:molecularFormula'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+                output_str.append("      <div property='schema:molecularFormula'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
             } else if ("Definition".equals(key)) {
                 String value = values.get(0);
-                output_str += "      <div property='schema:description'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+                output_str.append("      <div property='schema:description'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
             } else if ("InChIKey".equals(key) || "INCHI_KEY".equals(key)) {
                 String value = values.get(0);
-                output_str += "      <div property='schema:inChIKey'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+                output_str.append("      <div property='schema:inChIKey'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
             } else if ("InChI".equals(key) || "INCHI_IDENTIFIER".equals(key)) {
                 String value = values.get(0);
-                output_str += "      <div property='schema:inChI'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+                output_str.append("      <div property='schema:inChI'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
             } else if ("Mass".equals(key) || "MOLECULAR_WEIGHT".equals(key)) {
                 String value = values.get(0);
-                output_str += "      <div property='schema:molecularWeight'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+                output_str.append("      <div property='schema:molecularWeight'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
             } else if ("IUPAC Names".equals(key) || "JCHEM_IUPAC".equals(key)) {
                 String value = values.get(0);
-                output_str += "      <div property='schema:iupacName'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+                output_str.append("      <div property='schema:iupacName'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
             } else if ("CAS Registry Numbers".equals(key) || "CAS_NUMBER".equals((key))) {
                 String value = values.get(0);
-                output_str += "      <div property='schema:identifier'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+                output_str.append("      <div property='schema:identifier'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
             } else if ("Synonyms".equals(key) || "SYNONYMS".equals(key)) {
                 String value = values.get(0);
-                output_str += "      <div property='schema:alternateName'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+                output_str.append("      <div property='schema:alternateName'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
             } else if ("COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
                 String value = values.get(0);
-                output_str += "      <div property='schema:name'>" + StringEscapeUtils.escapeHtml4(value) + "</div>\n";
+                output_str.append("      <div property='schema:name'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
             }
         }
 
-        if (!output_str.isEmpty()) {
+        if (output_str.length() > 0) {
             System.out.println("    <div typeof='schema:MolecularEntity' about='http://example.org/me" + createID() + "'>");
+            System.out.print(output_str);
+            System.out.println("    </div>");
+        }
+
+    }
+
+    /**
+     * Print main compound data in Microdata
+     */
+    void printMicrodataCompound() {
+        StringBuilder output_str = new StringBuilder();
+        for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
+            String key = entry.getKey();
+            List<String> values = entry.getValue();
+
+            if ("SMILES".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      <div itemprop='smiles'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+            } else if ("Formulae".equals(key) || "FORMULA".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      <div itemprop='molecularFormula'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+            } else if ("Definition".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      <div itemprop='description'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+            } else if ("InChIKey".equals(key) || "INCHI_KEY".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      <div itemprop='inChIKey'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+            } else if ("InChI".equals(key) || "INCHI_IDENTIFIER".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      <div itemprop='inChI'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+            } else if ("Mass".equals(key) || "MOLECULAR_WEIGHT".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      <div itemprop='molecularWeight'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+            } else if ("IUPAC Names".equals(key) || "JCHEM_IUPAC".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      <div itemprop='iupacName'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+            } else if ("CAS Registry Numbers".equals(key) || "CAS_NUMBER".equals((key))) {
+                String value = values.get(0);
+                output_str.append("      <div itemprop='identifier'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+            } else if ("Synonyms".equals(key) || "SYNONYMS".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      <div itemprop='alternateName'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+            } else if ("COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      <div itemprop='name'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+            }
+        }
+
+        if (output_str.length() > 0) {
+            System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='http://example.org/me" + createID() + "'>");
             System.out.print(output_str);
             System.out.println("    </div>");
         }

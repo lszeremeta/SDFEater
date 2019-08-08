@@ -86,6 +86,15 @@ class File {
                     System.out.println("  </head>");
                     System.out.println("  <body vocab='http://schema.org/'>");
                     break;
+                // Microdata
+                case 'm':
+                    System.out.println("<!DOCTYPE html>");
+                    System.out.println("<html lang='en'>");
+                    System.out.println("  <head>");
+                    System.out.println("    <title>Example Document</title>");
+                    System.out.println("  </head>");
+                    System.out.println("  <body>");
+                    break;
                 default:
                     break;
             }
@@ -144,6 +153,9 @@ class File {
                                 break;
                             case 'a':
                                 c.printRDFaCompound();
+                                break;
+                            case 'm':
+                                c.printMicrodataCompound();
                                 break;
                             default:
                                 break;
@@ -281,8 +293,9 @@ class File {
             case 'h':
                 jenaModel.write(System.out, "RDFTHRIFT");
                 break;
-            // RDFa
+            // RDFa and Microdata
             case 'a':
+            case 'm':
                 System.out.println("  </body>");
                 System.out.println("</html>");
                 break;

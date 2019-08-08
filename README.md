@@ -60,6 +60,7 @@ You can specify the output format using `-f,--format`. Available output formats:
 * `rdfthrift` - [RDF Binary encoding using Thrift](https://afs.github.io/rdf-thrift/rdf-binary-thrift.html) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 * `jsonld` - [JSON-LD](https://json-ld.org/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 * `rdfa` - Simple HTML with [RDFa](http://rdfa.info/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
+* `microdata` - Simple HTML with [Microdata](https://www.w3.org/TR/microdata/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 
 ## Used open source projects
 - [Apache Commons CLI](https://github.com/apache/commons-cli) as CLI controller ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)),
