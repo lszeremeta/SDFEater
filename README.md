@@ -50,10 +50,10 @@ Running SDFEater without parameters displays help.
 
 ## Output formats
 You can specify the output format using `-f,--format`. Available output formats:
-* `cypher` - [Cypher](https://neo4j.com/developer/cypher-query-language/) compound, atoms, bonds and relation ready to [import to the Neo4j graph database](https://neo4j.com/developer/kb/export-sub-graph-to-cypher-and-import/),
+* `cypher` - [Cypher](https://neo4j.com/developer/cypher-query-language/) molecule, atoms, bonds and relation ready to [import to the Neo4j graph database](https://neo4j.com/developer/kb/export-sub-graph-to-cypher-and-import/),
 * `cvme` - [CVME](http://cs.aalto.fi/en/current/events/2017-09-22-002/) file format based on SKOS,
-* `smiles` - plain text SMILES (if available in the compound property)
-* `inchi` - plain text InChI (if available in the compound property)
+* `smiles` - plain text SMILES (if available in the molecule property)
+* `inchi` - plain text InChI (if available in the molecule property)
 * `turtle` - [Terse RDF Triple Language](https://www.w3.org/TR/turtle/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 * `ntriples` - [N-Triples](https://www.w3.org/TR/n-triples/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 * `rdfxml` - [RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)

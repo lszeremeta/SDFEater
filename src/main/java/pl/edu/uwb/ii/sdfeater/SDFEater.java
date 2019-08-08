@@ -80,7 +80,7 @@ class SDFEater {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Compound c = new Compound();
+        Molecule molecule = new Molecule();
         Options options = new Options();
         Option input = new Option("i", "input", true, "input file path");
         input.setRequired(true);
@@ -106,40 +106,40 @@ class SDFEater {
                 if (format.equalsIgnoreCase("cypher")) {
                     if (cmd.hasOption("urls") && cmd.hasOption("periodic")) {
                         loadPeriodicTableData();
-                        file.parse(c, 'c', true, true);
+                        file.parse(molecule, 'c', true, true);
                     } else if (!cmd.hasOption("urls") && cmd.hasOption("periodic")) {
                         loadPeriodicTableData();
-                        file.parse(c, 'c', false, true);
+                        file.parse(molecule, 'c', false, true);
                     } else if (cmd.hasOption("urls") && !cmd.hasOption("periodic")) {
-                        file.parse(c, 'c', true, false);
+                        file.parse(molecule, 'c', true, false);
                     } else if (!cmd.hasOption("urls") && !cmd.hasOption("periodic")) {
-                        file.parse(c, 'c', false, false);
+                        file.parse(molecule, 'c', false, false);
                     }
                 } else if (format.equalsIgnoreCase("cvme")) {
-                    file.parse(c, 'r', true, false);
+                    file.parse(molecule, 'r', true, false);
                 } else if (format.equalsIgnoreCase("smiles")) {
-                    file.parse(c, 's', false, false);
+                    file.parse(molecule, 's', false, false);
                 } else if (format.equalsIgnoreCase("inchi")) {
-                    file.parse(c, 'i', false, false);
+                    file.parse(molecule, 'i', false, false);
                 } else if (format.equalsIgnoreCase("turtle")) {
                     initializeJenaModel();
-                    file.parse(c, 't', false, false);
+                    file.parse(molecule, 't', false, false);
                 } else if (format.equalsIgnoreCase("ntriples")) {
                     initializeJenaModel();
-                    file.parse(c, 'n', false, false);
+                    file.parse(molecule, 'n', false, false);
                 } else if (format.equalsIgnoreCase("jsonld")) {
                     initializeJenaModel();
-                    file.parse(c, 'j', false, false);
+                    file.parse(molecule, 'j', false, false);
                 } else if (format.equalsIgnoreCase("rdfxml")) {
                     initializeJenaModel();
-                    file.parse(c, 'x', false, false);
+                    file.parse(molecule, 'x', false, false);
                 } else if (format.equalsIgnoreCase("rdfthrift")) {
                     initializeJenaModel();
-                    file.parse(c, 'h', false, false);
+                    file.parse(molecule, 'h', false, false);
                 } else if (format.equalsIgnoreCase("rdfa")) {
-                    file.parse(c, 'a', false, false);
+                    file.parse(molecule, 'a', false, false);
                 } else if (format.equalsIgnoreCase("microdata")) {
-                    file.parse(c, 'm', false, false);
+                    file.parse(molecule, 'm', false, false);
                 }
 
             }

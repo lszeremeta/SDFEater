@@ -40,18 +40,22 @@ import static pl.edu.uwb.ii.sdfeater.SDFEater.jenaModel;
 import static pl.edu.uwb.ii.sdfeater.SDFEater.periodic_table_data;
 
 /**
- * Class that stores information about chemical compound
+ * Class that stores information about chemical molecule
  *
- * @author Łukasz Szeremeta 2017-2018
+ * @author Łukasz Szeremeta 2017-2019
  * @author Dominik Tomaszuk 2017-2018
  */
-class Compound {
+class Molecule {
 
     /**
      * Consts for UUID
      */
     private static final byte STRIKE = 0;
     private static final byte UNDERLINE = 1;
+
+    /**
+     * Incremental ID
+     */
     private static final AtomicLong idCounter = new AtomicLong();
     /**
      * Stores atoms data
@@ -63,21 +67,24 @@ class Compound {
      */
     final List<Bond> bonds = new ArrayList<>();
     /**
-     * Stores all properties of the chemical compound
+     * Stores all properties of the chemical molecule
      */
     private final Map<String, List<String>> properties = new HashMap<>();
     private UUID uuid;
 
-    Compound() {
+    Molecule() {
         uuid = UUID.randomUUID();
     }
 
+    /**
+     * Create incremental ID
+     */
     private static String createID() {
         return String.valueOf(idCounter.getAndIncrement());
     }
 
     /**
-     * Set compound property name
+     * Set molecule property name
      *
      * @param propertyName property name (key)
      */
@@ -154,11 +161,11 @@ class Compound {
     }
 
     /**
-     * Print main compound data in Cypher
+     * Print main molecule data in Cypher
      */
-    void printCypherCompound() {
+    void printCypherMolecule() {
         StringBuilder val_tmp = new StringBuilder();
-        StringBuilder query_str = new StringBuilder("CREATE (c" + addUUID(UNDERLINE) + ":Compound {");
+        StringBuilder query_str = new StringBuilder("CREATE (c" + addUUID(UNDERLINE) + ":Molecule {");
 
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
@@ -185,9 +192,9 @@ class Compound {
     }
 
     /**
-     * Print main compound data in CVME
+     * Print main molecule data in CVME
      */
-    void printChemSKOSCompound() {
+    void printChemSKOSMolecule() {
         StringBuilder val_tmp = new StringBuilder();
         StringBuilder query_str = new StringBuilder();
 
@@ -303,7 +310,7 @@ class Compound {
             } else if ("Patent Database Links".equals(key)) {
                 String value = values.get(0);
                 query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> cvme:patent ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
-            } else if ("PubChem Database Compound Links".equals(key)) {
+            } else if ("PubChem Database Molecule Links".equals(key)) {
                 String value = values.get(0);
                 query_str.append("<urn:uuid:").append(addUUID(STRIKE)).append("> rdfs:seeAlso ").append(printValueAsNumberOrStringCVME(value)).append(" .\n");
             } else if ("PubChem Database Substance Links".equals(key)) {
@@ -316,7 +323,7 @@ class Compound {
     }
 
     /**
-     * Add main compound data to Jena model
+     * Add main molecule data to Jena model
      */
     void addToJenaModel() {
         Resource me = ResourceFactory.createResource();
@@ -372,9 +379,9 @@ class Compound {
     }
 
     /**
-     * Print main compound data in RDFa
+     * Print main molecule data in RDFa
      */
-    void printRDFaCompound() {
+    void printRDFaMolecule() {
         StringBuilder output_str = new StringBuilder();
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
@@ -422,9 +429,9 @@ class Compound {
     }
 
     /**
-     * Print main compound data in Microdata
+     * Print main molecule data in Microdata
      */
-    void printMicrodataCompound() {
+    void printMicrodataMolecule() {
         StringBuilder output_str = new StringBuilder();
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
@@ -653,7 +660,7 @@ class Compound {
     }
 
     /**
-     * Print atoms data and Compound-Atom relations in Cypher
+     * Print atoms data and Molecule-Atom relations in Cypher
      */
     void printCypherAtoms() {
         if (!atoms.isEmpty()) {
@@ -663,12 +670,12 @@ class Compound {
                 it++;
             }
 
-            printCypherCompoundAtomRelation();
+            printCypherMoleculeAtomRelation();
         }
     }
 
     /**
-     * Print atoms data with additional periodic table data and Compound-Atom
+     * Print atoms data with additional periodic table data and Molecule-Atom
      * relations in Cypher
      */
     void printCypherAtomsWithPeriodicTableData() {
@@ -699,7 +706,7 @@ class Compound {
             }
             System.out.print(str);
 
-            printCypherCompoundAtomRelation();
+            printCypherMoleculeAtomRelation();
         }
     }
 
@@ -714,9 +721,9 @@ class Compound {
     }
 
     /**
-     * Print Compound-Atom relations in Cypher
+     * Print Molecule-Atom relations in Cypher
      */
-    private void printCypherCompoundAtomRelation() {
+    private void printCypherMoleculeAtomRelation() {
         if (!atoms.isEmpty()) {
             StringBuilder query_str = new StringBuilder("CREATE");
 
@@ -840,7 +847,7 @@ class Compound {
     }
 
     /**
-     * Prepare program structures for new compound
+     * Prepare program structures for new molecule
      */
     void clearAll() {
         properties.clear();

@@ -58,7 +58,7 @@ class File {
      * Reads and retrieves data from the input file and then writes it to the
      * appropriate program structures
      *
-     * @param c Compound object to which values from the file will be entered
+     * @param molecule Molecule object to which values from the file will be entered
      * @param format Output format: c - Cypher, r - cvme, s - smiles, n - inchi
      * @param urls Try to generate full database URLs instead of IDs
      * (true/false)
@@ -66,7 +66,7 @@ class File {
      * cypher format (true/false)
      *
      */
-    void parse(Compound c, char format, boolean urls, boolean periodic) {
+    void parse(Molecule molecule, char format, boolean urls, boolean periodic) {
         try {
             FileInputStream fstream = new FileInputStream(filename);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -110,12 +110,12 @@ class File {
                     tokens = strLine.split("\\s+");
 
                     if (tokens.length == 16) {
-                        c.atoms.add(new Atom(tokens[3], Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2])));
+                        molecule.atoms.add(new Atom(tokens[3], Float.parseFloat(tokens[0]), Float.parseFloat(tokens[1]), Float.parseFloat(tokens[2])));
                     }
 
                     // V2000, V3000; comment text exclusion
                     if ((tokens.length == 7 && !tokens[6].startsWith("V") && isInt(tokens[0]) || tokens.length == 6 && isInt(tokens[0]))) {
-                        c.bonds.add(new Bond(Integer.parseInt(tokens[0]), Byte.parseByte(tokens[2]), Integer.parseInt(tokens[1]), Byte.parseByte(tokens[3])));
+                        molecule.bonds.add(new Bond(Integer.parseInt(tokens[0]), Byte.parseByte(tokens[2]), Integer.parseInt(tokens[1]), Byte.parseByte(tokens[3])));
                     }
                 } else if (molfileReady && !strLine.matches("M\\s+\\w+.*")) {
                     // SDF file parse
@@ -125,42 +125,42 @@ class File {
                     } else if (strLine.startsWith("$$$$")) {
                         switch (format) {
                             case 'c':
-                                c.printCypherCompound();
+                                molecule.printCypherMolecule();
                                 if (periodic) {
-                                    c.printCypherAtomsWithPeriodicTableData();
+                                    molecule.printCypherAtomsWithPeriodicTableData();
                                 } else {
-                                    c.printCypherAtoms();
+                                    molecule.printCypherAtoms();
                                 }
-                                c.printCypherBonds();
+                                molecule.printCypherBonds();
                                 System.out.println(';');
                                 break;
                             case 'r':
-                                c.printChemSKOSCompound();
-                                c.printChemSKOSAtomsAndBonds();
+                                molecule.printChemSKOSMolecule();
+                                molecule.printChemSKOSAtomsAndBonds();
                                 break;
                             case 's':
-                                c.printSMILES();
+                                molecule.printSMILES();
                                 break;
                             case 'i':
-                                c.printInChI();
+                                molecule.printInChI();
                                 break;
                             case 't':
                             case 'n':
                             case 'j':
                             case 'x':
                             case 'h':
-                                c.addToJenaModel();
+                                molecule.addToJenaModel();
                                 break;
                             case 'a':
-                                c.printRDFaCompound();
+                                molecule.printRDFaMolecule();
                                 break;
                             case 'm':
-                                c.printMicrodataCompound();
+                                molecule.printMicrodataMolecule();
                                 break;
                             default:
                                 break;
                         }
-                        c.clearAll();
+                        molecule.clearAll();
                         molfileReady = false;
                         //} else if (strLine.isEmpty()) {
                     } else if (!strLine.isEmpty()) {
@@ -168,104 +168,104 @@ class File {
                             // Database links
                             switch (pName) {
                                 case "Agricola Citation Links":
-                                    c.addPropertyByName(pName, "https://agricola.nal.usda.gov/cgi-bin/Pwebrecon.cgi?Search_Arg=" + strLine + "&DB=local&CNT=25&Search_Code=GKEY%5E&STARTDB=AGRIDB");
+                                    molecule.addPropertyByName(pName, "https://agricola.nal.usda.gov/cgi-bin/Pwebrecon.cgi?Search_Arg=" + strLine + "&DB=local&CNT=25&Search_Code=GKEY%5E&STARTDB=AGRIDB");
                                     break;
                                 case "ArrayExpress Database Links":
-                                    c.addPropertyByName(pName, "https://www.ebi.ac.uk/arrayexpress/experiments/" + strLine);
+                                    molecule.addPropertyByName(pName, "https://www.ebi.ac.uk/arrayexpress/experiments/" + strLine);
                                     break;
                                 case "BioModels Database Links":
-                                    c.addPropertyByName(pName, "https://www.ebi.ac.uk/biomodels-main/" + strLine);
+                                    molecule.addPropertyByName(pName, "https://www.ebi.ac.uk/biomodels-main/" + strLine);
                                     break;
                                 case "ChEBI ID":
-                                    c.addPropertyByName(pName, "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=" + strLine.substring(6));
+                                    molecule.addPropertyByName(pName, "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=" + strLine.substring(6));
                                     break;
                                 case "DrugBank Database Links":
-                                    c.addPropertyByName(pName, "https://www.drugbank.ca/drugs/" + strLine);
+                                    molecule.addPropertyByName(pName, "https://www.drugbank.ca/drugs/" + strLine);
                                     break;
                                 case "ECMDB Database Links":
-                                    c.addPropertyByName(pName, "http://ecmdb.ca/compounds/" + strLine);
+                                    molecule.addPropertyByName(pName, "http://ecmdb.ca/compounds/" + strLine);
                                     break;
                                 case "HMDB Database Links":
                                     // metabolites
-                                    c.addPropertyByName(pName, "http://www.hmdb.ca/metabolites/" + strLine);
+                                    molecule.addPropertyByName(pName, "http://www.hmdb.ca/metabolites/" + strLine);
                                     break;
                                 case "IntAct Database Links":
-                                    c.addPropertyByName(pName, "https://www.ebi.ac.uk/intact/interaction/" + strLine);
+                                    molecule.addPropertyByName(pName, "https://www.ebi.ac.uk/intact/interaction/" + strLine);
                                     break;
                                 case "IntEnz Database Links":
                                     strLine = strLine.replaceAll(" ", "+");
-                                    c.addPropertyByName(pName, "http://www.ebi.ac.uk/intenz/query?q=" + strLine);
+                                    molecule.addPropertyByName(pName, "http://www.ebi.ac.uk/intenz/query?q=" + strLine);
                                     break;
                                 case "KEGG COMPOUND Database Links":
-                                    c.addPropertyByName(pName, "http://www.genome.jp/dbget-bin/www_bget?cpd:" + strLine);
+                                    molecule.addPropertyByName(pName, "http://www.genome.jp/dbget-bin/www_bget?cpd:" + strLine);
                                     break;
                                 case "KEGG DRUG Database Links":
-                                    c.addPropertyByName(pName, "http://www.genome.jp/dbget-bin/www_bget?dr:" + strLine);
+                                    molecule.addPropertyByName(pName, "http://www.genome.jp/dbget-bin/www_bget?dr:" + strLine);
                                     break;
                                 case "KEGG GLYCAN Database Links":
-                                    c.addPropertyByName(pName, "http://www.genome.jp/dbget-bin/www_bget?gl:" + strLine);
+                                    molecule.addPropertyByName(pName, "http://www.genome.jp/dbget-bin/www_bget?gl:" + strLine);
                                     break;
                                 case "KNApSAcK Database Links":
-                                    c.addPropertyByName(pName, "http://kanaya.naist.jp/knapsack_jsp/information.jsp?word=" + strLine);
+                                    molecule.addPropertyByName(pName, "http://kanaya.naist.jp/knapsack_jsp/information.jsp?word=" + strLine);
                                     break;
                                 case "LIPID MAPS instance Database Links":
-                                    c.addPropertyByName(pName, "http://www.lipidmaps.org/data/LMSDRecord.php?LMID=" + strLine);
+                                    molecule.addPropertyByName(pName, "http://www.lipidmaps.org/data/LMSDRecord.php?LMID=" + strLine);
                                     break;
                                 case "MetaCyc Database Links":
-                                    c.addPropertyByName(pName, "https://metacyc.org/compound?orgid=META&id=" + strLine);
+                                    molecule.addPropertyByName(pName, "https://metacyc.org/compound?orgid=META&id=" + strLine);
                                     break;
                                 case "Patent Database Links":
-                                    c.addPropertyByName(pName, "https://worldwide.espacenet.com/searchResults?query=" + strLine);
+                                    molecule.addPropertyByName(pName, "https://worldwide.espacenet.com/searchResults?query=" + strLine);
                                     break;
                                 case "PDBeChem Database Links":
-                                    c.addPropertyByName(pName, "http://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/" + strLine);
+                                    molecule.addPropertyByName(pName, "http://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/" + strLine);
                                     break;
                                 case "PubChem Database Links":
                                     // custom key value for compound and substance links
                                     switch (strLine.substring(0, 3)) {
                                         case "CID":
-                                            c.addPropertyByName("PubChem Database Compound Links", "https://pubchem.ncbi.nlm.nih.gov/compound/" + strLine.substring(5));
+                                            molecule.addPropertyByName("PubChem Database Molecule Links", "https://pubchem.ncbi.nlm.nih.gov/compound/" + strLine.substring(5));
                                             break;
                                         case "SID":
-                                            c.addPropertyByName("PubChem Database Substance Links", "https://pubchem.ncbi.nlm.nih.gov/substance/" + strLine.substring(5));
+                                            molecule.addPropertyByName("PubChem Database Substance Links", "https://pubchem.ncbi.nlm.nih.gov/substance/" + strLine.substring(5));
                                             break;
                                     }
                                     break;
                                 case "PubMed Central Citation Links":
-                                    c.addPropertyByName(pName, "https://www.ncbi.nlm.nih.gov/pmc/articles/" + strLine + "/");
+                                    molecule.addPropertyByName(pName, "https://www.ncbi.nlm.nih.gov/pmc/articles/" + strLine + "/");
                                     break;
                                 case "PubMed Citation Links":
-                                    c.addPropertyByName(pName, "https://www.ncbi.nlm.nih.gov/pubmed/?term=" + strLine);
+                                    molecule.addPropertyByName(pName, "https://www.ncbi.nlm.nih.gov/pubmed/?term=" + strLine);
                                     break;
                                 case "Reactome Database Links":
-                                    c.addPropertyByName(pName, "https://reactome.org/content/detail/" + strLine);
+                                    molecule.addPropertyByName(pName, "https://reactome.org/content/detail/" + strLine);
                                     break;
                                 case "RESID Database Links":
-                                    c.addPropertyByName(pName, "http://pir.georgetown.edu/cgi-bin/resid?id=" + strLine);
+                                    molecule.addPropertyByName(pName, "http://pir.georgetown.edu/cgi-bin/resid?id=" + strLine);
                                     break;
                                 case "Rhea Database Links":
-                                    c.addPropertyByName(pName, "https://www.rhea-db.org/reaction?id=" + strLine);
+                                    molecule.addPropertyByName(pName, "https://www.rhea-db.org/reaction?id=" + strLine);
                                     break;
                                 case "SABIO-RK Database Links":
-                                    c.addPropertyByName(pName, "http://sabio.h-its.org/reacdetails.jsp?reactid=" + strLine);
+                                    molecule.addPropertyByName(pName, "http://sabio.h-its.org/reacdetails.jsp?reactid=" + strLine);
                                     break;
                                 case "UM-BBD compID Database Links":
-                                    c.addPropertyByName(pName, "http://eawag-bbd.ethz.ch/servlets/pageservlet?ptype=c&compID=" + strLine);
+                                    molecule.addPropertyByName(pName, "http://eawag-bbd.ethz.ch/servlets/pageservlet?ptype=c&compID=" + strLine);
                                     break;
                                 case "UniProt Database Links":
-                                    c.addPropertyByName(pName, "https://www.uniprot.org/uniprot/" + strLine);
+                                    molecule.addPropertyByName(pName, "https://www.uniprot.org/uniprot/" + strLine);
                                     break;
                                 case "Wikipedia Database Links":
-                                    c.addPropertyByName(pName, "https://en.wikipedia.org/wiki/" + strLine);
+                                    molecule.addPropertyByName(pName, "https://en.wikipedia.org/wiki/" + strLine);
                                     break;
                                 case "YMDB Database Links":
-                                    c.addPropertyByName(pName, "http://www.ymdb.ca/compounds/" + strLine);
+                                    molecule.addPropertyByName(pName, "http://www.ymdb.ca/compounds/" + strLine);
                                     break;
                                 default:
-                                    c.addPropertyByName(pName, strLine);
+                                    molecule.addPropertyByName(pName, strLine);
                             }
                         } else {
-                            c.addPropertyByName(pName, strLine);
+                            molecule.addPropertyByName(pName, strLine);
                         }
                     }
                 }
