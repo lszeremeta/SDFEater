@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017-2019 Łukasz Szeremeta.
@@ -48,7 +48,6 @@ class File {
      * File class constructor
      *
      * @param filename filename of input file
-     *
      */
     File(String filename) {
         this.filename = filename;
@@ -59,12 +58,11 @@ class File {
      * appropriate program structures
      *
      * @param molecule Molecule object to which values from the file will be entered
-     * @param format Output format: c - Cypher, r - cvme, s - smiles, n - inchi
-     * @param urls Try to generate full database URLs instead of IDs
-     * (true/false)
+     * @param format   Output format: c - Cypher, r - cvme, s - smiles, n - inchi
+     * @param urls     Try to generate full database URLs instead of IDs
+     *                 (true/false)
      * @param periodic Map with additional atoms data from periodic table for
-     * cypher format (true/false)
-     *
+     *                 cypher format (true/false)
      */
     void parse(Molecule molecule, char format, boolean urls, boolean periodic) {
         try {
@@ -77,6 +75,14 @@ class File {
 
             /* Do something BEFORE file reading */
             switch (format) {
+                // JSON-LD with HTML
+                case 'd':
+                    System.out.println("<!DOCTYPE html>\n" +
+                            "<html lang=\"en\">\n" +
+                            "  <head>\n" +
+                            "    <title>Example Document</title>\n" +
+                            "    <script type=\"application/ld+json\">");
+                    break;
                 // RDFa
                 case 'a':
                     System.out.println("<!DOCTYPE html>");
@@ -147,6 +153,7 @@ class File {
                             case 't':
                             case 'n':
                             case 'j':
+                            case 'd':
                             case 'x':
                             case 'h':
                                 molecule.addToJenaModel();
@@ -286,6 +293,13 @@ class File {
                 break;
             case 'j':
                 jenaModel.write(System.out, "JSONLD");
+                break;
+            // JSON-LD with HTML
+            case 'd':
+                jenaModel.write(System.out, "JSONLD");
+                System.out.println("    </script>\n" +
+                        "  </head>\n" +
+                        "</html>");
                 break;
             case 'x':
                 jenaModel.write(System.out, "RDF/XML");

@@ -58,6 +58,7 @@ You can specify the output format using `-f,--format`. Available output formats:
 * `ntriples` - [N-Triples](https://www.w3.org/TR/n-triples/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 * `rdfxml` - [RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 * `rdfthrift` - [RDF Binary encoding using Thrift](https://afs.github.io/rdf-thrift/rdf-binary-thrift.html) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
+* `jsonldhtml` - [JSON-LD](https://json-ld.org/) with HTML (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 * `jsonld` - [JSON-LD](https://json-ld.org/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 * `rdfa` - Simple HTML with [RDFa](http://rdfa.info/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 * `microdata` - Simple HTML with [Microdata](https://www.w3.org/TR/microdata/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)

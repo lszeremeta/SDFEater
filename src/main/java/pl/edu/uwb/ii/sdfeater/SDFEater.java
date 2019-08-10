@@ -127,6 +127,9 @@ class SDFEater {
                 } else if (format.equalsIgnoreCase("ntriples")) {
                     initializeJenaModel();
                     file.parse(molecule, 'n', false, false);
+                } else if (format.equalsIgnoreCase("jsonldhtml")) {
+                    initializeJenaModel();
+                    file.parse(molecule, 'd', false, false);
                 } else if (format.equalsIgnoreCase("jsonld")) {
                     initializeJenaModel();
                     file.parse(molecule, 'j', false, false);
