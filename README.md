@@ -44,7 +44,7 @@ In _examples_ directory you can find example SDF files based on data from [ChEBI
 Running SDFEater without parameters displays help.
 
 * `-i,--input <arg>` - input SDF file path (required)
-* `-f,--format <arg>` - output format (`cypher`, `cvme`, `smiles`, `inchi`) (required)
+* `-f,--format <arg>` - output format (e.g. git `cypher`, `cvme`, `smiles`, `inchi`) (required)
 * `-p,--periodic` - add additional atoms data from [periodic table](https://github.com/lszeremeta/SDFEater/blob/master/src/main/resources/pl/edu/uwb/ii/sdfeater/periodic_table.json) (for `cypher` output format)
 * `-u,--urls` - try to generate full database URLs instead of IDs (enabled in `cvme`)
 

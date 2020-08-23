@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pl.edu.uwb.ii</groupId>
     <artifactId>SDFEater</artifactId>
-    <version>1.5</version>
+    <version>1.5.0</version>
     <packaging>jar</packaging>
     <description>SDFEater is a tool for parsing SDF cheminformatics format</description>
     <properties>
