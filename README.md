@@ -89,3 +89,10 @@ Would you like to improve the SDFEater? Great! We are waiting for your help and 
 ## License
 
 Distributed under [MIT license](https://github.com/lszeremeta/chebi-sdf-parser/blob/master/LICENSE.txt).
+
+## See also
+
+These projects can also be useful:
+
+* [Molstruct](https://github.com/lszeremeta/molstruct) - Convert chemical molecule data CSV files to structured data formats
+* [MEgen](https://github.com/domel/MEgen) - Convenient online form to generate structured data about molecules
