@@ -25,5 +25,4 @@ jobs:
           prerelease: false
           draft: true
           files: |
-            LICENSE.txt
             target/*.jar
