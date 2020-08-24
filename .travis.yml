@@ -1,3 +1,4 @@
+dist: focal
 language: java 
 jdk: oraclejdk11
 install: true
