@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/lszeremeta/SDFEater/master/logo/SDFEater.png" alt="SDFEater logo" width="300">
+# <img src="https://raw.githubusercontent.com/lszeremeta/SDFEater/master/logo/SDFEater.png" alt="SDFEater logo" width="300">
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1467892.svg)](https://doi.org/10.5281/zenodo.1467892) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/fc5d5e2e22ce4616a041d97cdf1f3a11)](https://www.codacy.com/app/l-szeremeta-dev/SDFEater?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lszeremeta/SDFEater&amp;utm_campaign=Badge_Grade)
 
