@@ -95,4 +95,4 @@ Distributed under [MIT license](https://github.com/lszeremeta/chebi-sdf-parser/b
 These projects can also be useful:
 
 * [Molstruct](https://github.com/lszeremeta/molstruct) - Convert chemical molecule data CSV files to structured data formats
-* [MEgen](https://github.com/domel/MEgen) - Convenient online form to generate structured data about molecules
+* [MEgen](https://github.com/lszeremeta/MEgen) - Convenient online form to generate structured data about molecules
