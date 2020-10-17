@@ -15,7 +15,7 @@ RUN mvn package --file=pom.xml \
 
 
 # Package stage
-FROM gcr.io/distroless/java:11
+FROM gcr.io/distroless/java:11-nonroot
 LABEL maintainer="Łukasz Szeremeta <l.szeremeta.dev+sdfeater@gmail.com>"
 
 WORKDIR /app
