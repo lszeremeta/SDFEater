@@ -38,7 +38,7 @@ The `$(pwd)` sub-command expands to the current working directory on Linux or ma
 docker run -it --rm --name sdfeater-app --mount type=bind,source="$(pwd)"/input,target=/app/input,readonly lszeremeta/sdfeater:latest
 ```
 
-### Build Maven project yourself
+### Build SDFEater from sources
 
 You need Java with Maven installed.
 
@@ -101,7 +101,7 @@ java -jar SDFEater-VERSION-jar-with-dependencies.jar -i ../examples/chebi_test.s
 Returns [JSON-LD](https://json-ld.org/) and redirect output to `molecules.jsonld` file. SDFEater run from a JAR file.
 
 ```shell
-docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest -i /app/input/chebi_test.sdf -f microdata  > molecules.html
+docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest -i input/chebi_test.sdf -f microdata  > molecules.html
 ```
 
 Returns simple HTML with added [Microdata](https://www.w3.org/TR/microdata/) and redirect output to `molecules.html` file. Run from pre-build Docker image.
