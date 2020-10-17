@@ -32,10 +32,10 @@ docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/inpu
 
 In this case, the local directory `/home/user/input` has been mounted under `/app/input`.
 
-The `$(pwd)` sub-command expands to the current working directory on Linux or macOS hosts. You can simply mount `input` directory inside your current working directory:
+You can also simply mount current working directory using `$(pwd)` sub-command:
 
 ```shell
-docker run -it --rm --name sdfeater-app --mount type=bind,source="$(pwd)"/input,target=/app/input,readonly lszeremeta/sdfeater:latest
+docker run -it --rm --name sdfeater-app --mount type=bind,source="$(pwd)",target=/app/input,readonly lszeremeta/sdfeater:latest
 ```
 
 ### Build SDFEater from sources
