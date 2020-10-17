@@ -86,28 +86,6 @@ docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/inpu
 
 In this case, your local directory `/home/user/input` has been mounted under `/app/input`.
 
-## Examples
-
-```shell
-java -jar SDFEater-VERSION-jar-with-dependencies.jar -i ../examples/chebi_special_char_test.sdf -f cypher -up
-```
-
-Returns [Cypher](https://neo4j.com/developer/cypher-query-language/) with added periodic table data for atoms and replaced chemical database IDs with URL. SDFEater run from a JAR file.
-
-```shell
-java -jar SDFEater-VERSION-jar-with-dependencies.jar -i ../examples/chebi_test.sdf -f jsonld  > molecules.jsonld
-```
-
-Returns [JSON-LD](https://json-ld.org/) and redirect output to `molecules.jsonld` file. SDFEater run from a JAR file.
-
-```shell
-docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest -i input/chebi_test.sdf -f microdata  > molecules.html
-```
-
-Returns simple HTML with added [Microdata](https://www.w3.org/TR/microdata/) and redirect output to `molecules.html` file. Run from pre-build Docker image.
-
-In `examples` directory in the this repository you can find example SDF files based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) and [DrugBank  open structures](https://www.drugbank.ca/releases/latest#open-data) databases.
-
 ## CLI options
 
 Running SDFEater without parameters displays help.
@@ -135,6 +113,28 @@ You can specify the output format using `-f,--format`. Available output formats:
 * `jsonld` - [JSON-LD](https://json-ld.org/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 * `rdfa` - Simple HTML with [RDFa](http://rdfa.info/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
 * `microdata` - Simple HTML with [Microdata](https://www.w3.org/TR/microdata/) (based on [MolecularEntitly](https://bioschemas.org/types/MolecularEntity/) type)
+
+## Examples
+
+```shell
+java -jar SDFEater-VERSION-jar-with-dependencies.jar -i ../examples/chebi_special_char_test.sdf -f cypher -up
+```
+
+Returns [Cypher](https://neo4j.com/developer/cypher-query-language/) with added periodic table data for atoms and replaced chemical database IDs with URL. SDFEater run from a JAR file.
+
+```shell
+java -jar SDFEater-VERSION-jar-with-dependencies.jar -i ../examples/chebi_test.sdf -f jsonld  > molecules.jsonld
+```
+
+Returns [JSON-LD](https://json-ld.org/) and redirect output to `molecules.jsonld` file. SDFEater run from a JAR file.
+
+```shell
+docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest -i input/chebi_test.sdf -f microdata  > molecules.html
+```
+
+Returns simple HTML with added [Microdata](https://www.w3.org/TR/microdata/) and redirect output to `molecules.html` file. Run from pre-build Docker image.
+
+In `examples` directory in the this repository you can find example SDF files based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) and [DrugBank  open structures](https://www.drugbank.ca/releases/latest#open-data) databases.
 
 ## Publications and resources
 
