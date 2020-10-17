@@ -6,9 +6,41 @@
 
 ## How to start
 
-Simply download one of the [ready to use JAR file](https://github.com/lszeremeta/SDFEater/releases) from project releases. You can also [clone this repository](https://help.github.com/articles/cloning-a-repository/) and build the project yourself.
+You can run SDFEater in a convenient way. You can use JAR file, run SDFEater from Docker image or build everything yourself. If you don't know what to choose, choose one of the first two options.
 
-### Build project yourself
+### JAR file
+
+You need Java installed.
+
+1. Download the ready-to-use JAR `SDFEater-VERSION-jar-with-dependencies.jar` file from [project release](https://github.com/lszeremeta/SDFEater/releases) asset.
+
+2. Run SDFEater
+
+```shell
+java -jar SDFEater-VERSION-jar-with-dependencies.jar
+```
+
+### Docker image
+
+If you have [Docker](https://docs.docker.com/engine/install/) installed, you can use the pre-built image on [Docker Hub](https://hub.docker.com/r/lszeremeta/sdfeater).
+
+Because the tool is closed inside the container, you have to [mount](https://docs.docker.com/storage/bind-mounts/#start-a-container-with-a-bind-mount) local directory with your input file. The default working directory of the image is `/app`. You need to mount your local directory inside it (e.g. `/app/input`):
+
+```shell
+docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest
+```
+
+In this case, the local directory `/home/user/input` has been mounted under `/app/input`.
+
+The `$(pwd)` sub-command expands to the current working directory on Linux or macOS hosts. You can simply mount `input` directory inside your current working directory:
+
+```shell
+docker run -it --rm --name sdfeater-app --mount type=bind,source="$(pwd)"/input,target=/app/input,readonly lszeremeta/sdfeater:latest
+```
+
+### Build Maven project yourself
+
+You need Java with Maven installed.
 
 1. Clone this repository:
 
@@ -16,7 +48,9 @@ Simply download one of the [ready to use JAR file](https://github.com/lszeremeta
 git clone https://github.com/lszeremeta/SDFEater.git
 ```
 
-2. Build SDFEater using [Apache Maven](https://maven.apache.org/):
+If you don't want or can't use git, you can [download the zip archive](https://github.com/lszeremeta/SDFEater/archive/master.zip) and extract it. 
+
+2. Go to the project directory and build SDFEater using [Apache Maven](https://maven.apache.org/):
 
 ```shell
 cd SDFEater
@@ -25,24 +59,65 @@ mvn clean package
 
 Built JAR files can be found in the _target_ directory.
 
-## Example usage
+### Local Docker build
+
+You need [Docker](https://docs.docker.com/engine/install/) installed.
+
+1. Clone this repository:
 
 ```shell
-java -jar SDFEater-version-jar-with-dependencies.jar -i ../examples/chebi_special_char_test.sdf -f cypher -up
+git clone https://github.com/lszeremeta/SDFEater.git
 ```
 
-Example above reads SDF input file, adds periodic table data for atoms, try to replace chemical database IDs with URL and give [Cypher](https://neo4j.com/developer/cypher-query-language/) file in the output.
+If you don't want or can't use git, you can [download the zip archive](https://github.com/lszeremeta/SDFEater/archive/master.zip) and extract it. 
 
-In _examples_ directory you can find example SDF files based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) and [DrugBank  open structures](https://www.drugbank.ca/releases/latest#open-data) ([CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)) databases.
+2. Go to the project directory and Docker image:
+
+```shell
+cd SDFEater
+docker build -t sdfeater .
+```
+
+3. Run Docker container:
+
+```shell
+docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly sdfeater
+```
+
+In this case, your local directory `/home/user/input` has been mounted under `/app/input`.
+
+## Examples
+
+```shell
+java -jar SDFEater-VERSION-jar-with-dependencies.jar -i ../examples/chebi_special_char_test.sdf -f cypher -up
+```
+
+Returns [Cypher](https://neo4j.com/developer/cypher-query-language/) with added periodic table data for atoms and replaced chemical database IDs with URL. SDFEater run from a JAR file.
+
+```shell
+java -jar SDFEater-VERSION-jar-with-dependencies.jar -i ../examples/chebi_test.sdf -f jsonld  > molecules.jsonld
+```
+
+Returns [JSON-LD](https://json-ld.org/) and redirect output to `molecules.jsonld` file. SDFEater run from a JAR file.
+
+```shell
+docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest -i /app/input/chebi_test.sdf -f microdata  > molecules.html
+```
+
+Returns simple HTML with added [Microdata](https://www.w3.org/TR/microdata/) and redirect output to `molecules.html` file. Run from pre-build Docker image.
+
+In `examples` directory in the this repository you can find example SDF files based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) and [DrugBank  open structures](https://www.drugbank.ca/releases/latest#open-data) databases.
 
 ## CLI options
 
 Running SDFEater without parameters displays help.
 
 * `-i,--input <arg>` - input SDF file path (required)
-* `-f,--format <arg>` - output format (e.g. `cypher`, `cvme`, `smiles`, `inchi`) (required; full list below)
+* `-f,--format <arg>` - output format (e.g. `cypher`, `jsonld`, `cvme`, `smiles`, `inchi`) (required; full list below)
 * `-p,--periodic` - add additional atoms data from [periodic table](https://github.com/lszeremeta/SDFEater/blob/master/src/main/resources/pl/edu/uwb/ii/sdfeater/periodic_table.json) (for `cypher` output format)
 * `-u,--urls` - try to generate full database URLs instead of IDs (enabled in `cvme`)
+
+Remember about the appropriate file path when using Docker image. Suppose you mounted your local directory `/home/user/input` under `/app/input` and the path to the SDF file you want to use in SDFEater is `/home/user/input/file.sdf`, enter the path `/app/input/file.sdf` or `input/file.sdf` as the value of the `-i` argument.
 
 ## Output formats
 
