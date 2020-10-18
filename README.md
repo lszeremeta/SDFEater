@@ -161,7 +161,7 @@ Would you like to improve the SDFEater? Great! We are waiting for your help and 
 
 ## License
 
-Distributed under [MIT license](https://github.com/lszeremeta/chebi-sdf-parser/blob/master/LICENSE.txt).
+Distributed under [MIT License](https://github.com/lszeremeta/chebi-sdf-parser/blob/master/LICENSE).
 
 ## See also
 
