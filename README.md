@@ -22,7 +22,7 @@ java -jar SDFEater-VERSION-jar-with-dependencies.jar
 
 ### Docker image
 
-If you have [Docker](https://docs.docker.com/engine/install/) installed, you can use the pre-built image on [Docker Hub](https://hub.docker.com/r/lszeremeta/sdfeater).
+If you have [Docker](https://docs.docker.com/engine/install/) installed, you can use tiny SDFEater Docker image from [Docker Hub](https://hub.docker.com/r/lszeremeta/sdfeater).
 
 Because the tool is closed inside the container, you have to [mount](https://docs.docker.com/storage/bind-mounts/#start-a-container-with-a-bind-mount) local directory with your input file. The default working directory of the image is `/app`. You need to mount your local directory inside it (e.g. `/app/input`):
 
