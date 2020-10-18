@@ -10,7 +10,7 @@ WORKDIR /app
 COPY . .
 
 ## build and rename jar
-RUN mvn package --file=pom.xml \
+RUN mvn -B package --file=pom.xml \
     && mv target/SDFEater-*-jar-with-dependencies.jar SDFEater.jar
 
 
