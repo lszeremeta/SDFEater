@@ -6,7 +6,7 @@
 
 ## How to start
 
-You can run SDFEater in a convenient way. You can use JAR file, run SDFEater from Docker image or build everything yourself. If you don't know what to choose, choose one of the first two options.
+You can use JAR file, run SDFEater from Docker image or build everything yourself. If you don't know what to choose, choose one of the first two options.
 
 ### JAR file
 
