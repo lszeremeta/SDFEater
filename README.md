@@ -153,7 +153,7 @@ If you need more detailed information, take a look at these publications and res
 * [Apache Jena](https://jena.apache.org/) - for some output formats ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)),
 * [Apache Commons Text](https://commons.apache.org/proper/commons-text/) - to HTML escape for RDFa and Microdata formats ([Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)).
 
-The sample SDF files in the examples directory are based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) and [DrugBank](https://www.drugbank.ca/releases/latest#open-data) open structures ([CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)) databases.
+The sample SDF files in the examples and test directory are based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)) and [DrugBank](https://www.drugbank.ca/releases/latest#open-data) open structures ([CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)) databases.
 
 ## Contribution
 
