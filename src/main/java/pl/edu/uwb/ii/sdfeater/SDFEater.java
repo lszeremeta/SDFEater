@@ -70,7 +70,7 @@ class SDFEater {
     /**
      * Initialize Apache Jena Model for some formats
      */
-    private static void initializeJenaModel() {
+    static void initializeJenaModel() {
         jenaModel = ModelFactory.createDefaultModel();
         jenaModel.setNsPrefix("schema", "https://schema.org/");
         jenaModel.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
