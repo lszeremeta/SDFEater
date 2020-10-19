@@ -38,11 +38,10 @@ class Bond {
     /**
      * Bond class constructor
      *
-     * @param atom1 first atom id
-     * @param type bond type
-     * @param atom2 second atom id
+     * @param atom1  first atom id
+     * @param type   bond type
+     * @param atom2  second atom id
      * @param stereo bond stereo
-     *
      */
     Bond(int atom1, byte type, int atom2, byte stereo) {
         this.atom1 = atom1;

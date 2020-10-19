@@ -49,11 +49,15 @@ class SDFEater {
      * Stores all Atoms data from periodic table
      */
     static Map<String, Map<String, Object>> periodic_table_data;
+    /**
+     * Apache Jena Model for some formats
+     */
+    static Model jenaModel;
 
     /**
      * Loads periodic data from JSON file to the Map
      */
-    private static void loadPeriodicTableData() {
+    protected static void loadPeriodicTableData() {
         Gson gson = new GsonBuilder().create();
         Type type = new TypeToken<Map<String, Map<String, String>>>() {
         }.getType();
@@ -61,11 +65,6 @@ class SDFEater {
         Reader periodic_reader = new InputStreamReader(periodic_resource);
         periodic_table_data = gson.fromJson(periodic_reader, type);
     }
-
-    /**
-     * Apache Jena Model for some formats
-     */
-    static Model jenaModel;
 
     /**
      * Initialize Apache Jena Model for some formats

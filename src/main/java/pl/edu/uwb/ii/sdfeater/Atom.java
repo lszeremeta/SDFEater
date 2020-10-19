@@ -34,15 +34,14 @@ class Atom {
     final float x;
     final float y;
     final float z;
-    
+
     /**
      * Atom class constructor
      *
      * @param symbol atom symbol
-     * @param x atom x position
-     * @param y atom y position
-     * @param z atom z position
-     *
+     * @param x      atom x position
+     * @param y      atom y position
+     * @param z      atom z position
      */
     Atom(String symbol, float x, float y, float z) {
         this.symbol = symbol;
