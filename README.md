@@ -93,7 +93,7 @@ Running SDFEater without parameters displays help.
 * `-i,--input <arg>` - input SDF file path (required)
 * `-f,--format <arg>` - output format (e.g. `cypher`, `jsonld`, `cvme`, `smiles`, `inchi`) (required; full list below)
 * `-p,--periodic` - add additional atoms data from [periodic table](https://github.com/lszeremeta/SDFEater/blob/master/src/main/resources/pl/edu/uwb/ii/sdfeater/periodic_table.json) (for `cypher` output format)
-* `-u,--urls` - try to generate full database URLs instead of IDs (enabled in `cvme`)
+* `-u,--urls` - try to generate full database URLs instead of IDs (always enabled in `cvme`)
 
 Remember about the appropriate file path when using Docker image. Suppose you mounted your local directory `/home/user/input` under `/app/input` and the path to the SDF file you want to use in SDFEater is `/home/user/input/file.sdf`. In this case, enter the path `/app/input/file.sdf` or `input/file.sdf` as the value of the `-i` argument.
 
