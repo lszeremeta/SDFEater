@@ -134,7 +134,7 @@ docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/inpu
 
 Returns simple HTML with added [Microdata](https://www.w3.org/TR/microdata/) and redirect output to `molecules.html` file. Run from pre-build Docker image.
 
-In `examples` directory in the this repository you can find example SDF files based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) and [DrugBank  open structures](https://www.drugbank.ca/releases/latest#open-data) databases.
+In `examples` directory you can find example SDF files based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) and [DrugBank  open structures](https://www.drugbank.ca/releases/latest#open-data) databases.
 
 ## Publications and resources
 
