@@ -281,6 +281,7 @@ class File {
             fstream.close();
         } catch (IOException | NumberFormatException e) {
             System.err.println("Error while parsing file: " + e.toString());
+            System.exit(2);
         }
 
         /* Do something AFTER file reading */
