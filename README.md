@@ -2,7 +2,7 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/fc5d5e2e22ce4616a041d97cdf1f3a11)](https://www.codacy.com/gh/lszeremeta/SDFEater/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lszeremeta/SDFEater&amp;utm_campaign=Badge_Grade) [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/lszeremeta/sdfeater?label=Docker%20image%20size)](https://hub.docker.com/r/lszeremeta/sdfeater)
 
-[SDF](https://pubs.acs.org/doi/abs/10.1021/ci00007a012) parser written in Java running from command-line interface (CLI). Do you love️ Docker? You can use a lightweight [SDFEater container](https://hub.docker.com/r/lszeremeta/sdfeater)! SDFEater not only ~~eats~~ parse your SDF files, but also can add additional data to the output. The choice of output formats is really wide.
+[SDF](https://pubs.acs.org/doi/abs/10.1021/ci00007a012) parser written in Java running from command-line interface (CLI). You don't need to have new Java installed! Java 8 and above are supported. Do you love️ Docker? You can use a lightweight [SDFEater container](https://hub.docker.com/r/lszeremeta/sdfeater)! SDFEater not only ~~eats~~ parse your SDF files, but also can add additional data to the output. The choice of output formats is really wide.
 
 ## How to start
 
@@ -10,7 +10,7 @@ You can use JAR file, run SDFEater from Docker image or build everything yoursel
 
 ### JAR file
 
-You need Java installed.
+You need Java 8+ installed.
 
 1. Download the ready-to-use JAR `SDFEater-VERSION-jar-with-dependencies.jar` file from [project release](https://github.com/lszeremeta/SDFEater/releases) asset.
 
