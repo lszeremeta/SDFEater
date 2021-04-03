@@ -58,13 +58,13 @@ class File {
      * appropriate program structures
      *
      * @param molecule Molecule object to which values from the file will be entered
-     * @param format   Output format: c - Cypher, r - cvme, s - smiles, n - inchi
+     * @param format   Output format from Format enum
      * @param urls     Try to generate full database URLs instead of IDs
      *                 (true/false)
      * @param periodic Map with additional atoms data from periodic table for
      *                 cypher format (true/false)
      */
-    void parse(Molecule molecule, char format, boolean urls, boolean periodic) {
+    void parse(Molecule molecule, SDFEater.Format format, boolean urls, boolean periodic) {
         try {
             FileInputStream fstream = new FileInputStream(filename);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -76,7 +76,7 @@ class File {
             /* Do something BEFORE file reading */
             switch (format) {
                 // JSON-LD with HTML
-                case 'd':
+                case jsonldhtml:
                     System.out.println("<!DOCTYPE html>\n" +
                             "<html lang=\"en\">\n" +
                             "  <head>\n" +
@@ -84,7 +84,7 @@ class File {
                             "    <script type=\"application/ld+json\">");
                     break;
                 // RDFa
-                case 'a':
+                case rdfa:
                     System.out.println("<!DOCTYPE html>");
                     System.out.println("<html lang='en'>");
                     System.out.println("  <head>");
@@ -93,7 +93,7 @@ class File {
                     System.out.println("  <body vocab='http://schema.org/'>");
                     break;
                 // Microdata
-                case 'm':
+                case microdata:
                     System.out.println("<!DOCTYPE html>");
                     System.out.println("<html lang='en'>");
                     System.out.println("  <head>");
@@ -130,7 +130,7 @@ class File {
                         pName = pName.substring(0, pName.length() - 1);
                     } else if (strLine.startsWith("$$$$")) {
                         switch (format) {
-                            case 'c':
+                            case cypher:
                                 molecule.printCypherMolecule();
                                 if (periodic) {
                                     molecule.printCypherAtomsWithPeriodicTableData();
@@ -140,28 +140,28 @@ class File {
                                 molecule.printCypherBonds();
                                 System.out.println(';');
                                 break;
-                            case 'r':
+                            case cvme:
                                 molecule.printChemSKOSMolecule();
                                 molecule.printChemSKOSAtomsAndBonds();
                                 break;
-                            case 's':
+                            case smiles:
                                 molecule.printSMILES();
                                 break;
-                            case 'i':
+                            case inchi:
                                 molecule.printInChI();
                                 break;
-                            case 't':
-                            case 'n':
-                            case 'j':
-                            case 'd':
-                            case 'x':
-                            case 'h':
+                            case turtle:
+                            case ntriples:
+                            case jsonld:
+                            case jsonldhtml:
+                            case rdfxml:
+                            case rdfthrift:
                                 molecule.addToJenaModel();
                                 break;
-                            case 'a':
+                            case rdfa:
                                 molecule.printRDFaMolecule();
                                 break;
-                            case 'm':
+                            case microdata:
                                 molecule.printMicrodataMolecule();
                                 break;
                             default:
@@ -286,31 +286,31 @@ class File {
 
         /* Do something AFTER file reading */
         switch (format) {
-            case 't':
+            case turtle:
                 jenaModel.write(System.out, "TURTLE");
                 break;
-            case 'n':
+            case ntriples:
                 jenaModel.write(System.out, "NTRIPLES");
                 break;
-            case 'j':
+            case jsonld:
                 jenaModel.write(System.out, "JSONLD");
                 break;
             // JSON-LD with HTML
-            case 'd':
+            case jsonldhtml:
                 jenaModel.write(System.out, "JSONLD");
                 System.out.println("    </script>\n" +
                         "  </head>\n" +
                         "</html>");
                 break;
-            case 'x':
+            case rdfxml:
                 jenaModel.write(System.out, "RDF/XML");
                 break;
-            case 'h':
+            case rdfthrift:
                 jenaModel.write(System.out, "RDFTHRIFT");
                 break;
             // RDFa and Microdata
-            case 'a':
-            case 'm':
+            case rdfa:
+            case microdata:
                 System.out.println("  </body>");
                 System.out.println("</html>");
                 break;

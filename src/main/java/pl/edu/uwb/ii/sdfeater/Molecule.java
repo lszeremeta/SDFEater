@@ -326,7 +326,7 @@ class Molecule {
      * Add main molecule data to Jena model
      */
     void addToJenaModel() {
-        Resource me = ResourceFactory.createResource();
+        Resource me = ResourceFactory.createResource("http://example.com/molecule#entity" + createID());
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
 
             String key = entry.getKey();

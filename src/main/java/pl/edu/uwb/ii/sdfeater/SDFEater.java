@@ -46,6 +46,24 @@ import java.util.Map;
 class SDFEater {
 
     /**
+     * Supported formats
+     */
+    public enum Format {
+        cypher,
+        cvme,
+        smiles,
+        inchi,
+        turtle,
+        ntriples,
+        rdfxml,
+        rdfthrift,
+        jsonldhtml,
+        jsonld,
+        rdfa,
+        microdata
+    }
+
+    /**
      * Stores all Atoms data from periodic table
      */
     static Map<String, Map<String, Object>> periodic_table_data;
@@ -104,35 +122,35 @@ class SDFEater {
                 String format = cmd.getOptionValue("format");
                 if (format.equalsIgnoreCase("cypher")) {
                     loadPeriodicTableData();
-                    file.parse(molecule, 'c', cmd.hasOption("urls"), cmd.hasOption("periodic"));
+                    file.parse(molecule, Format.cypher, cmd.hasOption("urls"), cmd.hasOption("periodic"));
                 } else if (format.equalsIgnoreCase("cvme")) {
-                    file.parse(molecule, 'r', true, false);
+                    file.parse(molecule, Format.cvme, true, false);
                 } else if (format.equalsIgnoreCase("smiles")) {
-                    file.parse(molecule, 's', false, false);
+                    file.parse(molecule, Format.smiles, false, false);
                 } else if (format.equalsIgnoreCase("inchi")) {
-                    file.parse(molecule, 'i', false, false);
+                    file.parse(molecule, Format.inchi, false, false);
                 } else if (format.equalsIgnoreCase("turtle")) {
                     initializeJenaModel();
-                    file.parse(molecule, 't', false, false);
+                    file.parse(molecule, Format.turtle, false, false);
                 } else if (format.equalsIgnoreCase("ntriples")) {
                     initializeJenaModel();
-                    file.parse(molecule, 'n', false, false);
+                    file.parse(molecule, Format.ntriples, false, false);
                 } else if (format.equalsIgnoreCase("jsonldhtml")) {
                     initializeJenaModel();
-                    file.parse(molecule, 'd', false, false);
+                    file.parse(molecule, Format.jsonldhtml, false, false);
                 } else if (format.equalsIgnoreCase("jsonld")) {
                     initializeJenaModel();
-                    file.parse(molecule, 'j', false, false);
+                    file.parse(molecule, Format.jsonld, false, false);
                 } else if (format.equalsIgnoreCase("rdfxml")) {
                     initializeJenaModel();
-                    file.parse(molecule, 'x', false, false);
+                    file.parse(molecule, Format.rdfxml, false, false);
                 } else if (format.equalsIgnoreCase("rdfthrift")) {
                     initializeJenaModel();
-                    file.parse(molecule, 'h', false, false);
+                    file.parse(molecule, Format.rdfthrift, false, false);
                 } else if (format.equalsIgnoreCase("rdfa")) {
-                    file.parse(molecule, 'a', false, false);
+                    file.parse(molecule, Format.rdfa, false, false);
                 } else if (format.equalsIgnoreCase("microdata")) {
-                    file.parse(molecule, 'm', false, false);
+                    file.parse(molecule, Format.microdata, false, false);
                 }
 
             }
