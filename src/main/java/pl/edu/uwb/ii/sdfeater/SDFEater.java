@@ -97,7 +97,9 @@ class SDFEater {
             cmd = parser.parse(options, args);
             String fileparam = cmd.getOptionValue("input");
             File file = new File(fileparam);
-            loadPeriodicTableData();
+            if (cmd.getOptionValue("format") == "cypherp" || cmd.getOptionValue("format") == "cypherup") {
+                loadPeriodicTableData();
+            }
             initializeJenaModel();
             file.parse(molecule, Format.valueOf(cmd.getOptionValue("format")), Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
         } catch (IllegalArgumentException e) {
