@@ -421,7 +421,8 @@ class Molecule {
         }
 
         if (output_str.length() > 0) {
-            System.out.println("    <div typeof='schema:MolecularEntity' about='http://example.com/molecule#entity" + createID() + "'>");
+            String mID = createID();
+            System.out.println("    <div typeof='schema:MolecularEntity' about='http://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
             System.out.print(output_str);
             System.out.println("    </div>");
         }
@@ -471,7 +472,8 @@ class Molecule {
         }
 
         if (output_str.length() > 0) {
-            System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='http://example.com/molecule#entity" + createID() + "'>");
+            String mID = createID();
+            System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='http://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
             System.out.print(output_str);
             System.out.println("    </div>");
         }
