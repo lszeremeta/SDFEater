@@ -97,7 +97,7 @@ class SDFEater {
             cmd = parser.parse(options, args);
             String fileparam = cmd.getOptionValue("input");
             File file = new File(fileparam);
-            if (cmd.getOptionValue("format") == "cypherp" || cmd.getOptionValue("format") == "cypherup") {
+            if (cmd.getOptionValue("format").equals("cypherp") || cmd.getOptionValue("format").equals("cypherup")) {
                 loadPeriodicTableData();
             }
             initializeJenaModel();
