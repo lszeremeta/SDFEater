@@ -40,7 +40,7 @@ import java.util.Map;
 /**
  * Main parser class
  *
- * @author Łukasz Szeremeta 2017-2018
+ * @author Łukasz Szeremeta 2017-2021
  * @author Dominik Tomaszuk 2017-2018
  */
 class SDFEater {
@@ -103,17 +103,8 @@ class SDFEater {
             if (cmd.hasOption("format")) {
                 String format = cmd.getOptionValue("format");
                 if (format.equalsIgnoreCase("cypher")) {
-                    if (cmd.hasOption("urls") && cmd.hasOption("periodic")) {
-                        loadPeriodicTableData();
-                        file.parse(molecule, 'c', true, true);
-                    } else if (!cmd.hasOption("urls") && cmd.hasOption("periodic")) {
-                        loadPeriodicTableData();
-                        file.parse(molecule, 'c', false, true);
-                    } else if (cmd.hasOption("urls") && !cmd.hasOption("periodic")) {
-                        file.parse(molecule, 'c', true, false);
-                    } else if (!cmd.hasOption("urls") && !cmd.hasOption("periodic")) {
-                        file.parse(molecule, 'c', false, false);
-                    }
+                    loadPeriodicTableData();
+                    file.parse(molecule, 'c', cmd.hasOption("urls"), cmd.hasOption("periodic"));
                 } else if (format.equalsIgnoreCase("cvme")) {
                     file.parse(molecule, 'r', true, false);
                 } else if (format.equalsIgnoreCase("smiles")) {

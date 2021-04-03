@@ -34,7 +34,7 @@ import static pl.edu.uwb.ii.sdfeater.SDFEater.jenaModel;
 /**
  * Class responsible for all file operations
  *
- * @author Łukasz Szeremeta 2017-2018
+ * @author Łukasz Szeremeta 2017-2021
  * @author Dominik Tomaszuk 2018
  */
 class File {
