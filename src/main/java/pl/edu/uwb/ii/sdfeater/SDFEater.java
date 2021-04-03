@@ -87,7 +87,7 @@ class SDFEater {
         Option formatarg = new Option("f", "format", true, "output format (cypher, cvme, smiles, inchi, turtle, ntriples, rdfxml, rdfthrift, jsonldhtml, jsonld, rdfa, microdata)");
         formatarg.setRequired(true);
         options.addOption(formatarg);
-        Option urls = new Option("u", "urls", false, "try to generate full database URLs instead of IDs (for cypher output format, enabled in cvme)");
+        Option urls = new Option("u", "urls", false, "try to generate full database URLs instead of IDs (for cypher output format, always enabled in cvme)");
         urls.setRequired(false);
         options.addOption(urls);
         Option periodic_data = new Option("p", "periodic", false, "add additional atoms data from periodic table (for cypher output format)");
