@@ -84,18 +84,12 @@ class SDFEater {
         Option input = new Option("i", "input", true, "input file path");
         input.setRequired(true);
         options.addOption(input);
-        Option formatarg = new Option("f", "format", true, "output format (cypher, cvme, smiles, inchi, turtle, ntriples, rdfxml, rdfthrift, jsonldhtml, jsonld, rdfa, microdata)");
+        Option formatarg = new Option("f", "format", true, "output format (cypher, cypheru, cypherp, cypherup, cvme, smiles, inchi, turtle, ntriples, rdfxml, rdfthrift, jsonldhtml, jsonld, rdfa, microdata)");
         formatarg.setRequired(true);
         options.addOption(formatarg);
         Option subject = new Option("s", "subject", true, "subject type (iri, uuid, bnode; iri by default); for all formats excluding cypher, cvme, smiles, inchi");
         subject.setRequired(false);
         options.addOption(subject);
-        Option urls = new Option("u", "urls", false, "try to generate full database URLs instead of IDs (for cypher output format, always enabled in cvme)");
-        urls.setRequired(false);
-        options.addOption(urls);
-        Option periodic_data = new Option("p", "periodic", false, "add additional atoms data from periodic table (for cypher output format)");
-        periodic_data.setRequired(false);
-        options.addOption(periodic_data);
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
@@ -103,57 +97,11 @@ class SDFEater {
             cmd = parser.parse(options, args);
             String fileparam = cmd.getOptionValue("input");
             File file = new File(fileparam);
-            if (cmd.hasOption("format")) {
-                String format = cmd.getOptionValue("format");
-                if (format.equalsIgnoreCase("cypher") && !cmd.hasOption("urls") && !cmd.hasOption("periodic")) {
-                    file.parse(molecule, Format.cypher, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("cypher") && cmd.hasOption("urls") && !cmd.hasOption("periodic")) {
-                    file.parse(molecule, Format.cypheru, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("cypher") && cmd.hasOption("periodic") && !cmd.hasOption("urls")) {
-                    loadPeriodicTableData();
-                    file.parse(molecule, Format.cypherp, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("cypher") && cmd.hasOption("urls") && cmd.hasOption("periodic")) {
-                    loadPeriodicTableData();
-                    file.parse(molecule, Format.cypherup, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("cvme")) {
-                    file.parse(molecule, Format.cvme, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("smiles")) {
-                    file.parse(molecule, Format.smiles, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("inchi")) {
-                    file.parse(molecule, Format.inchi, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("turtle")) {
-                    initializeJenaModel();
-                    file.parse(molecule, Format.turtle, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("ntriples")) {
-                    initializeJenaModel();
-                    file.parse(molecule, Format.ntriples, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("jsonldhtml")) {
-                    initializeJenaModel();
-                    file.parse(molecule, Format.jsonldhtml, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("jsonld")) {
-                    initializeJenaModel();
-                    file.parse(molecule, Format.jsonld, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("rdfxml")) {
-                    initializeJenaModel();
-                    file.parse(molecule, Format.rdfxml, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("rdfthrift")) {
-                    initializeJenaModel();
-                    file.parse(molecule, Format.rdfthrift, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("rdfa")) {
-                    file.parse(molecule, Format.rdfa, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else if (format.equalsIgnoreCase("microdata")) {
-                    file.parse(molecule, Format.microdata, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
-                } else {
-                    System.err.println("The selected format is not supported");
-                    formatter.printHelp("SDFEater.jar", options);
-                }
-
-            }
+            loadPeriodicTableData();
+            initializeJenaModel();
+            file.parse(molecule, Format.valueOf(cmd.getOptionValue("format")), Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
         } catch (IllegalArgumentException e) {
             System.err.println("Incorrect option selected");
-            formatter.printHelp("SDFEater.jar", options);
-        } catch (ParseException e) {
-            System.err.println("Parse error: " + e.getMessage());
             formatter.printHelp("SDFEater.jar", options);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());

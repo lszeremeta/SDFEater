@@ -92,9 +92,7 @@ Running SDFEater without parameters displays help.
 
 * `-i,--input <arg>` - input SDF file path (required)
 * `-f,--format <arg>` - output format (e.g. `cypher`, `jsonld`, `cvme`, `smiles`, `inchi`) (required; full list below)
-* `-p,--periodic` - add additional atoms data from [periodic table](https://github.com/lszeremeta/SDFEater/blob/master/src/main/resources/pl/edu/uwb/ii/sdfeater/periodic_table.json) (for `cypher` output format)
 * `-s,--subject <arg>` - subject type (`iri`, `uuid`, `bnode`; `iri` by default; for all formats excluding cypher, cvme, smiles, inchi)
-* `-u,--urls` - try to generate full database URLs instead of IDs (for `cypher` output format, always enabled in `cvme`)
 
 Remember about the appropriate file path when using Docker image. Suppose you mounted your local directory `/home/user/input` under `/app/input` and the path to the SDF file you want to use in SDFEater is `/home/user/input/file.sdf`. In this case, enter the path `/app/input/file.sdf` or `input/file.sdf` as the value of the `-i` argument.
 
@@ -103,6 +101,9 @@ Remember about the appropriate file path when using Docker image. Suppose you mo
 You can specify the output format using `-f,--format`. Available output formats:
 
 * `cypher` - [Cypher](https://neo4j.com/developer/cypher-query-language/) molecule, atoms, bonds and relation ready to [import to the Neo4j graph database](https://neo4j.com/developer/kb/export-sub-graph-to-cypher-and-import/),
+* `cypheru` - the same as `cypher` option but try to generate full database URLs instead of IDs,
+* `cypherp` - the same as `cypher` option but add additional atoms data from [periodic table](https://github.com/lszeremeta/SDFEater/blob/master/src/main/resources/pl/edu/uwb/ii/sdfeater/periodic_table.json),
+* `cypherup` - the same as `cypher` option but added URLs and additional atoms data from [periodic table](https://github.com/lszeremeta/SDFEater/blob/master/src/main/resources/pl/edu/uwb/ii/sdfeater/periodic_table.json),
 * `cvme` - [CVME](http://cs.aalto.fi/en/current/events/2017-09-22-002/) file format based on SKOS,
 * `smiles` - plain text SMILES (if available in the molecule property)
 * `inchi` - plain text InChI (if available in the molecule property)
@@ -118,7 +119,7 @@ You can specify the output format using `-f,--format`. Available output formats:
 ## Examples
 
 ```shell
-java -jar SDFEater-VERSION-jar-with-dependencies.jar -i ../examples/chebi_special_char_test.sdf -f cypher -up
+java -jar SDFEater-VERSION-jar-with-dependencies.jar -i ../examples/chebi_special_char_test.sdf -f cypherup
 ```
 
 Returns [Cypher](https://neo4j.com/developer/cypher-query-language/) with added periodic table data for atoms and replaced chemical database IDs with URL. SDFEater run from a JAR file.
