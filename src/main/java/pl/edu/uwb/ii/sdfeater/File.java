@@ -58,9 +58,10 @@ class File {
      * appropriate program structures
      *
      * @param molecule Molecule object to which values from the file will be entered
-     * @param format   Output format from Format enum
+     * @param format   Output format
+     * @param subject  Subject type
      */
-    void parse(Molecule molecule, SDFEater.Format format) {
+    void parse(Molecule molecule, SDFEater.Format format, SDFEater.Subject subject) {
         try {
             FileInputStream fstream = new FileInputStream(filename);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -156,13 +157,13 @@ class File {
                             case jsonldhtml:
                             case rdfxml:
                             case rdfthrift:
-                                molecule.addToJenaModel();
+                                molecule.addToJenaModel(subject);
                                 break;
                             case rdfa:
-                                molecule.printRDFaMolecule();
+                                molecule.printRDFaMolecule(subject);
                                 break;
                             case microdata:
-                                molecule.printMicrodataMolecule();
+                                molecule.printMicrodataMolecule(subject);
                                 break;
                             default:
                                 break;

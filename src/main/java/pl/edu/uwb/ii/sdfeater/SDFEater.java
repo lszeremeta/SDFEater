@@ -87,6 +87,9 @@ class SDFEater {
         Option formatarg = new Option("f", "format", true, "output format (cypher, cvme, smiles, inchi, turtle, ntriples, rdfxml, rdfthrift, jsonldhtml, jsonld, rdfa, microdata)");
         formatarg.setRequired(true);
         options.addOption(formatarg);
+        Option subject = new Option("s", "subject", true, "subject type (iri, uuid, bnode; iri by default); for all formats excluding cypher, cvme, smiles, inchi");
+        subject.setRequired(false);
+        options.addOption(subject);
         Option urls = new Option("u", "urls", false, "try to generate full database URLs instead of IDs (for cypher output format, always enabled in cvme)");
         urls.setRequired(false);
         options.addOption(urls);
@@ -103,51 +106,57 @@ class SDFEater {
             if (cmd.hasOption("format")) {
                 String format = cmd.getOptionValue("format");
                 if (format.equalsIgnoreCase("cypher") && !cmd.hasOption("urls") && !cmd.hasOption("periodic")) {
-                    file.parse(molecule, Format.cypher);
+                    file.parse(molecule, Format.cypher, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("cypher") && cmd.hasOption("urls") && !cmd.hasOption("periodic")) {
-                    file.parse(molecule, Format.cypheru);
+                    file.parse(molecule, Format.cypheru, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("cypher") && cmd.hasOption("periodic") && !cmd.hasOption("urls")) {
                     loadPeriodicTableData();
-                    file.parse(molecule, Format.cypherp);
+                    file.parse(molecule, Format.cypherp, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("cypher") && cmd.hasOption("urls") && cmd.hasOption("periodic")) {
                     loadPeriodicTableData();
-                    file.parse(molecule, Format.cypherup);
+                    file.parse(molecule, Format.cypherup, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("cvme")) {
-                    file.parse(molecule, Format.cvme);
+                    file.parse(molecule, Format.cvme, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("smiles")) {
-                    file.parse(molecule, Format.smiles);
+                    file.parse(molecule, Format.smiles, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("inchi")) {
-                    file.parse(molecule, Format.inchi);
+                    file.parse(molecule, Format.inchi, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("turtle")) {
                     initializeJenaModel();
-                    file.parse(molecule, Format.turtle);
+                    file.parse(molecule, Format.turtle, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("ntriples")) {
                     initializeJenaModel();
-                    file.parse(molecule, Format.ntriples);
+                    file.parse(molecule, Format.ntriples, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("jsonldhtml")) {
                     initializeJenaModel();
-                    file.parse(molecule, Format.jsonldhtml);
+                    file.parse(molecule, Format.jsonldhtml, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("jsonld")) {
                     initializeJenaModel();
-                    file.parse(molecule, Format.jsonld);
+                    file.parse(molecule, Format.jsonld, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("rdfxml")) {
                     initializeJenaModel();
-                    file.parse(molecule, Format.rdfxml);
+                    file.parse(molecule, Format.rdfxml, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("rdfthrift")) {
                     initializeJenaModel();
-                    file.parse(molecule, Format.rdfthrift);
+                    file.parse(molecule, Format.rdfthrift, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("rdfa")) {
-                    file.parse(molecule, Format.rdfa);
+                    file.parse(molecule, Format.rdfa, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else if (format.equalsIgnoreCase("microdata")) {
-                    file.parse(molecule, Format.microdata);
+                    file.parse(molecule, Format.microdata, Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
                 } else {
                     System.err.println("The selected format is not supported");
                     formatter.printHelp("SDFEater.jar", options);
                 }
 
             }
+        } catch (IllegalArgumentException e) {
+            System.err.println("Incorrect option selected");
+            formatter.printHelp("SDFEater.jar", options);
         } catch (ParseException e) {
-            System.err.println(e.getMessage());
+            System.err.println("Parse error: " + e.getMessage());
+            formatter.printHelp("SDFEater.jar", options);
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
             formatter.printHelp("SDFEater.jar", options);
         }
     }
@@ -171,5 +180,14 @@ class SDFEater {
         jsonld,
         rdfa,
         microdata
+    }
+
+    /**
+     * Subject type
+     */
+    public enum Subject {
+        iri,
+        uuid,
+        bnode
     }
 }

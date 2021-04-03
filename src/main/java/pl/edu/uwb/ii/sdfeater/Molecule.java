@@ -324,9 +324,20 @@ class Molecule {
 
     /**
      * Add main molecule data to Jena model
+     *
+     * @param subject subject type
      */
-    void addToJenaModel() {
-        Resource me = ResourceFactory.createResource("http://example.com/molecule#entity" + createID());
+    void addToJenaModel(SDFEater.Subject subject) {
+        Resource me = ResourceFactory.createResource();
+
+        if (subject == SDFEater.Subject.iri) {
+            me = ResourceFactory.createResource("http://example.com/molecule#entity" + createID());
+        } else if (subject == SDFEater.Subject.uuid) {
+            me = ResourceFactory.createResource("urn:uuid:" + uuid);
+        } else if (subject == SDFEater.Subject.bnode) {
+            me = ResourceFactory.createResource();
+        }
+
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
 
             String key = entry.getKey();
@@ -381,7 +392,7 @@ class Molecule {
     /**
      * Print main molecule data in RDFa
      */
-    void printRDFaMolecule() {
+    void printRDFaMolecule(SDFEater.Subject subject) {
         StringBuilder output_str = new StringBuilder();
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
@@ -421,8 +432,15 @@ class Molecule {
         }
 
         if (output_str.length() > 0) {
-            String mID = createID();
-            System.out.println("    <div typeof='schema:MolecularEntity' about='http://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
+            if (subject == SDFEater.Subject.iri) {
+                String mID = createID();
+                System.out.println("    <div typeof='schema:MolecularEntity' about='http://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
+            } else if (subject == SDFEater.Subject.uuid) {
+                System.out.println("    <div typeof='schema:MolecularEntity' about='urn:uuid:" + uuid + "'>");
+            } else if (subject == SDFEater.Subject.bnode) {
+                System.out.println("    <div typeof='schema:MolecularEntity' about='_:b" + createID() + "'>");
+            }
+
             System.out.print(output_str);
             System.out.println("    </div>");
         }
@@ -431,8 +449,10 @@ class Molecule {
 
     /**
      * Print main molecule data in Microdata
+     *
+     * @param subject subject type
      */
-    void printMicrodataMolecule() {
+    void printMicrodataMolecule(SDFEater.Subject subject) {
         StringBuilder output_str = new StringBuilder();
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
@@ -472,8 +492,15 @@ class Molecule {
         }
 
         if (output_str.length() > 0) {
-            String mID = createID();
-            System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='http://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
+            if (subject == SDFEater.Subject.iri) {
+                String mID = createID();
+                System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='http://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
+            } else if (subject == SDFEater.Subject.uuid) {
+                System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='urn:uuid:" + uuid + "'>");
+            } else if (subject == SDFEater.Subject.bnode) {
+                System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='_:b" + createID() + "'>");
+            }
+
             System.out.print(output_str);
             System.out.println("    </div>");
         }

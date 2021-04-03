@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Paths;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static pl.edu.uwb.ii.sdfeater.SDFEater.initializeJenaModel;
 import static pl.edu.uwb.ii.sdfeater.SDFEater.loadPeriodicTableData;
@@ -53,7 +54,7 @@ class OutputTest {
      */
     @Test
     void cypherRawContainsRequiredStrings() {
-        file.parse(molecule, SDFEater.Format.cypher);
+        file.parse(molecule, SDFEater.Format.cypher, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"CREATE (", "{", "}", ",", ")", ":", "[", "]", "'", ":", "->", ")-[:", "]->(", "symbol:", "C", "x:", "y:", "z:"};
         assertTrue(stringContainsAllValues(out, required));
@@ -64,7 +65,7 @@ class OutputTest {
      */
     @Test
     void cypherRawContainsAllMoleculeData() {
-        file.parse(molecule, SDFEater.Format.cypher);
+        file.parse(molecule, SDFEater.Format.cypher, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
     }
@@ -76,7 +77,7 @@ class OutputTest {
      */
     @Test
     void cypherURLContainsRequiredStrings() {
-        file.parse(molecule, SDFEater.Format.cypheru);
+        file.parse(molecule, SDFEater.Format.cypheru, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"CREATE (", "{", "}", ",", ")", ":", "'", ":", ")-[:", "]->(", "symbol:", "C", "x:", "y:", "z:", "http", "//", "/"};
         assertTrue(stringContainsAllValues(out, required));
@@ -87,7 +88,7 @@ class OutputTest {
      */
     @Test
     void cypherURLContainsAllMoleculeData() {
-        file.parse(molecule, SDFEater.Format.cypheru);
+        file.parse(molecule, SDFEater.Format.cypheru, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
     }
@@ -100,7 +101,7 @@ class OutputTest {
     @Test
     void cypherPeriodicContainsRequiredStrings() {
         loadPeriodicTableData();
-        file.parse(molecule, SDFEater.Format.cypherp);
+        file.parse(molecule, SDFEater.Format.cypherp, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"CREATE (", "{", "}", ",", ")", ":", "'", ":", ")-[:", "]->(", "symbol:", "C", "x:", "y:", "z:", "atomicNumber:", "name:", "Carbon", "atomicMass:", "bondingType:"};
         assertTrue(stringContainsAllValues(out, required));
@@ -112,7 +113,7 @@ class OutputTest {
     @Test
     void cypherPeriodicContainsAllMoleculeData() {
         loadPeriodicTableData();
-        file.parse(molecule, SDFEater.Format.cypherp);
+        file.parse(molecule, SDFEater.Format.cypherp, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
     }
@@ -125,7 +126,7 @@ class OutputTest {
     @Test
     void cypherAllContainsRequiredStrings() {
         loadPeriodicTableData();
-        file.parse(molecule, SDFEater.Format.cypherup);
+        file.parse(molecule, SDFEater.Format.cypherup, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"CREATE (", "{", "}", ",", ")", ":", "'", ":", ")-[:", "]->(", "symbol:", "C", "x:", "y:", "z:", "http", "//", "/", "atomicNumber:", "name:", "Carbon", "atomicMass:", "bondingType:"};
         assertTrue(stringContainsAllValues(out, required));
@@ -137,7 +138,7 @@ class OutputTest {
     @Test
     void cypherAllContainsAllMoleculeData() {
         loadPeriodicTableData();
-        file.parse(molecule, SDFEater.Format.cypherup);
+        file.parse(molecule, SDFEater.Format.cypherup, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
     }
@@ -149,7 +150,7 @@ class OutputTest {
      */
     @Test
     void cvmeContainsRequiredStrings() {
-        file.parse(molecule, SDFEater.Format.cvme);
+        file.parse(molecule, SDFEater.Format.cvme, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"skos:altLabel", "skos:definition", "skos:notation", "skos:prefLabel", "rdfs:seeAlso", "dbo:inchi", "dbp:inchikey", "dbo:casNumber", "skos:hiddenLabel", "skos:example", "urn:uuid:", "^^", "@", "chemskos:SMILES", ".", "<", ">", "http", ":", "//", "\"\"\"", "END", "C"};
         assertTrue(stringContainsAllValues(out, required));
@@ -160,7 +161,7 @@ class OutputTest {
      */
     @Test
     void cvmeContainsAllMoleculeData() {
-        file.parse(molecule, SDFEater.Format.cvme);
+        file.parse(molecule, SDFEater.Format.cvme, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
     }
@@ -172,7 +173,7 @@ class OutputTest {
      */
     @Test
     void smilesContainsSMILES() {
-        file.parse(molecule, SDFEater.Format.smiles);
+        file.parse(molecule, SDFEater.Format.smiles, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"[H][C@@]1(Oc2cc(O)cc(O)c2C[C@H]1O)c1ccc(O)c(O)c1", "CC1(C)[C@@H]2CC[C@@](C)(C2)C1=O"};
         assertTrue(stringContainsAllValues(out, required));
@@ -185,7 +186,7 @@ class OutputTest {
      */
     @Test
     void inchiContainsInChI() {
-        file.parse(molecule, SDFEater.Format.inchi);
+        file.parse(molecule, SDFEater.Format.inchi, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"InChI=1S/C15H14O6/c16-8-4-11(18)9-6-13(20)15(21-14(9)5-8)7-1-2-10(17)12(19)3-7/h1-5,13,15-20H,6H2/t13-,15-/m1/s1", "InChI=1S/C10H16O/c1-9(2)7-4-5-10(3,6-7)8(9)11/h7H,4-6H2,1-3H3/t7-,10+/m1/s1"};
         assertTrue(stringContainsAllValues(out, required));
@@ -199,7 +200,7 @@ class OutputTest {
     @Test
     void turtleContainsRequiredStrings() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.turtle);
+        file.parse(molecule, SDFEater.Format.turtle, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"@prefix", "schema.org", "rdf", "MolecularEntity", "[", ";", "]", ".", "<", ">", "http", "//", ":", "\""};
         assertTrue(stringContainsAllValues(out, required));
@@ -211,7 +212,7 @@ class OutputTest {
     @Test
     void turtleContainsAllMoleculeDataFields() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.turtle);
+        file.parse(molecule, SDFEater.Format.turtle, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeDataFields));
     }
@@ -222,9 +223,45 @@ class OutputTest {
     @Test
     void turtleContainsAllMoleculeData() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.turtle);
+        file.parse(molecule, SDFEater.Format.turtle, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
+    }
+
+    /**
+     * Test if Turtle output have IRI subject
+     */
+    @Test
+    void turtleHaveIRISubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.turtle, SDFEater.Subject.iri);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"http", "example.com", "molecule", "#", "entity"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if Turtle output have uuid subject
+     */
+    @Test
+    void turtleHaveUUIDSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.turtle, SDFEater.Subject.uuid);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"urn:uuid:"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if Turtle output have bNode subject
+     */
+    @Test
+    void turtleHaveBNodeSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.turtle, SDFEater.Subject.bnode);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"[", "]"};
+        assertTrue(stringContainsAllValues(out, required));
     }
 
     // N-Triples
@@ -235,7 +272,7 @@ class OutputTest {
     @Test
     void nTriplesContainsRequiredStrings() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.ntriples);
+        file.parse(molecule, SDFEater.Format.ntriples, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"schema.org", "rdf", "MolecularEntity", ".", "<", ">", "http", "//", ":", "\""};
         assertTrue(stringContainsAllValues(out, required));
@@ -247,7 +284,7 @@ class OutputTest {
     @Test
     void nTriplesContainsAllMoleculeDataFields() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.ntriples);
+        file.parse(molecule, SDFEater.Format.ntriples, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeDataFields));
     }
@@ -258,9 +295,45 @@ class OutputTest {
     @Test
     void nTriplesContainsAllMoleculeData() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.ntriples);
+        file.parse(molecule, SDFEater.Format.ntriples, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
+    }
+
+    /**
+     * Test if N-Triples output have IRI subject
+     */
+    @Test
+    void nTriplesHaveIRISubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.ntriples, SDFEater.Subject.iri);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"http", "example.com", "molecule", "#", "entity"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if N-Triples output have uuid subject
+     */
+    @Test
+    void nTriplesHaveUUIDSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.ntriples, SDFEater.Subject.uuid);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"urn:uuid:"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if N-Triples output have bNode subject
+     */
+    @Test
+    void nTriplesHaveBNodeSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.ntriples, SDFEater.Subject.bnode);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"_:"};
+        assertTrue(stringContainsAllValues(out, required));
     }
 
     // RDF/XML
@@ -271,7 +344,7 @@ class OutputTest {
     @Test
     void rdfXMLContainsRequiredStrings() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.rdfxml);
+        file.parse(molecule, SDFEater.Format.rdfxml, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"<", ">", "rdf:RDF", "xmlns:", "<rdf:Description", "type", "MolecularEntity", "schema", "</", "&lt;", "&gt;"};
         assertTrue(stringContainsAllValues(out, required));
@@ -283,7 +356,7 @@ class OutputTest {
     @Test
     void rdfXMLContainsAllMoleculeDataFields() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.rdfxml);
+        file.parse(molecule, SDFEater.Format.rdfxml, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeDataFields));
     }
@@ -294,9 +367,45 @@ class OutputTest {
     @Test
     void rdfXMLContainsAllMoleculeData() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.rdfxml);
+        file.parse(molecule, SDFEater.Format.rdfxml, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
+    }
+
+    /**
+     * Test if RDF/XML output have IRI subject
+     */
+    @Test
+    void rdfXMLHaveIRISubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.rdfxml, SDFEater.Subject.iri);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"http", "example.com", "molecule", "#", "entity"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if RDF/XML output have uuid subject
+     */
+    @Test
+    void rdfXMLHaveUUIDSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.rdfxml, SDFEater.Subject.uuid);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"urn:uuid:"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if RDF/XML output have bNode subject
+     */
+    @Test
+    void rdfXMLHaveBNodeSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.rdfxml, SDFEater.Subject.bnode);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"rdf:about"};
+        assertFalse(stringContainsAllValues(out, required));
     }
 
     // RDF Binary encoding using Thrift (rdfthrift)
@@ -307,7 +416,7 @@ class OutputTest {
     @Test
     void rdfthriftContainsRequiredStrings() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.rdfthrift);
+        file.parse(molecule, SDFEater.Format.rdfthrift, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"schema", "rdf"};
         assertTrue(stringContainsAllValues(out, required));
@@ -319,7 +428,7 @@ class OutputTest {
     @Test
     void rdfthriftContainsAllMoleculeDataFields() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.rdfthrift);
+        file.parse(molecule, SDFEater.Format.rdfthrift, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeDataFields));
     }
@@ -330,9 +439,45 @@ class OutputTest {
     @Test
     void rdfthriftContainsAllMoleculeData() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.rdfthrift);
+        file.parse(molecule, SDFEater.Format.rdfthrift, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
+    }
+
+    /**
+     * Test if rdfthrift output have IRI subject
+     */
+    @Test
+    void rdfthriftHaveIRISubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.rdfthrift, SDFEater.Subject.iri);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"http", "example.com", "molecule", "#", "entity"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if rdfthrift output have uuid subject
+     */
+    @Test
+    void rdfthriftHaveUUIDSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.rdfthrift, SDFEater.Subject.uuid);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"urn:uuid:"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if rdfthrift output have bNode subject
+     */
+    @Test
+    void rdfthriftHaveBNodeSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.rdfthrift, SDFEater.Subject.bnode);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"http", "example.com", "molecule", "#", "entity", "urn:uuid:"};
+        assertFalse(stringContainsAllValues(out, required));
     }
 
     // JSON-LD + HTML
@@ -343,7 +488,7 @@ class OutputTest {
     @Test
     void jsonldHtmlContainsRequiredStrings() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.jsonldhtml);
+        file.parse(molecule, SDFEater.Format.jsonldhtml, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"<", ">", "</", "script>", "@id", "{", "}", ",", "MolecularEntity"};
         assertTrue(stringContainsAllValues(out, required));
@@ -355,7 +500,7 @@ class OutputTest {
     @Test
     void jsonldHtmlContainsAllMoleculeDataFields() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.jsonldhtml);
+        file.parse(molecule, SDFEater.Format.jsonldhtml, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeDataFields));
     }
@@ -366,7 +511,7 @@ class OutputTest {
     @Test
     void jsonldHtmlContainsAllMoleculeData() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.jsonldhtml);
+        file.parse(molecule, SDFEater.Format.jsonldhtml, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
     }
@@ -379,7 +524,7 @@ class OutputTest {
     @Test
     void jsonldContainsRequiredStrings() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.jsonld);
+        file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"@id", "{", "}", ",", "MolecularEntity"};
         assertTrue(stringContainsAllValues(out, required));
@@ -391,7 +536,7 @@ class OutputTest {
     @Test
     void jsonldContainsAllMoleculeDataFields() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.jsonld);
+        file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeDataFields));
     }
@@ -402,9 +547,45 @@ class OutputTest {
     @Test
     void jsonldContainsAllMoleculeData() {
         initializeJenaModel();
-        file.parse(molecule, SDFEater.Format.jsonld);
+        file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
+    }
+
+    /**
+     * Test if JSON-LD output have IRI subject
+     */
+    @Test
+    void jsonldHaveIRISubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.iri);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"http", "example.com", "molecule", "#", "entity"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if JSON-LD output have uuid subject
+     */
+    @Test
+    void jsonldHaveUUIDSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.uuid);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"urn:uuid:"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if JSON-LD output have bNode subject
+     */
+    @Test
+    void jsonldHaveBNodeSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.bnode);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"_:b0"};
+        assertTrue(stringContainsAllValues(out, required));
     }
 
     // RDFa
@@ -414,7 +595,7 @@ class OutputTest {
      */
     @Test
     void rdfaContainsRequiredStrings() {
-        file.parse(molecule, SDFEater.Format.rdfa);
+        file.parse(molecule, SDFEater.Format.rdfa, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"<", ">", "</", "typeof", "property", "MolecularEntity", "&lt;", "&gt;"};
         assertTrue(stringContainsAllValues(out, required));
@@ -425,7 +606,7 @@ class OutputTest {
      */
     @Test
     void rdfaContainsAllMoleculeDataFields() {
-        file.parse(molecule, SDFEater.Format.rdfa);
+        file.parse(molecule, SDFEater.Format.rdfa, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeDataFields));
     }
@@ -435,9 +616,45 @@ class OutputTest {
      */
     @Test
     void rdfaContainsAllMoleculeData() {
-        file.parse(molecule, SDFEater.Format.rdfa);
+        file.parse(molecule, SDFEater.Format.rdfa, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
+    }
+
+    /**
+     * Test if RDFa output have IRI subject
+     */
+    @Test
+    void rdfaHaveIRISubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.rdfa, SDFEater.Subject.iri);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"http", "example.com", "molecule", "#", "entity"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if RDFa output have uuid subject
+     */
+    @Test
+    void rdfaHaveUUIDSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.rdfa, SDFEater.Subject.uuid);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"urn:uuid:"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if RDFa output have bNode subject
+     */
+    @Test
+    void rdfaHaveBNodeSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.rdfa, SDFEater.Subject.bnode);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"_:b"};
+        assertTrue(stringContainsAllValues(out, required));
     }
 
     // Microdata
@@ -447,7 +664,7 @@ class OutputTest {
      */
     @Test
     void microdataContainsRequiredStrings() {
-        file.parse(molecule, SDFEater.Format.microdata);
+        file.parse(molecule, SDFEater.Format.microdata, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"<", ">", "</", "itemscope", "itemtype", "itemprop", "MolecularEntity", "&lt;", "&gt;"};
         assertTrue(stringContainsAllValues(out, required));
@@ -458,7 +675,7 @@ class OutputTest {
      */
     @Test
     void microdataContainsAllMoleculeDataFields() {
-        file.parse(molecule, SDFEater.Format.microdata);
+        file.parse(molecule, SDFEater.Format.microdata, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeDataFields));
     }
@@ -468,9 +685,45 @@ class OutputTest {
      */
     @Test
     void microdataContainsAllMoleculeData() {
-        file.parse(molecule, SDFEater.Format.microdata);
+        file.parse(molecule, SDFEater.Format.microdata, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
+    }
+
+    /**
+     * Test if Microdata output have IRI subject
+     */
+    @Test
+    void microdataIRISubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.microdata, SDFEater.Subject.iri);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"http", "example.com", "molecule", "#", "entity"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if Microdata output have uuid subject
+     */
+    @Test
+    void microdataHaveUUIDSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.microdata, SDFEater.Subject.uuid);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"urn:uuid:"};
+        assertTrue(stringContainsAllValues(out, required));
+    }
+
+    /**
+     * Test if Microdata output have bNode subject
+     */
+    @Test
+    void microdataHaveBNodeSubject() {
+        initializeJenaModel();
+        file.parse(molecule, SDFEater.Format.microdata, SDFEater.Subject.bnode);
+        String out = outputStreamCaptor.toString();
+        String[] required = {"_:b"};
+        assertTrue(stringContainsAllValues(out, required));
     }
 
 }
