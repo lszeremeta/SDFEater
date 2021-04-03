@@ -59,12 +59,8 @@ class File {
      *
      * @param molecule Molecule object to which values from the file will be entered
      * @param format   Output format from Format enum
-     * @param urls     Try to generate full database URLs instead of IDs
-     *                 (true/false)
-     * @param periodic Map with additional atoms data from periodic table for
-     *                 cypher format (true/false)
      */
-    void parse(Molecule molecule, SDFEater.Format format, boolean urls, boolean periodic) {
+    void parse(Molecule molecule, SDFEater.Format format) {
         try {
             FileInputStream fstream = new FileInputStream(filename);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -131,12 +127,16 @@ class File {
                     } else if (strLine.startsWith("$$$$")) {
                         switch (format) {
                             case cypher:
+                            case cypheru:
                                 molecule.printCypherMolecule();
-                                if (periodic) {
-                                    molecule.printCypherAtomsWithPeriodicTableData();
-                                } else {
-                                    molecule.printCypherAtoms();
-                                }
+                                molecule.printCypherAtoms();
+                                molecule.printCypherBonds();
+                                System.out.println(';');
+                                break;
+                            case cypherp:
+                            case cypherup:
+                                molecule.printCypherMolecule();
+                                molecule.printCypherAtomsWithPeriodicTableData();
                                 molecule.printCypherBonds();
                                 System.out.println(';');
                                 break;
@@ -171,7 +171,7 @@ class File {
                         molfileReady = false;
                         //} else if (strLine.isEmpty()) {
                     } else if (!strLine.isEmpty()) {
-                        if (urls) {
+                        if (format == SDFEater.Format.cypheru || format == SDFEater.Format.cypherup || format == SDFEater.Format.cvme) {
                             // Database links
                             switch (pName) {
                                 case "Agricola Citation Links":

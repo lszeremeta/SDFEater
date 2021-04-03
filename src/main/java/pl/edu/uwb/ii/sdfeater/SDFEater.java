@@ -46,24 +46,6 @@ import java.util.Map;
 class SDFEater {
 
     /**
-     * Supported formats
-     */
-    public enum Format {
-        cypher,
-        cvme,
-        smiles,
-        inchi,
-        turtle,
-        ntriples,
-        rdfxml,
-        rdfthrift,
-        jsonldhtml,
-        jsonld,
-        rdfa,
-        microdata
-    }
-
-    /**
      * Stores all Atoms data from periodic table
      */
     static Map<String, Map<String, Object>> periodic_table_data;
@@ -105,7 +87,7 @@ class SDFEater {
         Option formatarg = new Option("f", "format", true, "output format (cypher, cvme, smiles, inchi, turtle, ntriples, rdfxml, rdfthrift, jsonldhtml, jsonld, rdfa, microdata)");
         formatarg.setRequired(true);
         options.addOption(formatarg);
-        Option urls = new Option("u", "urls", false, "try to generate full database URLs instead of IDs (enabled in cvme)");
+        Option urls = new Option("u", "urls", false, "try to generate full database URLs instead of IDs (for cypher output format, enabled in cvme)");
         urls.setRequired(false);
         options.addOption(urls);
         Option periodic_data = new Option("p", "periodic", false, "add additional atoms data from periodic table (for cypher output format)");
@@ -120,43 +102,74 @@ class SDFEater {
             File file = new File(fileparam);
             if (cmd.hasOption("format")) {
                 String format = cmd.getOptionValue("format");
-                if (format.equalsIgnoreCase("cypher")) {
+                if (format.equalsIgnoreCase("cypher") && !cmd.hasOption("urls") && !cmd.hasOption("periodic")) {
+                    file.parse(molecule, Format.cypher);
+                } else if (format.equalsIgnoreCase("cypher") && cmd.hasOption("urls") && !cmd.hasOption("periodic")) {
+                    file.parse(molecule, Format.cypheru);
+                } else if (format.equalsIgnoreCase("cypher") && cmd.hasOption("periodic") && !cmd.hasOption("urls")) {
                     loadPeriodicTableData();
-                    file.parse(molecule, Format.cypher, cmd.hasOption("urls"), cmd.hasOption("periodic"));
+                    file.parse(molecule, Format.cypherp);
+                } else if (format.equalsIgnoreCase("cypher") && cmd.hasOption("urls") && cmd.hasOption("periodic")) {
+                    loadPeriodicTableData();
+                    file.parse(molecule, Format.cypherup);
                 } else if (format.equalsIgnoreCase("cvme")) {
-                    file.parse(molecule, Format.cvme, true, false);
+                    file.parse(molecule, Format.cvme);
                 } else if (format.equalsIgnoreCase("smiles")) {
-                    file.parse(molecule, Format.smiles, false, false);
+                    file.parse(molecule, Format.smiles);
                 } else if (format.equalsIgnoreCase("inchi")) {
-                    file.parse(molecule, Format.inchi, false, false);
+                    file.parse(molecule, Format.inchi);
                 } else if (format.equalsIgnoreCase("turtle")) {
                     initializeJenaModel();
-                    file.parse(molecule, Format.turtle, false, false);
+                    file.parse(molecule, Format.turtle);
                 } else if (format.equalsIgnoreCase("ntriples")) {
                     initializeJenaModel();
-                    file.parse(molecule, Format.ntriples, false, false);
+                    file.parse(molecule, Format.ntriples);
                 } else if (format.equalsIgnoreCase("jsonldhtml")) {
                     initializeJenaModel();
-                    file.parse(molecule, Format.jsonldhtml, false, false);
+                    file.parse(molecule, Format.jsonldhtml);
                 } else if (format.equalsIgnoreCase("jsonld")) {
                     initializeJenaModel();
-                    file.parse(molecule, Format.jsonld, false, false);
+                    file.parse(molecule, Format.jsonld);
                 } else if (format.equalsIgnoreCase("rdfxml")) {
                     initializeJenaModel();
-                    file.parse(molecule, Format.rdfxml, false, false);
+                    file.parse(molecule, Format.rdfxml);
                 } else if (format.equalsIgnoreCase("rdfthrift")) {
                     initializeJenaModel();
-                    file.parse(molecule, Format.rdfthrift, false, false);
+                    file.parse(molecule, Format.rdfthrift);
                 } else if (format.equalsIgnoreCase("rdfa")) {
-                    file.parse(molecule, Format.rdfa, false, false);
+                    file.parse(molecule, Format.rdfa);
                 } else if (format.equalsIgnoreCase("microdata")) {
-                    file.parse(molecule, Format.microdata, false, false);
+                    file.parse(molecule, Format.microdata);
+                } else {
+                    System.err.println("The selected format is not supported");
+                    formatter.printHelp("SDFEater.jar", options);
                 }
 
             }
         } catch (ParseException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             formatter.printHelp("SDFEater.jar", options);
         }
+    }
+
+    /**
+     * Supported formats
+     */
+    public enum Format {
+        cypher,
+        cypheru,
+        cypherp,
+        cypherup,
+        cvme,
+        smiles,
+        inchi,
+        turtle,
+        ntriples,
+        rdfxml,
+        rdfthrift,
+        jsonldhtml,
+        jsonld,
+        rdfa,
+        microdata
     }
 }
