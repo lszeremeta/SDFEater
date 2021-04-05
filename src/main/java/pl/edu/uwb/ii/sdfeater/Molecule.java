@@ -24,6 +24,7 @@
  */
 package pl.edu.uwb.ii.sdfeater;
 
+import com.google.gson.Gson;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
@@ -42,7 +43,7 @@ import static pl.edu.uwb.ii.sdfeater.SDFEater.periodic_table_data;
 /**
  * Class that stores information about chemical molecule
  *
- * @author Łukasz Szeremeta 2017-2019
+ * @author Łukasz Szeremeta 2017-2021
  * @author Dominik Tomaszuk 2017-2018
  */
 class Molecule {
@@ -390,7 +391,73 @@ class Molecule {
     }
 
     /**
+     * Print main molecule data in JSON-LD
+     *
+     * @param subject subject type
+     */
+    void printJSONLDMolecule(SDFEater.Subject subject) {
+        StringBuilder output_str = new StringBuilder();
+
+        for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
+            String key = entry.getKey();
+            List<String> values = entry.getValue();
+
+            if ("SMILES".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      \"smiles\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
+            } else if ("Formulae".equals(key) || "FORMULA".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      \"molecularFormula\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
+            } else if ("Definition".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      \"description\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
+            } else if ("InChIKey".equals(key) || "INCHI_KEY".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      \"inChIKey\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
+            } else if ("InChI".equals(key) || "INCHI_IDENTIFIER".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      \"inChI\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
+            } else if ("Mass".equals(key) || "MOLECULAR_WEIGHT".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      \"molecularWeight\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
+            } else if ("IUPAC Names".equals(key) || "JCHEM_IUPAC".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      \"iupacName\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
+            } else if ("CAS Registry Numbers".equals(key) || "CAS_NUMBER".equals((key))) {
+                String value = values.get(0);
+                output_str.append("      \"identifier\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
+            } else if ("Synonyms".equals(key) || "SYNONYMS".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      \"alternateName\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
+            } else if ("COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
+                String value = values.get(0);
+                output_str.append("      \"name\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
+            }
+        }
+
+        if (output_str.length() > 0) {
+            output_str.setLength(output_str.length() - 2);
+            System.out.println("    {");
+            if (subject == SDFEater.Subject.iri) {
+                System.out.println("      \"@id\" : \"http://example.com/molecule#entity" + createID() + "\",");
+            } else if (subject == SDFEater.Subject.uuid) {
+                System.out.println("      \"@id\" : \"urn:uuid:" + uuid + "\",");
+            } else if (subject == SDFEater.Subject.bnode) {
+                System.out.println("      \"@id\" : \"_:b" + createID() + "\",");
+            }
+            System.out.println("      \"@type\" : \"https://schema.org/MolecularEntity\",");
+
+            System.out.print(output_str);
+            System.out.println();
+            System.out.println("    },");
+        }
+
+    }
+
+    /**
      * Print main molecule data in RDFa
+     *
+     * @param subject subject type
      */
     void printRDFaMolecule(SDFEater.Subject subject) {
         StringBuilder output_str = new StringBuilder();
@@ -534,6 +601,20 @@ class Molecule {
             return value + ", ";
         } else {
             return "'" + value + "', ";
+        }
+    }
+
+    /**
+     * Detect if value is number and use this in JSON-LD output
+     *
+     * @param value Value to check
+     * @return valid JSON value
+     */
+    private String printValueAsNumberOrStringInJSONLD(String value) {
+        if (isNumber(value)) {
+            return value;
+        } else {
+            return new Gson().toJson(value);
         }
     }
 

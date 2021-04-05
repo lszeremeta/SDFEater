@@ -14,6 +14,8 @@ import static pl.edu.uwb.ii.sdfeater.SDFEater.loadPeriodicTableData;
 
 /**
  * Output data tests
+ *
+ * @author Łukasz Szeremeta 2021
  */
 class OutputTest {
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -487,7 +489,6 @@ class OutputTest {
      */
     @Test
     void jsonldHtmlContainsRequiredStrings() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.jsonldhtml, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"<", ">", "</", "script>", "@id", "{", "}", ",", "MolecularEntity"};
@@ -499,7 +500,6 @@ class OutputTest {
      */
     @Test
     void jsonldHtmlContainsAllMoleculeDataFields() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.jsonldhtml, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeDataFields));
@@ -510,7 +510,6 @@ class OutputTest {
      */
     @Test
     void jsonldHtmlContainsAllMoleculeData() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.jsonldhtml, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
@@ -523,7 +522,6 @@ class OutputTest {
      */
     @Test
     void jsonldContainsRequiredStrings() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"@id", "{", "}", ",", "MolecularEntity"};
@@ -535,7 +533,6 @@ class OutputTest {
      */
     @Test
     void jsonldContainsAllMoleculeDataFields() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeDataFields));
@@ -546,7 +543,6 @@ class OutputTest {
      */
     @Test
     void jsonldContainsAllMoleculeData() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         assertTrue(stringContainsAllValues(out, testMoleculeData));
@@ -557,7 +553,6 @@ class OutputTest {
      */
     @Test
     void jsonldHaveIRISubject() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
         String[] required = {"http", "example.com", "molecule", "#", "entity"};
@@ -569,7 +564,6 @@ class OutputTest {
      */
     @Test
     void jsonldHaveUUIDSubject() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.uuid);
         String out = outputStreamCaptor.toString();
         String[] required = {"urn:uuid:"};
@@ -581,7 +575,6 @@ class OutputTest {
      */
     @Test
     void jsonldHaveBNodeSubject() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.bnode);
         String out = outputStreamCaptor.toString();
         String[] required = {"_:b0"};

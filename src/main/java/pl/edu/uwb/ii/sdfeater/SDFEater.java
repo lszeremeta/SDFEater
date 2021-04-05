@@ -97,10 +97,20 @@ class SDFEater {
             cmd = parser.parse(options, args);
             String fileparam = cmd.getOptionValue("input");
             File file = new File(fileparam);
-            if (cmd.getOptionValue("format").equals("cypherp") || cmd.getOptionValue("format").equals("cypherup")) {
-                loadPeriodicTableData();
+
+            // load and set additional modules for formats
+            switch (cmd.getOptionValue("format")) {
+                case "cypherp":
+                case "cypherup":
+                    loadPeriodicTableData();
+                    break;
+                case "turtle":
+                case "ntriples":
+                case "rdfxml":
+                case "rdfthrift":
+                    initializeJenaModel();
+                    break;
             }
-            initializeJenaModel();
             file.parse(molecule, Format.valueOf(cmd.getOptionValue("format")), Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
         } catch (IllegalArgumentException e) {
             System.err.println("Incorrect option selected");
