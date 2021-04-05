@@ -79,7 +79,7 @@ class File {
                             "<html lang=\"en\">\n" +
                             "  <head>\n" +
                             "    <title>Example Document</title>\n" +
-                            "    <script type=\"application/ld+json\">" +
+                            "    <script type=\"application/ld+json\">\n" +
                             "{\n" +
                             "  \"@graph\" : [\n" +
                             "    {\n" +
@@ -489,7 +489,7 @@ class File {
                         "    },\n" +
                         "    \"schema\" : \"https://schema.org/\"\n" +
                         "  }\n" +
-                        "}" +
+                        "}\n" +
                         "    </script>\n" +
                         "  </head>\n" +
                         "</html>");
