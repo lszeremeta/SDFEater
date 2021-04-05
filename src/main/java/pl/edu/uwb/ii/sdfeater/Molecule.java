@@ -332,7 +332,7 @@ class Molecule {
         Resource me = ResourceFactory.createResource();
 
         if (subject == SDFEater.Subject.iri) {
-            me = ResourceFactory.createResource("http://example.com/molecule#entity" + createID());
+            me = ResourceFactory.createResource("https://example.com/molecule#entity" + createID());
         } else if (subject == SDFEater.Subject.uuid) {
             me = ResourceFactory.createResource("urn:uuid:" + uuid);
         } else if (subject == SDFEater.Subject.bnode) {
@@ -439,7 +439,7 @@ class Molecule {
             output_str.setLength(output_str.length() - 2);
             System.out.println("    {");
             if (subject == SDFEater.Subject.iri) {
-                System.out.println("      \"@id\" : \"http://example.com/molecule#entity" + createID() + "\",");
+                System.out.println("      \"@id\" : \"https://example.com/molecule#entity" + createID() + "\",");
             } else if (subject == SDFEater.Subject.uuid) {
                 System.out.println("      \"@id\" : \"urn:uuid:" + uuid + "\",");
             } else if (subject == SDFEater.Subject.bnode) {
@@ -501,7 +501,7 @@ class Molecule {
         if (output_str.length() > 0) {
             if (subject == SDFEater.Subject.iri) {
                 String mID = createID();
-                System.out.println("    <div typeof='schema:MolecularEntity' about='http://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
+                System.out.println("    <div typeof='schema:MolecularEntity' about='https://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
             } else if (subject == SDFEater.Subject.uuid) {
                 System.out.println("    <div typeof='schema:MolecularEntity' about='urn:uuid:" + uuid + "'>");
             } else if (subject == SDFEater.Subject.bnode) {
@@ -561,11 +561,11 @@ class Molecule {
         if (output_str.length() > 0) {
             if (subject == SDFEater.Subject.iri) {
                 String mID = createID();
-                System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='http://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
+                System.out.println("    <div itemscope itemtype='https://schema.org/MolecularEntity' itemid='https://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
             } else if (subject == SDFEater.Subject.uuid) {
-                System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='urn:uuid:" + uuid + "'>");
+                System.out.println("    <div itemscope itemtype='https://schema.org/MolecularEntity' itemid='urn:uuid:" + uuid + "'>");
             } else if (subject == SDFEater.Subject.bnode) {
-                System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='_:b" + createID() + "'>");
+                System.out.println("    <div itemscope itemtype='https://schema.org/MolecularEntity' itemid='_:b" + createID() + "'>");
             }
 
             System.out.print(output_str);
