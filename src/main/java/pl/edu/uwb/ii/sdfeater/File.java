@@ -76,7 +76,7 @@ class File {
             switch (format) {
                 // JSON-LD with HTML
                 case jsonldhtml:
-                    System.out.println("<!DOCTYPE html>\n" +
+                    output_str.append("<!DOCTYPE html>\n" +
                             "<html lang=\"en\">\n" +
                             "  <head>\n" +
                             "    <title>Example Document</title>\n" +
@@ -109,10 +109,10 @@ class File {
                             "      },\n" +
                             "      \"https://schema.org/temporal\": " + Year.now().toString() + ",\n" +
                             "      \"https://schema.org/url\": \"https://github.com/lszeremeta/SDFEater\"\n" +
-                            "    },");
+                            "    },\n");
                     break;
                 case jsonld:
-                    System.out.println(
+                    output_str.append(
                             "{\n" +
                                     "  \"@graph\" : [\n" +
                                     "    {\n" +
@@ -141,7 +141,7 @@ class File {
                                     "      },\n" +
                                     "      \"https://schema.org/temporal\": " + Year.now().toString() + ",\n" +
                                     "      \"https://schema.org/url\": \"https://github.com/lszeremeta/SDFEater\"\n" +
-                                    "    },");
+                                    "    },\n");
                     break;
                 // RDFa
                 case rdfa:
@@ -389,8 +389,7 @@ class File {
                 break;
             case jsonld:
                 output_str.setLength(output_str.length() - 2);
-                System.out.println(output_str);
-                System.out.println("  ],\n" +
+                output_str.append("\n  ],\n" +
                         "  \"@context\" : {\n" +
                         "    \"identifier\" : {\n" +
                         "      \"@id\" : \"https://schema.org/identifier\"\n" +
@@ -440,12 +439,12 @@ class File {
                         "    \"schema\" : \"https://schema.org/\"\n" +
                         "  }\n" +
                         "}");
+                System.out.print(output_str);
                 break;
             // JSON-LD with HTML
             case jsonldhtml:
                 output_str.setLength(output_str.length() - 2);
-                System.out.println(output_str);
-                System.out.println("  ],\n" +
+                output_str.append("\n  ],\n" +
                         "  \"@context\" : {\n" +
                         "    \"identifier\" : {\n" +
                         "      \"@id\" : \"https://schema.org/identifier\"\n" +
@@ -498,6 +497,7 @@ class File {
                         "    </script>\n" +
                         "  </head>\n" +
                         "</html>");
+                System.out.print(output_str);
                 break;
             case rdfxml:
                 jenaModel.write(System.out, "RDF/XML");
