@@ -439,7 +439,7 @@ class File {
                         "    \"schema\" : \"https://schema.org/\"\n" +
                         "  }\n" +
                         "}");
-                System.out.print(output_str);
+                System.out.println(output_str);
                 break;
             // JSON-LD with HTML
             case jsonldhtml:
@@ -497,7 +497,7 @@ class File {
                         "    </script>\n" +
                         "  </head>\n" +
                         "</html>");
-                System.out.print(output_str);
+                System.out.println(output_str);
                 break;
             case rdfxml:
                 jenaModel.write(System.out, "RDF/XML");
