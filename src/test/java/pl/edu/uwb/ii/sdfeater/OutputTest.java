@@ -20,7 +20,7 @@ import static pl.edu.uwb.ii.sdfeater.SDFEater.loadPeriodicTableData;
 class OutputTest {
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
     private final String[] testMoleculeDataFields = {"alternateName", "description", "identifier", "inChI", "inChIKey", "iupacName", "molecularFormula", "molecularWeight", "smiles"};
-    private final String[] testMoleculeData = {"(+)-2-fenchanone", "A fenchone that has", "4695-62-9", "InChI=1S/C10H16O/c1-9(2)7-4-5-10(3,6-7)8(9)11/h7H,4-6H2,1-3H3/t7-,10+/m1/s1", "LHXDLQBQYFFVNW-XCBNKYQSSA-N", "(1S,4R)-fenchan-2-one", "C10H16O", "152.23340", "CC1(C)[C@@H]2CC[C@@](C)(C2)C1=O", "(-)-Epicatechin", "A catechin with", "490-46-0", "InChI=1S/C15H14O6/c16-8-4-11(18)9-6-13(20)15(21-14(9)5-8)7-1-2-10(17)12(19)3-7/h1-5,13,15-20H,6H2/t13-,15-/m1/s1", "PFTAWBLQPZVEMU-UKRRQHHQSA-N", "(2R,3R)-2-(3,4-dihydroxyphenyl)-3,4-dihydro-2H-chromene-3,5,7-triol", "C15H14O6", "290.26810", "[H][C@@]1(Oc2cc(O)cc(O)c2C[C@H]1O)c1ccc(O)c(O)c1"};
+    private final String[] testMoleculeData = {"(+)-2-fenchanone", "A fenchone that has", "4695-62-9", "InChI", "1S/C10H16O/c1-9(2)7-4-5-10(3,6-7)8(9)11/h7H,4-6H2,1-3H3/t7-,10+/m1/s1", "LHXDLQBQYFFVNW-XCBNKYQSSA-N", "(1S,4R)-fenchan-2-one", "C10H16O", "152.23340", "CC1(C)[C@@H]2CC[C@@](C)(C2)C1", "(-)-Epicatechin", "A catechin with", "490-46-0", "1S/C15H14O6/c16-8-4-11(18)9-6-13(20)15(21-14(9)5-8)7-1-2-10(17)12(19)3-7/h1-5,13,15-20H,6H2/t13-,15-/m1/s1", "PFTAWBLQPZVEMU-UKRRQHHQSA-N", "(2R,3R)-2-(3,4-dihydroxyphenyl)-3,4-dihydro-2H-chromene-3,5,7-triol", "C15H14O6", "290.26810", "[H][C@@]1(Oc2cc(O)cc(O)c2C[C@H]1O)c1ccc(O)c(O)c1"};
     private final File file = new File(Paths.get("src", "test", "resources", "chebi_test.sdf").toFile().getAbsolutePath());
     private Molecule molecule;
 
@@ -577,7 +577,7 @@ class OutputTest {
     void jsonldHaveBNodeSubject() {
         file.parse(molecule, SDFEater.Format.jsonld, SDFEater.Subject.bnode);
         String out = outputStreamCaptor.toString();
-        String[] required = {"_:b0"};
+        String[] required = {"_:b"};
         assertTrue(stringContainsAllValues(out, required));
     }
 

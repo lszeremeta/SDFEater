@@ -391,12 +391,23 @@ class Molecule {
     }
 
     /**
-     * Print main molecule data in JSON-LD
+     * Construct molecule data in JSON-LD
      *
      * @param subject subject type
+     * @return Molecule data in JSON-LD
      */
-    void printJSONLDMolecule(SDFEater.Subject subject) {
+    StringBuilder constructJSONLDMolecule(SDFEater.Subject subject) {
         StringBuilder output_str = new StringBuilder();
+
+        output_str.append("    {\n");
+        if (subject == SDFEater.Subject.iri) {
+            output_str.append("      \"@id\" : \"https://example.com/molecule#entity" + createID() + "\",\n");
+        } else if (subject == SDFEater.Subject.uuid) {
+            output_str.append("      \"@id\" : \"urn:uuid:" + uuid + "\",\n");
+        } else if (subject == SDFEater.Subject.bnode) {
+            output_str.append("      \"@id\" : \"_:b" + createID() + "\",\n");
+        }
+        output_str.append("      \"@type\" : \"https://schema.org/MolecularEntity\",\n");
 
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
@@ -435,23 +446,10 @@ class Molecule {
             }
         }
 
-        if (output_str.length() > 0) {
-            output_str.setLength(output_str.length() - 2);
-            System.out.println("    {");
-            if (subject == SDFEater.Subject.iri) {
-                System.out.println("      \"@id\" : \"https://example.com/molecule#entity" + createID() + "\",");
-            } else if (subject == SDFEater.Subject.uuid) {
-                System.out.println("      \"@id\" : \"urn:uuid:" + uuid + "\",");
-            } else if (subject == SDFEater.Subject.bnode) {
-                System.out.println("      \"@id\" : \"_:b" + createID() + "\",");
-            }
-            System.out.println("      \"@type\" : \"https://schema.org/MolecularEntity\",");
+        output_str.setLength(output_str.length() - 2);
+        output_str.append("\n    },\n");
 
-            System.out.print(output_str);
-            System.out.println();
-            System.out.println("    },");
-        }
-
+        return output_str;
     }
 
     /**

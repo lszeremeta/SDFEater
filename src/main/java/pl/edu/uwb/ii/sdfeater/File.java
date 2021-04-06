@@ -63,6 +63,7 @@ class File {
      * @param subject  Subject type
      */
     void parse(Molecule molecule, SDFEater.Format format, SDFEater.Subject subject) {
+        StringBuilder output_str = new StringBuilder();
         try {
             FileInputStream fstream = new FileInputStream(filename);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
@@ -250,7 +251,7 @@ class File {
                                 break;
                             case jsonldhtml:
                             case jsonld:
-                                molecule.printJSONLDMolecule(subject);
+                                output_str.append(molecule.constructJSONLDMolecule(subject));
                                 break;
                             case rdfa:
                                 molecule.printRDFaMolecule(subject);
@@ -387,6 +388,8 @@ class File {
                 jenaModel.write(System.out, "NTRIPLES");
                 break;
             case jsonld:
+                output_str.setLength(output_str.length() - 2);
+                System.out.println(output_str);
                 System.out.println("  ],\n" +
                         "  \"@context\" : {\n" +
                         "    \"identifier\" : {\n" +
@@ -440,6 +443,8 @@ class File {
                 break;
             // JSON-LD with HTML
             case jsonldhtml:
+                output_str.setLength(output_str.length() - 2);
+                System.out.println(output_str);
                 System.out.println("  ],\n" +
                         "  \"@context\" : {\n" +
                         "    \"identifier\" : {\n" +
