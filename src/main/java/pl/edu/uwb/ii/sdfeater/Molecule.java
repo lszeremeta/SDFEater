@@ -343,47 +343,47 @@ class Molecule {
 
             String key = entry.getKey();
             List<String> values = entry.getValue();
-            jenaModel.add(me, RDF.type, "https://schema.org/MolecularEntity");
+            jenaModel.add(me, RDF.type, "http://schema.org/MolecularEntity");
 
             if ("SMILES".equals(key)) {
                 String value = values.get(0);
-                Property p = jenaModel.createProperty("https://schema.org/smiles");
+                Property p = jenaModel.createProperty("http://schema.org/smiles");
                 jenaModel.add(me, p, value);
             } else if ("Formulae".equals(key) || "FORMULA".equals(key)) {
                 String value = values.get(0);
-                Property p = jenaModel.createProperty("https://schema.org/molecularFormula");
+                Property p = jenaModel.createProperty("http://schema.org/molecularFormula");
                 jenaModel.add(me, p, value);
             } else if ("Definition".equals(key)) {
                 String value = values.get(0);
-                Property p = jenaModel.createProperty("https://schema.org/description");
+                Property p = jenaModel.createProperty("http://schema.org/description");
                 jenaModel.add(me, p, value);
             } else if ("InChIKey".equals(key) || "INCHI_KEY".equals(key)) {
                 String value = values.get(0);
-                Property p = jenaModel.createProperty("https://schema.org/inChIKey");
+                Property p = jenaModel.createProperty("http://schema.org/inChIKey");
                 jenaModel.add(me, p, value);
             } else if ("InChI".equals(key) || "INCHI_IDENTIFIER".equals(key)) {
                 String value = values.get(0);
-                Property p = jenaModel.createProperty("https://schema.org/inChI");
+                Property p = jenaModel.createProperty("http://schema.org/inChI");
                 jenaModel.add(me, p, value);
             } else if ("Mass".equals(key) || "MOLECULAR_WEIGHT".equals(key)) {
                 String value = values.get(0);
-                Property p = jenaModel.createProperty("https://schema.org/molecularWeight");
+                Property p = jenaModel.createProperty("http://schema.org/molecularWeight");
                 jenaModel.add(me, p, value);
             } else if ("IUPAC Names".equals(key) || "JCHEM_IUPAC".equals(key)) {
                 String value = values.get(0);
-                Property p = jenaModel.createProperty("https://schema.org/iupacName");
+                Property p = jenaModel.createProperty("http://schema.org/iupacName");
                 jenaModel.add(me, p, value);
             } else if ("CAS Registry Numbers".equals(key) || "CAS_NUMBER".equals((key))) {
                 String value = values.get(0);
-                Property p = jenaModel.createProperty("https://schema.org/identifier");
+                Property p = jenaModel.createProperty("http://schema.org/identifier");
                 jenaModel.add(me, p, value);
             } else if ("Synonyms".equals(key) || "SYNONYMS".equals(key)) {
                 String value = values.get(0);
-                Property p = jenaModel.createProperty("https://schema.org/alternateName");
+                Property p = jenaModel.createProperty("http://schema.org/alternateName");
                 jenaModel.add(me, p, value);
             } else if ("COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
                 String value = values.get(0);
-                Property p = jenaModel.createProperty("https://schema.org/name");
+                Property p = jenaModel.createProperty("http://schema.org/name");
                 jenaModel.add(me, p, value);
             }
         }
@@ -407,7 +407,7 @@ class Molecule {
         } else if (subject == SDFEater.Subject.bnode) {
             output_str.append("      \"@id\" : \"_:b" + createID() + "\",\n");
         }
-        output_str.append("      \"@type\" : \"https://schema.org/MolecularEntity\",\n");
+        output_str.append("      \"@type\" : \"http://schema.org/MolecularEntity\",\n");
 
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
@@ -559,11 +559,11 @@ class Molecule {
         if (output_str.length() > 0) {
             if (subject == SDFEater.Subject.iri) {
                 String mID = createID();
-                System.out.println("    <div itemscope itemtype='https://schema.org/MolecularEntity' itemid='https://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
+                System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='https://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
             } else if (subject == SDFEater.Subject.uuid) {
-                System.out.println("    <div itemscope itemtype='https://schema.org/MolecularEntity' itemid='urn:uuid:" + uuid + "'>");
+                System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='urn:uuid:" + uuid + "'>");
             } else if (subject == SDFEater.Subject.bnode) {
-                System.out.println("    <div itemscope itemtype='https://schema.org/MolecularEntity' itemid='_:b" + createID() + "'>");
+                System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='_:b" + createID() + "'>");
             }
 
             System.out.print(output_str);
