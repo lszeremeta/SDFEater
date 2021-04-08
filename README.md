@@ -107,14 +107,14 @@ You can specify the output format using `-f,--format`. Available output formats:
 * `cvme` - [CVME](http://cs.aalto.fi/en/current/events/2017-09-22-002/) file format based on SKOS,
 * `smiles` - plain text SMILES (if available in the molecule property)
 * `inchi` - plain text InChI (if available in the molecule property)
-* `turtle` - [Terse RDF Triple Language](https://www.w3.org/TR/turtle/) (based on [MolecularEntitly profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
-* `ntriples` - [N-Triples](https://www.w3.org/TR/n-triples/) (based on [MolecularEntitly profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
-* `rdfxml` - [RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/) (based on [MolecularEntitly profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
-* `rdfthrift` - [RDF Binary encoding using Thrift](https://afs.github.io/rdf-thrift/rdf-binary-thrift.html) (based on [MolecularEntitly profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
-* `jsonldhtml` - [JSON-LD](https://json-ld.org/) with HTML (based on [MolecularEntitly profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
-* `jsonld` - [JSON-LD](https://json-ld.org/) (based on [MolecularEntitly profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
-* `rdfa` - Simple HTML with [RDFa](http://rdfa.info/) (based on [MolecularEntitly profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
-* `microdata` - Simple HTML with [Microdata](https://www.w3.org/TR/microdata/) (based on [MolecularEntitly profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
+* `turtle` - [Terse RDF Triple Language](https://www.w3.org/TR/turtle/) (based on [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
+* `ntriples` - [N-Triples](https://www.w3.org/TR/n-triples/) (based on [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
+* `rdfxml` - [RDF/XML](https://www.w3.org/TR/rdf-syntax-grammar/) (based on [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
+* `rdfthrift` - [RDF Binary encoding using Thrift](https://afs.github.io/rdf-thrift/rdf-binary-thrift.html) (based on [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
+* `jsonldhtml` - [JSON-LD](https://json-ld.org/) with HTML (based on [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
+* `jsonld` - [JSON-LD](https://json-ld.org/) (based on [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
+* `rdfa` - Simple HTML with [RDFa](http://rdfa.info/) (based on [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
+* `microdata` - Simple HTML with [Microdata](https://www.w3.org/TR/microdata/) (based on [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
 
 ## Examples
 
