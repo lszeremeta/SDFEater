@@ -90,6 +90,9 @@ class SDFEater {
         Option subject = new Option("s", "subject", true, "subject type (iri, uuid, bnode; iri by default); for all formats excluding cypher, cvme, smiles, inchi");
         subject.setRequired(false);
         options.addOption(subject);
+        Option base = new Option("b", "base", true, "molecule subject base for 'iri' subject type ('" + molecule.subjectBase + "' by default)");
+        base.setRequired(false);
+        options.addOption(base);
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
@@ -111,6 +114,12 @@ class SDFEater {
                     initializeJenaModel();
                     break;
             }
+
+            // replace default base molecule IRI
+            if (cmd.getOptionValue("subject", Subject.iri.toString()).equals(Subject.iri.toString())) {
+                molecule.subjectBase = cmd.getOptionValue("base", molecule.subjectBase);
+            }
+
             file.parse(molecule, Format.valueOf(cmd.getOptionValue("format")), Subject.valueOf(cmd.getOptionValue("subject", Subject.iri.toString())));
         } catch (IllegalArgumentException e) {
             System.err.println("Incorrect option selected");

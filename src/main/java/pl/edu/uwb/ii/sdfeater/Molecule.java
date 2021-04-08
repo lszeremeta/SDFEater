@@ -71,6 +71,12 @@ class Molecule {
      * Stores all properties of the chemical molecule
      */
     private final Map<String, List<String>> properties = new HashMap<>();
+
+    /**
+     * Subject base of molecule
+     */
+    String subjectBase = "https://example.com/molecule#entity";
+
     private UUID uuid;
 
     Molecule() {
@@ -332,7 +338,7 @@ class Molecule {
         Resource me = ResourceFactory.createResource();
 
         if (subject == SDFEater.Subject.iri) {
-            me = ResourceFactory.createResource("https://example.com/molecule#entity" + createID());
+            me = ResourceFactory.createResource(subjectBase + createID());
         } else if (subject == SDFEater.Subject.uuid) {
             me = ResourceFactory.createResource("urn:uuid:" + uuid);
         } else if (subject == SDFEater.Subject.bnode) {
@@ -401,7 +407,7 @@ class Molecule {
 
         output_str.append("    {\n");
         if (subject == SDFEater.Subject.iri) {
-            output_str.append("      \"@id\" : \"https://example.com/molecule#entity" + createID() + "\",\n");
+            output_str.append("      \"@id\" : \"" + subjectBase + createID() + "\",\n");
         } else if (subject == SDFEater.Subject.uuid) {
             output_str.append("      \"@id\" : \"urn:uuid:" + uuid + "\",\n");
         } else if (subject == SDFEater.Subject.bnode) {
@@ -499,7 +505,14 @@ class Molecule {
         if (output_str.length() > 0) {
             if (subject == SDFEater.Subject.iri) {
                 String mID = createID();
-                System.out.println("    <div typeof='schema:MolecularEntity' about='https://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
+                System.out.print("    <div typeof='schema:MolecularEntity' about='" + subjectBase + mID + "'");
+
+                if (subjectBase.contains("#")){
+                    System.out.print(" id='" +  subjectBase.substring(subjectBase.lastIndexOf('#') + 1) + mID + "'");
+                }
+
+                System.out.print(">\n");
+
             } else if (subject == SDFEater.Subject.uuid) {
                 System.out.println("    <div typeof='schema:MolecularEntity' about='urn:uuid:" + uuid + "'>");
             } else if (subject == SDFEater.Subject.bnode) {
@@ -559,7 +572,13 @@ class Molecule {
         if (output_str.length() > 0) {
             if (subject == SDFEater.Subject.iri) {
                 String mID = createID();
-                System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='https://example.com/molecule#entity" + mID + "' id='entity" + mID + "'>");
+                System.out.print("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='" + subjectBase + mID + "'");
+
+                if (subjectBase.contains("#")){
+                    System.out.print(" id='" +  subjectBase.substring(subjectBase.lastIndexOf('#') + 1) + mID + "'");
+                }
+
+                System.out.print(">\n");
             } else if (subject == SDFEater.Subject.uuid) {
                 System.out.println("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='urn:uuid:" + uuid + "'>");
             } else if (subject == SDFEater.Subject.bnode) {

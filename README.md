@@ -93,6 +93,7 @@ Running SDFEater without parameters displays help.
 * `-i,--input <arg>` - input SDF file path (required)
 * `-f,--format <arg>` - output format (e.g. `cypher`, `jsonld`, `cvme`, `smiles`, `inchi`) (required; full list below)
 * `-s,--subject <arg>` - subject type (`iri`, `uuid`, `bnode`; `iri` by default; for all formats excluding cypher, cvme, smiles, inchi)
+* `-b,--base <arg>` - molecule subject base for 'iri' subject type ('https://example.com/molecule#entity' by default)
 
 Remember about the appropriate file path when using Docker image. Suppose you mounted your local directory `/home/user/input` under `/app/input` and the path to the SDF file you want to use in SDFEater is `/home/user/input/file.sdf`. In this case, enter the path `/app/input/file.sdf` or `input/file.sdf` as the value of the `-i` argument.
 
