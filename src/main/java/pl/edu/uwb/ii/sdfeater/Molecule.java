@@ -404,16 +404,6 @@ class Molecule {
     StringBuilder constructJSONLDMolecule(SDFEater.Subject subject) {
         StringBuilder output_str = new StringBuilder();
 
-        output_str.append("    {\n");
-        if (subject == SDFEater.Subject.iri) {
-            output_str.append("      \"@id\" : " + printValueAsNumberOrStringInJSONLD(subjectBase + createID()) + ",\n");
-        } else if (subject == SDFEater.Subject.uuid) {
-            output_str.append("      \"@id\" : \"urn:uuid:" + uuid + "\",\n");
-        } else if (subject == SDFEater.Subject.bnode) {
-            output_str.append("      \"@id\" : \"_:b" + createID() + "\",\n");
-        }
-        output_str.append("      \"@type\" : \"http://schema.org/MolecularEntity\",\n");
-
         for (Map.Entry<String, List<String>> entry : properties.entrySet()) {
             String key = entry.getKey();
             List<String> values = entry.getValue();
@@ -451,8 +441,24 @@ class Molecule {
             }
         }
 
-        output_str.setLength(output_str.length() - 2);
-        output_str.append("\n    },\n");
+        if (output_str.length() > 0) {
+            StringBuilder start_part = new StringBuilder();
+
+            start_part.append("    {\n");
+            if (subject == SDFEater.Subject.iri) {
+                start_part.append("      \"@id\" : " + printValueAsNumberOrStringInJSONLD(subjectBase + createID()) + ",\n");
+            } else if (subject == SDFEater.Subject.uuid) {
+                start_part.append("      \"@id\" : \"urn:uuid:" + uuid + "\",\n");
+            } else if (subject == SDFEater.Subject.bnode) {
+                start_part.append("      \"@id\" : \"_:b" + createID() + "\",\n");
+            }
+            start_part.append("      \"@type\" : \"http://schema.org/MolecularEntity\",\n");
+
+            output_str.insert(0, start_part);
+
+            output_str.setLength(output_str.length() - 2);
+            output_str.append("\n    },\n");
+        }
 
         return output_str;
     }
