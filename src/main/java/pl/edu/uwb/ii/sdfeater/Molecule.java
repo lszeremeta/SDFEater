@@ -24,7 +24,7 @@
  */
 package pl.edu.uwb.ii.sdfeater;
 
-import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -406,7 +406,7 @@ class Molecule {
 
         output_str.append("    {\n");
         if (subject == SDFEater.Subject.iri) {
-            output_str.append("      \"@id\" : \"" + subjectBase + createID() + "\",\n");
+            output_str.append("      \"@id\" : " + printValueAsNumberOrStringInJSONLD(subjectBase + createID()) + ",\n");
         } else if (subject == SDFEater.Subject.uuid) {
             output_str.append("      \"@id\" : \"urn:uuid:" + uuid + "\",\n");
         } else if (subject == SDFEater.Subject.bnode) {
@@ -504,7 +504,7 @@ class Molecule {
         if (output_str.length() > 0) {
             if (subject == SDFEater.Subject.iri) {
                 String mID = createID();
-                System.out.print("    <div typeof='schema:MolecularEntity' about='" + htmlEscape(subjectBase, true) + mID + "'");
+                System.out.print("    <div typeof='schema:MolecularEntity' about='" + htmlEscape(subjectBase + mID, true) + "'");
 
                 if (subjectBase.contains("#")) {
                     System.out.print(" id='" + subjectBase.substring(subjectBase.lastIndexOf('#') + 1) + mID + "'");
@@ -571,7 +571,7 @@ class Molecule {
         if (output_str.length() > 0) {
             if (subject == SDFEater.Subject.iri) {
                 String mID = createID();
-                System.out.print("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='" + htmlEscape(subjectBase, true) + mID + "'");
+                System.out.print("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='" + htmlEscape(subjectBase + mID, true) + "'");
 
                 if (subjectBase.contains("#")) {
                     System.out.print(" id='" + subjectBase.substring(subjectBase.lastIndexOf('#') + 1) + mID + "'");
@@ -630,7 +630,7 @@ class Molecule {
         if (isNumber(value)) {
             return value;
         } else {
-            return new Gson().toJson(value);
+            return new GsonBuilder().disableHtmlEscaping().create().toJson(value);
         }
     }
 
@@ -644,15 +644,14 @@ class Molecule {
      * @return Escaped HTML value
      */
     private String htmlEscape(String value, boolean quote) {
-        value = value.replace("&", "&amp;");
-        value = value.replace("<", "&lt;");
-        value = value.replace(">", "&gt;");
+        String escapedValue = value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+
         if (quote) {
-            value = value.replace("\"", "&quot;");
-            value = value.replace("'", "&#x27;");
+            escapedValue = escapedValue.replace("\"", "&quot;");
+            escapedValue = escapedValue.replace("'", "&#x27;");
         }
 
-        return value;
+        return escapedValue;
     }
 
     /**
