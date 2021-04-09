@@ -25,7 +25,6 @@
 package pl.edu.uwb.ii.sdfeater;
 
 import com.google.gson.Gson;
-import org.apache.commons.text.StringEscapeUtils;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
@@ -471,44 +470,44 @@ class Molecule {
 
             if ("SMILES".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div property='schema:smiles'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div property='schema:smiles'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("Formulae".equals(key) || "FORMULA".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div property='schema:molecularFormula'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div property='schema:molecularFormula'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("Definition".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div property='schema:description'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div property='schema:description'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("InChIKey".equals(key) || "INCHI_KEY".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div property='schema:inChIKey'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div property='schema:inChIKey'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("InChI".equals(key) || "INCHI_IDENTIFIER".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div property='schema:inChI'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div property='schema:inChI'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("Mass".equals(key) || "MOLECULAR_WEIGHT".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div property='schema:molecularWeight'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div property='schema:molecularWeight'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("IUPAC Names".equals(key) || "JCHEM_IUPAC".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div property='schema:iupacName'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div property='schema:iupacName'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("CAS Registry Numbers".equals(key) || "CAS_NUMBER".equals((key))) {
                 String value = values.get(0);
-                output_str.append("      <div property='schema:identifier'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div property='schema:identifier'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("Synonyms".equals(key) || "SYNONYMS".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div property='schema:alternateName'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div property='schema:alternateName'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div property='schema:name'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div property='schema:name'>").append(htmlEscape(value, false)).append("</div>\n");
             }
         }
 
         if (output_str.length() > 0) {
             if (subject == SDFEater.Subject.iri) {
                 String mID = createID();
-                System.out.print("    <div typeof='schema:MolecularEntity' about='" + subjectBase + mID + "'");
+                System.out.print("    <div typeof='schema:MolecularEntity' about='" + htmlEscape(subjectBase, true) + mID + "'");
 
-                if (subjectBase.contains("#")){
-                    System.out.print(" id='" +  subjectBase.substring(subjectBase.lastIndexOf('#') + 1) + mID + "'");
+                if (subjectBase.contains("#")) {
+                    System.out.print(" id='" + subjectBase.substring(subjectBase.lastIndexOf('#') + 1) + mID + "'");
                 }
 
                 System.out.print(">\n");
@@ -538,44 +537,44 @@ class Molecule {
 
             if ("SMILES".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div itemprop='smiles'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div itemprop='smiles'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("Formulae".equals(key) || "FORMULA".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div itemprop='molecularFormula'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div itemprop='molecularFormula'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("Definition".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div itemprop='description'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div itemprop='description'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("InChIKey".equals(key) || "INCHI_KEY".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div itemprop='inChIKey'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div itemprop='inChIKey'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("InChI".equals(key) || "INCHI_IDENTIFIER".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div itemprop='inChI'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div itemprop='inChI'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("Mass".equals(key) || "MOLECULAR_WEIGHT".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div itemprop='molecularWeight'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div itemprop='molecularWeight'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("IUPAC Names".equals(key) || "JCHEM_IUPAC".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div itemprop='iupacName'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div itemprop='iupacName'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("CAS Registry Numbers".equals(key) || "CAS_NUMBER".equals((key))) {
                 String value = values.get(0);
-                output_str.append("      <div itemprop='identifier'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div itemprop='identifier'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("Synonyms".equals(key) || "SYNONYMS".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div itemprop='alternateName'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div itemprop='alternateName'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
                 String value = values.get(0);
-                output_str.append("      <div itemprop='name'>").append(StringEscapeUtils.escapeHtml4(value)).append("</div>\n");
+                output_str.append("      <div itemprop='name'>").append(htmlEscape(value, false)).append("</div>\n");
             }
         }
 
         if (output_str.length() > 0) {
             if (subject == SDFEater.Subject.iri) {
                 String mID = createID();
-                System.out.print("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='" + subjectBase + mID + "'");
+                System.out.print("    <div itemscope itemtype='http://schema.org/MolecularEntity' itemid='" + htmlEscape(subjectBase, true) + mID + "'");
 
-                if (subjectBase.contains("#")){
-                    System.out.print(" id='" +  subjectBase.substring(subjectBase.lastIndexOf('#') + 1) + mID + "'");
+                if (subjectBase.contains("#")) {
+                    System.out.print(" id='" + subjectBase.substring(subjectBase.lastIndexOf('#') + 1) + mID + "'");
                 }
 
                 System.out.print(">\n");
@@ -633,6 +632,27 @@ class Molecule {
         } else {
             return new Gson().toJson(value);
         }
+    }
+
+    /**
+     * HTML escape
+     * <p>
+     * Escape "&", "<" and ">" characters to safe one. If quote is true, escape " and ' too.
+     *
+     * @param value Value to escape
+     * @param quote Escape quotation marks too? True - escape " and ', false - don't escape.
+     * @return Escaped HTML value
+     */
+    private String htmlEscape(String value, boolean quote) {
+        value = value.replace("&", "&amp;");
+        value = value.replace("<", "&lt;");
+        value = value.replace(">", "&gt;");
+        if (quote) {
+            value = value.replace("\"", "&quot;");
+            value = value.replace("'", "&#x27;");
+        }
+
+        return value;
     }
 
     /**
