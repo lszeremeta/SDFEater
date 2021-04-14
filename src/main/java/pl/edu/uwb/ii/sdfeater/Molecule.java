@@ -350,7 +350,15 @@ class Molecule {
             List<String> values = entry.getValue();
             jenaModel.add(me, RDF.type, "http://schema.org/MolecularEntity");
 
-            if ("SMILES".equals(key)) {
+            if ("ChEBI ID".equals(key)) {
+                String value = "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=" + values.get(0);
+                Property p = jenaModel.createProperty("http://schema.org/url");
+                jenaModel.add(me, p, value);
+            } else if ("DATABASE_ID".equals(key) || "DRUGBANK_ID".equals(key)) {
+                String value = "https://go.drugbank.com/drugs/" + values.get(0);
+                Property p = jenaModel.createProperty("http://schema.org/url");
+                jenaModel.add(me, p, value);
+            } else if ("SMILES".equals(key)) {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("http://schema.org/smiles");
                 jenaModel.add(me, p, value);
@@ -408,7 +416,13 @@ class Molecule {
             String key = entry.getKey();
             List<String> values = entry.getValue();
 
-            if ("SMILES".equals(key)) {
+            if ("ChEBI ID".equals(key)) {
+                String value = "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=" + values.get(0);
+                output_str.append("      \"url\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
+            } else if ("DATABASE_ID".equals(key) || "DRUGBANK_ID".equals(key)) {
+                String value = "https://go.drugbank.com/drugs/" + values.get(0);
+                output_str.append("      \"url\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
+            } else if ("SMILES".equals(key)) {
                 String value = values.get(0);
                 output_str.append("      \"smiles\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
             } else if ("Formulae".equals(key) || "FORMULA".equals(key)) {
@@ -474,7 +488,13 @@ class Molecule {
             String key = entry.getKey();
             List<String> values = entry.getValue();
 
-            if ("SMILES".equals(key)) {
+            if ("ChEBI ID".equals(key)) {
+                String value = "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=" + values.get(0);
+                output_str.append("      <a href='").append(htmlEscape(value, true)).append("' rel='schema:url'>").append(htmlEscape(value, false)).append("</a>\n");
+            } else if ("DATABASE_ID".equals(key) || "DRUGBANK_ID".equals(key)) {
+                String value = "https://go.drugbank.com/drugs/" + values.get(0);
+                output_str.append("      <a href='").append(htmlEscape(value, true)).append("' rel='schema:url'>").append(htmlEscape(value, false)).append("</a>\n");
+            } else if ("SMILES".equals(key)) {
                 String value = values.get(0);
                 output_str.append("      <div property='schema:smiles'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("Formulae".equals(key) || "FORMULA".equals(key)) {
@@ -541,7 +561,13 @@ class Molecule {
             String key = entry.getKey();
             List<String> values = entry.getValue();
 
-            if ("SMILES".equals(key)) {
+            if ("ChEBI ID".equals(key)) {
+                String value = "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=" + values.get(0);
+                output_str.append("      <a href='").append(htmlEscape(value, true)).append("' itemprop='url'>").append(htmlEscape(value, false)).append("</a>\n");
+            } else if ("DATABASE_ID".equals(key) || "DRUGBANK_ID".equals(key)) {
+                String value = "https://go.drugbank.com/drugs/" + values.get(0);
+                output_str.append("      <a href='").append(htmlEscape(value, true)).append("' itemprop='url'>").append(htmlEscape(value, false)).append("</a>\n");
+            } else if ("SMILES".equals(key)) {
                 String value = values.get(0);
                 output_str.append("      <div itemprop='smiles'>").append(htmlEscape(value, false)).append("</div>\n");
             } else if ("Formulae".equals(key) || "FORMULA".equals(key)) {
