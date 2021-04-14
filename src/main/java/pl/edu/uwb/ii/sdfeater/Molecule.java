@@ -394,7 +394,7 @@ class Molecule {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("http://schema.org/alternateName");
                 jenaModel.add(me, p, value);
-            } else if ("COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
+            } else if ("ChEBI Name".equals(key) || "COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
                 String value = values.get(0);
                 Property p = jenaModel.createProperty("http://schema.org/name");
                 jenaModel.add(me, p, value);
@@ -449,7 +449,7 @@ class Molecule {
             } else if ("Synonyms".equals(key) || "SYNONYMS".equals(key)) {
                 String value = values.get(0);
                 output_str.append("      \"alternateName\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
-            } else if ("COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
+            } else if ("ChEBI Name".equals(key) || "COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
                 String value = values.get(0);
                 output_str.append("      \"name\" : ").append(printValueAsNumberOrStringInJSONLD(value)).append(",\n");
             }
@@ -521,7 +521,7 @@ class Molecule {
             } else if ("Synonyms".equals(key) || "SYNONYMS".equals(key)) {
                 String value = values.get(0);
                 output_str.append("      <div property='schema:alternateName'>").append(htmlEscape(value, false)).append("</div>\n");
-            } else if ("COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
+            } else if ("ChEBI Name".equals(key) || "COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
                 String value = values.get(0);
                 output_str.append("      <div property='schema:name'>").append(htmlEscape(value, false)).append("</div>\n");
             }
@@ -594,7 +594,7 @@ class Molecule {
             } else if ("Synonyms".equals(key) || "SYNONYMS".equals(key)) {
                 String value = values.get(0);
                 output_str.append("      <div itemprop='alternateName'>").append(htmlEscape(value, false)).append("</div>\n");
-            } else if ("COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
+            } else if ("ChEBI Name".equals(key) || "COMMON_NAME".equals(key) || "GENERIC_NAME".equals(key)) {
                 String value = values.get(0);
                 output_str.append("      <div itemprop='name'>").append(htmlEscape(value, false)).append("</div>\n");
             }
