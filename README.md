@@ -6,9 +6,9 @@
 
 ## How to start
 
-You can use the JAR file, run SDFEater from Docker image or build everything yourself. If you don't know what to choose, choose one of the first two options.
+You can use the JAR file or run SDFEater from Docker image. If you want, you can also [build everything yourself](https://github.com/lszeremeta/SDFEater/wiki/Manual-project-build). 
 
-### JAR file
+### Use JAR file
 
 You need Java 8+ installed.
 
@@ -20,9 +20,9 @@ You need Java 8+ installed.
 java -jar SDFEater-VERSION-jar-with-dependencies.jar
 ```
 
-### Docker image
+### Use Docker image
 
-If you have [Docker](https://docs.docker.com/engine/install/) installed, you can use tiny SDFEater Docker image from [Docker Hub](https://hub.docker.com/r/lszeremeta/sdfeater).
+If you have [Docker](https://docs.docker.com/engine/install/) installed, you can use a tiny SDFEater Docker image from [Docker Hub](https://hub.docker.com/r/lszeremeta/sdfeater).
 
 Because the tool is closed inside the container, you have to [mount](https://docs.docker.com/storage/bind-mounts/#start-a-container-with-a-bind-mount) local directory with your input file. The default working directory of the image is `/app`. You need to mount your local directory inside it (e.g. `/app/input`):
 
@@ -37,54 +37,6 @@ You can also simply mount current working directory using `$(pwd)` sub-command:
 ```shell
 docker run -it --rm --name sdfeater-app --mount type=bind,source="$(pwd)",target=/app/input,readonly lszeremeta/sdfeater:latest
 ```
-
-### Build SDFEater from sources
-
-You need Java with Maven installed.
-
-1. Clone this repository:
-
-```shell
-git clone https://github.com/lszeremeta/SDFEater.git
-```
-
-If you don't want or can't use git, you can [download the zip archive](https://github.com/lszeremeta/SDFEater/archive/master.zip) and extract it. 
-
-2. Go to the project directory and build SDFEater using [Apache Maven](https://maven.apache.org/):
-
-```shell
-cd SDFEater
-mvn clean package
-```
-
-Built JAR files can be found in the _target_ directory.
-
-### Local Docker build
-
-You need [Docker](https://docs.docker.com/engine/install/) installed.
-
-1. Clone this repository:
-
-```shell
-git clone https://github.com/lszeremeta/SDFEater.git
-```
-
-If you don't want or can't use git, you can [download the zip archive](https://github.com/lszeremeta/SDFEater/archive/master.zip) and extract it. 
-
-2. Go to the project directory and build Docker image:
-
-```shell
-cd SDFEater
-docker build -t sdfeater .
-```
-
-3. Run Docker container:
-
-```shell
-docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly sdfeater
-```
-
-In this case, your local directory `/home/user/input` has been mounted under `/app/input`.
 
 ## CLI options
 
