@@ -19,7 +19,7 @@ SDFEater is also available as a [Docker image](#docker-image). In most scenarios
     java -jar SDFEater-VERSION-jar-with-dependencies.jar -f rdfa -i ChEBI_complete_3star.sdf > ChEBI_complete_3star_rdfa.html
 ```
 
-That's all. Now you have the RDFa file ready in the current directory. You can try other output formats and options as described below. You can also use SDFEater to convert other data in SDF format.
+That's all. Now you have the RDFa file ready in the current directory. You can try other output formats and options as described below. You can also use SDFEater to convert [DrugBank SDF files](https://go.drugbank.com/releases/latest#structures).
 
 ## Docker image
 
