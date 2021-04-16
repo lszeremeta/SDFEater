@@ -4,23 +4,24 @@
 
 [SDF](https://pubs.acs.org/doi/abs/10.1021/ci00007a012) parser written in Java running from the command-line interface (CLI). You don't need to have new Java installed! Java 8 and above are supported. Do you love️ Docker? You can use a lightweight [SDFEater container](https://hub.docker.com/r/lszeremeta/sdfeater)! SDFEater not only ~~eats~~ parse your SDF files but also can add additional data to the output. The choice of output formats is really wide.
 
-## How to start
+## Quick start
 
-You can use the JAR file or run SDFEater from Docker image. If you want, you can also [build everything yourself](https://github.com/lszeremeta/SDFEater/wiki/Manual-project-build). 
-
-### Use JAR file
-
-You need Java 8+ installed.
+Use SDFEater in 3 easy steps. In this example, we will use the [ChEBI](https://www.ebi.ac.uk/chebi/init.do) dataset and ready to use JAR file. You need Java 8+ installed.
 
 1. Download the ready-to-use JAR `SDFEater-VERSION-jar-with-dependencies.jar` file from [project release](https://github.com/lszeremeta/SDFEater/releases) asset.
 
-2. Run SDFEater
+SDFEater is also available as a [Docker image](#docker-image). In most scenarios, JAR file or the Docker image should be sufficient and convenient to run SDFEater but you may want to [build everything yourself](https://github.com/lszeremeta/SDFEater/wiki/Manual-project-build).
+
+2. Download [ChEBI complete 3 star dataset file](ftp://ftp.ebi.ac.uk/pub/databases/chebi/SDF/ChEBI_complete_3star.sdf.gz) and unpack downloaded gz archive. ChEBI datasets are shared via FTP, so if your browser or operating system does not support FTP, you may need an additional program such as [FileZilla](https://filezilla-project.org/).
+3. Assuming the `ChEBI_complete_3star.sdf` file is in the current directory and the output format you're interested in is RDFa, the command will be as follows:
 
 ```shell
-java -jar SDFEater-VERSION-jar-with-dependencies.jar
+    java -jar SDFEater-VERSION-jar-with-dependencies.jar -f rdfa -i ChEBI_complete_3star.sdf > ChEBI_complete_3star_rdfa.html
 ```
 
-### Use Docker image
+That's all. Now you have the RDFa file ready in the current directory. You can try other output formats and options as described below. You can also use SDFEater to convert other data in SDF format.
+
+## Docker image
 
 If you have [Docker](https://docs.docker.com/engine/install/) installed, you can use a tiny SDFEater Docker image from [Docker Hub](https://hub.docker.com/r/lszeremeta/sdfeater).
 
@@ -68,6 +69,10 @@ You can specify the output format using `-f,--format`. Available output formats:
 * `jsonld` - [JSON-LD](https://json-ld.org/) (based on [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
 * `rdfa` - Simple HTML with [RDFa](http://rdfa.info/) (based on [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
 * `microdata` - Simple HTML with [Microdata](https://www.w3.org/TR/microdata/) (based on [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/))
+
+## What is structured data
+
+[Structured data](https://developers.google.com/search/docs/guides/intro-structured-data) are additional data placed on websites. They are not visible to ordinary internet users but can be easily processed by machines. There are 3 formats that we can use to save structured data - [JSON-LD](https://json-ld.org/), [RDFa](http://rdfa.info/), and [Microdata](https://www.w3.org/TR/microdata/). SDFEater supports them all and uses the [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/).
 
 ## Examples
 
