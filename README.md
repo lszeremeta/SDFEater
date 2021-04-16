@@ -12,7 +12,7 @@ Use SDFEater in 3 easy steps. In this example, we will use the [ChEBI](https://w
 
 SDFEater is also available as a [Docker image](#docker-image). In most scenarios, JAR file or the Docker image should be sufficient and convenient to run SDFEater but you may want to [build everything yourself](https://github.com/lszeremeta/SDFEater/wiki/Manual-project-build).
 
-2. Download [ChEBI complete 3 star dataset file](ftp://ftp.ebi.ac.uk/pub/databases/chebi/SDF/ChEBI_complete_3star.sdf.gz) and unpack downloaded gz archive. ChEBI datasets are shared via FTP, so if your browser or operating system does not support FTP, you may need an additional program such as [FileZilla](https://filezilla-project.org/).
+2. Download [ChEBI complete 3-star dataset file](ftp://ftp.ebi.ac.uk/pub/databases/chebi/SDF/ChEBI_complete_3star.sdf.gz) and unpack downloaded gz archive. ChEBI datasets are shared via FTP, so if your browser or operating system does not support FTP, you may need an additional program such as [FileZilla](https://filezilla-project.org/).
 3. Assuming the `ChEBI_complete_3star.sdf` file is in the current directory and the output format you're interested in is RDFa, the command will be as follows:
 
 ```shell
@@ -25,7 +25,7 @@ That's all. Now you have the RDFa file ready in the current directory. You can t
 
 If you have [Docker](https://docs.docker.com/engine/install/) installed, you can use a tiny SDFEater Docker image from [Docker Hub](https://hub.docker.com/r/lszeremeta/sdfeater).
 
-Because the tool is closed inside the container, you have to [mount](https://docs.docker.com/storage/bind-mounts/#start-a-container-with-a-bind-mount) local directory with your input file. The default working directory of the image is `/app`. You need to mount your local directory inside it (e.g. `/app/input`):
+Because the tool is closed inside the container, you have to [mount](https://docs.docker.com/storage/bind-mounts/#start-a-container-with-a-bind-mount) local directory with your input file. The default working directory of the image is `/app`. You need to mount your the local directory inside it (e.g. `/app/input`):
 
 ```shell
 docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest
@@ -33,7 +33,7 @@ docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/inpu
 
 In this case, the local directory `/home/user/input` has been mounted under `/app/input`.
 
-You can also simply mount current working directory using `$(pwd)` sub-command:
+You can also simply mount the current working directory using `$(pwd)` sub-command:
 
 ```shell
 docker run -it --rm --name sdfeater-app --mount type=bind,source="$(pwd)",target=/app/input,readonly lszeremeta/sdfeater:latest
@@ -48,7 +48,7 @@ Running SDFEater without parameters displays help.
 * `-s,--subject <arg>` - subject type (`iri`, `uuid`, `bnode`; `iri` by default; for all formats excluding cypher, cvme, smiles, inchi)
 * `-b,--base <arg>` - molecule subject base for 'iri' subject type ('https://example.com/molecule#entity' by default)
 
-Remember about the appropriate file path when using Docker image. Suppose you mounted your local directory `/home/user/input` under `/app/input` and the path to the SDF file you want to use in SDFEater is `/home/user/input/file.sdf`. In this case, enter the path `/app/input/file.sdf` or `input/file.sdf` as the value of the `-i` argument.
+Remember about the appropriate file path when using the Docker image. Suppose you mounted your local directory `/home/user/input` under `/app/input` and the path to the SDF file you want to use in SDFEater is `/home/user/input/file.sdf`. In this case, enter the path `/app/input/file.sdf` or `input/file.sdf` as the value of the `-i` argument.
 
 ## Output formats
 
@@ -86,19 +86,19 @@ Returns [Cypher](https://neo4j.com/developer/cypher-query-language/) with added 
 java -jar SDFEater-VERSION-jar-with-dependencies.jar -i ../examples/chebi_test.sdf -f jsonld  > molecules.jsonld
 ```
 
-Returns [JSON-LD](https://json-ld.org/) and redirect output to `molecules.jsonld` file. SDFEater run from a JAR file.
+Returns [JSON-LD](https://json-ld.org/) and redirects output to `molecules.jsonld` file. SDFEater runs from a JAR file.
 
 ```shell
 docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest -i input/chebi_test.sdf -f microdata  > molecules.html
 ```
 
-Returns simple HTML with added [Microdata](https://www.w3.org/TR/microdata/) and redirect output to `molecules.html` file. Run from pre-build Docker image.
+Returns simple HTML with added [Microdata](https://www.w3.org/TR/microdata/) and redirects output to `molecules.html` file. Run from pre-build Docker image.
 
-In `examples` directory you can find example SDF files based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) and [DrugBank  open structures](https://www.drugbank.ca/releases/latest#open-data) databases.
+In the `examples` directory you can find example SDF files based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) and [DrugBank  open structures](https://www.drugbank.ca/releases/latest#open-data) databases.
 
 ## Publications and resources
 
-If you need more detailed information, take a look at these publications and resources. There you will find detailed description of the parser, performance tests and example Cypher outputs.
+If you need more detailed information, take a look at these publications and resources. There you will find a detailed description of the parser, performance tests, and example Cypher outputs.
 
 1. Ł. Szeremeta, "SDFEater: A Parser for Chemoinformatics Formats" 9 2018 \[Online]. Available: <https://doi.org/10.26434/chemrxiv.7123193>.
 2. D. Tomaszuk and Ł. Szeremeta, "Named Property Graphs" in Proceedings of the 2018 Federated Conference on Computer Science and Information Systems, ser. Annals of Computer Science and Information Systems, M. Ganzha, L. Maciaszek, and M. Paprzycki, Eds., vol. 15. IEEE, 2018, pp. 173–177. (2018) \[Online]. Available: <http://dx.doi.org/10.15439/2018F103>.
@@ -117,7 +117,7 @@ The sample SDF files in the examples and test directory are based on data from [
 
 ## Contribution
 
-Would you like to improve the SDFEater? Great! We are waiting for your help and suggestions. If you are new in open source contributions, read [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/).
+Would you like to improve the SDFEater? Great! We are waiting for your help and suggestions. If you are new to open source contributions, read [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/).
 
 ## License
 
