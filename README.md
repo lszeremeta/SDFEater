@@ -74,7 +74,7 @@ You can specify the output format using `-f,--format`. Available output formats:
 
 [Structured data](https://developers.google.com/search/docs/guides/intro-structured-data) are additional data placed on websites. They are not visible to ordinary internet users but can be easily processed by machines. There are 3 formats that we can use to save structured data - [JSON-LD](https://json-ld.org/), [RDFa](http://rdfa.info/), and [Microdata](https://www.w3.org/TR/microdata/). SDFEater supports them all and uses the [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/).
 
-## Examples
+## Additional examples
 
 ```shell
 java -jar SDFEater-VERSION-jar-with-dependencies.jar -i ../examples/chebi_special_char_test.sdf -f cypherup
