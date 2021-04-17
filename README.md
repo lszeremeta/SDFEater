@@ -2,7 +2,7 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/fc5d5e2e22ce4616a041d97cdf1f3a11)](https://www.codacy.com/gh/lszeremeta/SDFEater/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lszeremeta/SDFEater&amp;utm_campaign=Badge_Grade) [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/lszeremeta/sdfeater?label=Docker%20image%20size)](https://hub.docker.com/r/lszeremeta/sdfeater)
 
-[SDF](https://pubs.acs.org/doi/abs/10.1021/ci00007a012) parser written in Java running from the command-line interface (CLI). You don't need to have new Java installed! Java 8 and above are supported. Do you love️ Docker? You can use a lightweight [SDFEater container](https://hub.docker.com/r/lszeremeta/sdfeater)! SDFEater not only ~~eats~~ parse your SDF files but also can add additional data to the output. The choice of output formats is really wide.
+[SDF](https://pubs.acs.org/doi/abs/10.1021/ci00007a012) parser written in Java is run from the command-line interface (CLI). You don't need to have new Java installed! Java 8 and above are supported. Do you love️ Docker? You can use a lightweight [SDFEater container](https://hub.docker.com/r/lszeremeta/sdfeater)! SDFEater not only ~~eats~~ parse your SDF files but also can add additional data to the output. The choice of output formats is really wide.
 
 ## Quick start
 
@@ -25,7 +25,7 @@ That's all. Now you have the RDFa file ready in the current directory. You can t
 
 If you have [Docker](https://docs.docker.com/engine/install/) installed, you can use a tiny SDFEater Docker image from [Docker Hub](https://hub.docker.com/r/lszeremeta/sdfeater).
 
-Because the tool is closed inside the container, you have to [mount](https://docs.docker.com/storage/bind-mounts/#start-a-container-with-a-bind-mount) local directory with your input file. The default working directory of the image is `/app`. You need to mount your the local directory inside it (e.g. `/app/input`):
+Because the tool is closed inside the container, you have to [mount](https://docs.docker.com/storage/bind-mounts/#start-a-container-with-a-bind-mount) a local directory with your input file. The default working directory of the image is `/app`. You need to mount your local directory inside it (e.g. `/app/input`):
 
 ```shell
 docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest
@@ -72,7 +72,7 @@ You can specify the output format using `-f,--format`. Available output formats:
 
 ## What is structured data
 
-[Structured data](https://developers.google.com/search/docs/guides/intro-structured-data) are additional data placed on websites. They are not visible to ordinary internet users but can be easily processed by machines. There are 3 formats that we can use to save structured data - [JSON-LD](https://json-ld.org/), [RDFa](http://rdfa.info/), and [Microdata](https://www.w3.org/TR/microdata/). SDFEater supports them all and uses the [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/).
+[Structured data](https://developers.google.com/search/docs/guides/intro-structured-data) is additional data placed on websites. It is not visible to ordinary internet users but can be easily processed by machines. There are 3 formats that we can use to save structured data - [JSON-LD](https://json-ld.org/), [RDFa](http://rdfa.info/), and [Microdata](https://www.w3.org/TR/microdata/). SDFEater supports them all and uses the [MolecularEntity profile](https://bioschemas.org/profiles/MolecularEntity/0.5-RELEASE/).
 
 ## Additional examples
 
@@ -94,11 +94,11 @@ docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/inpu
 
 Returns simple HTML with added [Microdata](https://www.w3.org/TR/microdata/) and redirects output to `molecules.html` file. Run from pre-build Docker image.
 
-In the `examples` directory you can find example SDF files based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) and [DrugBank  open structures](https://www.drugbank.ca/releases/latest#open-data) databases.
+In the `examples` directory you can find example of SDF files based on data from [ChEBI](https://www.ebi.ac.uk/chebi/init.do) and [DrugBank  open structures](https://www.drugbank.ca/releases/latest#open-data) databases.
 
 ## Publications and resources
 
-If you need more detailed information, take a look at these publications and resources. There you will find a detailed description of the parser, performance tests, and example Cypher outputs.
+If you need more detailed information, take a look at these publications and resources. There you will find a detailed description of the parser, performance tests, and example of Cypher outputs.
 
 1. Ł. Szeremeta, "SDFEater: A Parser for Chemoinformatics Formats" 9 2018 \[Online]. Available: <https://doi.org/10.26434/chemrxiv.7123193>.
 2. D. Tomaszuk and Ł. Szeremeta, "Named Property Graphs" in Proceedings of the 2018 Federated Conference on Computer Science and Information Systems, ser. Annals of Computer Science and Information Systems, M. Ganzha, L. Maciaszek, and M. Paprzycki, Eds., vol. 15. IEEE, 2018, pp. 173–177. (2018) \[Online]. Available: <http://dx.doi.org/10.15439/2018F103>.
