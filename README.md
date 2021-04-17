@@ -12,7 +12,7 @@ Use SDFEater in 3 easy steps. In this example, we will use the [ChEBI](https://w
 
 SDFEater is also available as a [Docker image](#docker-image). In most scenarios, JAR file or the Docker image should be sufficient and convenient to run SDFEater but you may want to [build everything yourself](https://github.com/lszeremeta/SDFEater/wiki/Manual-project-build).
 
-2. Download [ChEBI complete 3-star dataset file](https://www.ebi.ac.uk/chebi/downloadsForward.do) and unpack downloaded gz archive. ChEBI datasets are shared via FTP, so if your browser or operating system does not support FTP, you may need an additional program such as [FileZilla](https://filezilla-project.org/).
+2. [Download ChEBI complete 3-star dataset file](https://www.ebi.ac.uk/chebi/downloadsForward.do) and unpack downloaded gz archive. ChEBI datasets are shared via FTP, so if your browser or operating system does not support FTP, you may need an additional program such as [FileZilla](https://filezilla-project.org/).
 3. Assuming the `ChEBI_complete_3star.sdf` file is in the current directory and the output format you're interested in is RDFa, the command will be as follows:
 
 ```shell
