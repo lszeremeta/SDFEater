@@ -10,7 +10,7 @@ Use SDFEater in 3 easy steps. In this example, we will use the [ChEBI](https://w
 
 1. Download the ready-to-use JAR `SDFEater-VERSION-jar-with-dependencies.jar` file from [project release](https://github.com/lszeremeta/SDFEater/releases) asset.
 
-SDFEater is also available as a [Docker image](#docker-image). In most scenarios, JAR file or the Docker image should be sufficient and convenient to run SDFEater but you may want to [build everything yourself](https://github.com/lszeremeta/SDFEater/wiki/Manual-project-build).
+SDFEater is also available as a [Docker image](#docker-image). In most scenarios, JAR file or the Docker image should be sufficient and convenient to run SDFEater, but you may want to [build everything yourself](https://github.com/lszeremeta/SDFEater/wiki/Manual-project-build).
 
 2. [Download ChEBI complete 3-star dataset file](https://www.ebi.ac.uk/chebi/downloadsForward.do) and unpack downloaded gz archive. ChEBI datasets are shared via FTP, so if your browser or operating system does not support FTP, you may need an additional program such as [FileZilla](https://filezilla-project.org/).
 3. Assuming the `ChEBI_complete_3star.sdf` file is in the current directory and the output format you're interested in is RDFa, the command will be as follows:
@@ -55,9 +55,9 @@ Remember about the appropriate file path when using the Docker image. Suppose yo
 You can specify the output format using `-f,--format`. Available output formats:
 
 * `cypher` - [Cypher](https://neo4j.com/developer/cypher-query-language/) molecule, atoms, bonds and relation ready to [import to the Neo4j graph database](https://neo4j.com/developer/kb/export-sub-graph-to-cypher-and-import/),
-* `cypheru` - the same as `cypher` option but try to generate full database URLs instead of IDs,
-* `cypherp` - the same as `cypher` option but add additional atoms data from [periodic table](https://github.com/lszeremeta/SDFEater/blob/master/src/main/resources/pl/edu/uwb/ii/sdfeater/periodic_table.json),
-* `cypherup` - the same as `cypher` option but added URLs and additional atoms data from [periodic table](https://github.com/lszeremeta/SDFEater/blob/master/src/main/resources/pl/edu/uwb/ii/sdfeater/periodic_table.json),
+* `cypheru` - the same as `cypher` option, but try to generate full database URLs instead of IDs,
+* `cypherp` - the same as `cypher` option, but add additional atoms data from [periodic table](https://github.com/lszeremeta/SDFEater/blob/master/src/main/resources/pl/edu/uwb/ii/sdfeater/periodic_table.json),
+* `cypherup` - the same as `cypher` option, but added URLs and additional atoms data from [periodic table](https://github.com/lszeremeta/SDFEater/blob/master/src/main/resources/pl/edu/uwb/ii/sdfeater/periodic_table.json),
 * `cvme` - [CVME](http://cs.aalto.fi/en/current/events/2017-09-22-002/) file format based on SKOS,
 * `smiles` - plain text SMILES (if available in the molecule property)
 * `inchi` - plain text InChI (if available in the molecule property)
