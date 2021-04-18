@@ -1,10 +1,16 @@
-name: Java CI
+# Builds and tests SDFEater on every push (excluding master branch) and pull request
 
-on: [push, pull_request]
+name: Build & test
+
+on:
+  push:
+    branches-ignore:
+      - master
+  pull_request:
 
 jobs:
-  build:
-
+  test:
+    name: Build & test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -17,5 +23,5 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java-version }}
-    - name: Build with Maven
+    - name: Build and test with Maven
       run: mvn -B package --file pom.xml

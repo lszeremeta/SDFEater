@@ -1,9 +1,9 @@
-name: Create pre-release
+name: Release
 
 on:
   push:
-    branches:
-      - "master"
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
 
 jobs:
   test:
@@ -24,8 +24,8 @@ jobs:
       run: mvn -B package --file pom.xml
 
 
-  pre-release:
-    name: GitHub pre-release
+  github-release:
+    name: GitHub Release
     runs-on: ubuntu-latest
     needs: test
 
@@ -37,17 +37,12 @@ jobs:
           java-version: 8
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-      - name: Turnstyle
-        uses: softprops/turnstyle@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create pre-release
+      - name: Create release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "beta"
-          prerelease: true
-          title: "Development Build"
+          prerelease: false
+          draft: true
           files: |
             target/*.jar
 
@@ -60,15 +55,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Turnstyle
-        uses: softprops/turnstyle@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Prepare
         id: prep
         run: |
           DOCKER_IMAGE=lszeremeta/sdfeater
-          VERSION=latest
+          VERSION=${GITHUB_REF#refs/tags/v}
           TAGS="${DOCKER_IMAGE}:${VERSION}"
           echo ::set-output name=tags::${TAGS}
           
