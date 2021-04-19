@@ -107,7 +107,7 @@ class File {
                             "      \"http://schema.org/creator\": {\n" +
                             "        \"@id\": \"https://github.com/lszeremeta/SDFEater\"\n" +
                             "      },\n" +
-                            "      \"http://schema.org/temporal\": " + Year.now().toString() + ",\n" +
+                            "      \"http://schema.org/temporal\": \"" + Year.now().toString() + "\",\n" +
                             "      \"http://schema.org/url\": \"https://github.com/lszeremeta/SDFEater\"\n" +
                             "    },\n");
                     break;
@@ -139,7 +139,7 @@ class File {
                                     "      \"http://schema.org/creator\": {\n" +
                                     "        \"@id\": \"https://github.com/lszeremeta/SDFEater\"\n" +
                                     "      },\n" +
-                                    "      \"http://schema.org/temporal\": " + Year.now().toString() + ",\n" +
+                                    "      \"http://schema.org/temporal\": \"" + Year.now().toString() + "\",\n" +
                                     "      \"http://schema.org/url\": \"https://github.com/lszeremeta/SDFEater\"\n" +
                                     "    },\n");
                     break;
