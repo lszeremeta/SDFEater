@@ -615,14 +615,13 @@ class OutputTest {
     }
 
     /**
-     * Test if RDFa output have IRI subject
+     * Test if RDFa output have IRI subject with id
      */
     @Test
     void rdfaHaveIRISubject() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.rdfa, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
-        String[] required = {"http", "example.com", "molecule", "#", "entity"};
+        String[] required = {"http", "example.com", "molecule", "#", "entity", " id='"};
         assertTrue(stringContainsAllValues(out, required));
     }
 
@@ -631,7 +630,6 @@ class OutputTest {
      */
     @Test
     void rdfaHaveUUIDSubject() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.rdfa, SDFEater.Subject.uuid);
         String out = outputStreamCaptor.toString();
         String[] required = {"urn:uuid:"};
@@ -643,7 +641,6 @@ class OutputTest {
      */
     @Test
     void rdfaHaveBNodeSubject() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.rdfa, SDFEater.Subject.bnode);
         String out = outputStreamCaptor.toString();
         String[] required = {"_:b"};
@@ -684,14 +681,13 @@ class OutputTest {
     }
 
     /**
-     * Test if Microdata output have IRI subject
+     * Test if Microdata output have IRI subject with id
      */
     @Test
     void microdataIRISubject() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.microdata, SDFEater.Subject.iri);
         String out = outputStreamCaptor.toString();
-        String[] required = {"http", "example.com", "molecule", "#", "entity"};
+        String[] required = {"http", "example.com", "molecule", "#", "entity", " id='"};
         assertTrue(stringContainsAllValues(out, required));
     }
 
@@ -700,7 +696,6 @@ class OutputTest {
      */
     @Test
     void microdataHaveUUIDSubject() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.microdata, SDFEater.Subject.uuid);
         String out = outputStreamCaptor.toString();
         String[] required = {"urn:uuid:"};
@@ -712,7 +707,6 @@ class OutputTest {
      */
     @Test
     void microdataHaveBNodeSubject() {
-        initializeJenaModel();
         file.parse(molecule, SDFEater.Format.microdata, SDFEater.Subject.bnode);
         String out = outputStreamCaptor.toString();
         String[] required = {"_:b"};
