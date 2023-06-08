@@ -28,7 +28,7 @@ If you have [Docker](https://docs.docker.com/engine/install/) installed, you can
 Because the tool is closed inside the container, you have to [mount](https://docs.docker.com/storage/bind-mounts/#start-a-container-with-a-bind-mount) a local directory with your input file. The default working directory of the image is `/app`. You need to mount your local directory inside it (e.g. `/app/input`):
 
 ```shell
-docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest
+docker run --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest
 ```
 
 In this case, the local directory `/home/user/input` has been mounted under `/app/input`.
@@ -36,7 +36,7 @@ In this case, the local directory `/home/user/input` has been mounted under `/ap
 You can also simply mount the current working directory using `$(pwd)` sub-command:
 
 ```shell
-docker run -it --rm --name sdfeater-app --mount type=bind,source="$(pwd)",target=/app/input,readonly lszeremeta/sdfeater:latest
+docker run --rm --name sdfeater-app --mount type=bind,source="$(pwd)",target=/app/input,readonly lszeremeta/sdfeater:latest
 ```
 
 ## CLI options
@@ -89,7 +89,7 @@ java -jar SDFEater-VERSION-jar-with-dependencies.jar -i ../examples/chebi_test.s
 Returns [JSON-LD](https://json-ld.org/) and redirects output to `molecules.jsonld` file. SDFEater runs from a JAR file.
 
 ```shell
-docker run -it --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest -i input/chebi_test.sdf -f microdata  > molecules.html
+docker run --rm --name sdfeater-app --mount type=bind,source=/home/user/input,target=/app/input,readonly lszeremeta/sdfeater:latest -i input/chebi_test.sdf -f microdata  > molecules.html
 ```
 
 Returns simple HTML with added [Microdata](https://www.w3.org/TR/microdata/) and redirects output to `molecules.html` file. Run from pre-build Docker image.
